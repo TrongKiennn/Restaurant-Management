@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link id="favicon" rel="icon" type="image/png" href="/images/shop_icon.ico">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="referrer" content="always" />
+    <meta name="description" content="TailwindCSS Ecommerce Template" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+</head>
+
+<body class="bg-gray-100">
+    <div x-data="{ cartOpen: false, isOpen: false }">
+        <!-- #region Header -->
+        <div class="bg-slate-900 py-2 px-4 hidden md:block">
+            <div class="flex justify-between items-center">
+                <div class="flex space-x-4">
+                    <a href="tel:+123-456-7890" class="text-white flex items-center">
+                        <i class="fa fa-phone-square mr-2"></i>+123-456-7890
+                    </a>
+                    <a href="mailto:mail@ecom.com" class="text-white flex items-center">
+                        <i class="fa fa-envelope mr-2"></i>mail@ecom.com
+                    </a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="/register" class="text-white flex items-center">
+                        <i class="fas fa-user-edit mr-2"></i>Register
+                    </a>
+                    <a href="/login" class="text-white flex items-center">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                </div>
+            </div>
+        </div>
+        <%- include('header') %>
+        <!-- #endregion Header -->
+
+        <main class="my-8">
+            <!-- Page-specific content here -->
+            <%- content %>
+        </main>
+
+        <!-- #region Footer-->
+        <!-- Add footer content here -->
+        <!-- #endregion Footer -->
+    </div>
+    <script src="/js/header.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+           
+            const user = <%- JSON.stringify(user) %>; 
+
+            if (user) {
+                const loginLink = document.querySelector('a[href="/login"]');
+                const registerLink = document.querySelector('a[href="/register"]');
+    
+                if (loginLink) {
+                    loginLink.innerHTML = '<i class="fas fa-sign-out-alt mr-2"></i>Logout';
+                    loginLink.href = '/logout'; 
+                }
+    
+                if (registerLink) {
+                    registerLink.style.display = 'none';
+                }
+            } else {
+                
+                console.log("User chưa đăng nhập, không có thông tin user.");
+            }
+        });
+    </script>
+    
+    
+</body>
+
+</html>
