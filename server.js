@@ -40,6 +40,7 @@ app.use(passport.session())
 const registrationRouter = require("./customer/registration/registrationRouter");
 const loginRouter=require('./customer/login/loginRouter');
 const logoutRouter=require('./customer/logout/logoutRouter')
+const categoryRouter=require('./customer/category/categoryRouter')
 
 // Set the view engine to EJS
 app.set("view engine", "ejs");
@@ -66,7 +67,7 @@ app.use("/dist", express.static("dist"));
 app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
 app.use("/logout",logoutRouter)
-
+app.use("/category",categoryRouter)
 
 const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {

@@ -5,11 +5,14 @@
 exports.up = async function (knex) {
 	await knex.raw(
 		`CREATE TABLE IF NOT EXISTS users (
-    ID SERIAL PRIMARY KEY,
-    name VARCHAR(255) ,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    salt VARCHAR(255)
+   Id SERIAL PRIMARY KEY,
+    Name TEXT,
+    Email TEXT,
+    Password TEXT,
+    Salt TEXT,
+    Create_At TIMESTAMP,
+    Update_At TIMESTAMP,
+    Role BOOLEAN
 );`
 	);
 };

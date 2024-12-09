@@ -4,25 +4,22 @@
  * @param {number} minPrice - Minimum price filter.
  * @param {number} maxPrice - Maximum price filter.
  * @param {string} sort - Sort order (column, direction), e.g. "id,ASC". If not provided will be RANDOM() by default.
- * @param {string} brand - Brand filter.
+ * @param {string} manufacturer - Manufacturer filter.
  * @param {string} search - Search keyword.
- * @param {string} products_type - Type of products, e.g. "mobilephones". If not provided, all products are considered.
+ * @param {string} products_category - Category of products, e.g. "mobilephones". If not provided, all products are considered.
  * @returns {Object} Object containing SQL filter statements.
  * @returns {string} priceFilter - SQL statement for price filter. Blank if no price filter is applied.
- * @returns {string} brandFilter - SQL statement for brand filter. Blank if no brand filter is applied.
+ * @returns {string} manufacturerFilter - SQL statement for manufacturer filter. Blank if no manufacturer filter is applied.
  * @returns {string} searchFilter - SQL statement for search filter. Blank if no search filter is applied.
  * @returns {string} sortFilter - SQL statement for sort filter. RANDOM() if no sort order were provided
- * @returns {string} productsTypeFilter - SQL statement for product type filter. Blank if no product type filter is applied.
+ * @returns {string} productsCategoryFilter - SQL statement for product category filter. Blank if no product category filter is applied.
  * @example
- * const {priceFilter, brandFilter, searchFilter, sortFilter, productsTypeFilter} = prepareFilterStatements(100, 500, "price,ASC", "Samsung", "Galaxy", "mobilephones");
+ * const {priceFilter, manufacturerFilter, searchFilter, sortFilter, productsCategoryFilter} = prepareFilterStatements(100, 500, "price,ASC", "Samsung", "Galaxy", "mobilephones");
  */
-function prepareFilterStatements(minPrice, maxPrice, sort, brand, search, products_type) {
-    let productsTypeFilter = "";
-    if(products_type != null)
-        productsTypeFilter = `AND type_id = (SELECT id from types where type_name = '${products_type}')`;
-
+function prepareFilterStatements(minPrice, maxPrice, sort, search, typeOfFood) {
+    let productsCategoryFilter  = typeOfFood === "All" ? "" : `AND c.name IN (${typeOfFood.split(",").map(g => `'${g}'`).join(", ")})`;;
+    
     // initialize filters
-    let brandFilter = brand === "All" ? "" : `AND brand IN (${brand.split(",").map(g => `'${g}'`).join(", ")})`;
     let searchFilter = search ? `AND name ILIKE '%${search}%'` : "";
     let priceFilter = ""; 
 
@@ -36,13 +33,16 @@ function prepareFilterStatements(minPrice, maxPrice, sort, brand, search, produc
 
     let sortFilter = "";
     const [sortColumn, sortDir] = sort.split(",");
+    
     if(sortColumn != null && sortDir != null) {
         sortFilter = `ORDER BY ${sortColumn} ${sortDir}`;
     } else {
         sortFilter = "ORDER BY RANDOM()";
     }
+
+
     
-    return {priceFilter, brandFilter, searchFilter, sortFilter, productsTypeFilter};
+    return {priceFilter, searchFilter, sortFilter, productsCategoryFilter};
 }
 
 module.exports = {
