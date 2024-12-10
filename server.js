@@ -1,4 +1,5 @@
 const express = require('express');
+
 const path =require('path');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -56,6 +57,7 @@ app.use((req, res, next) => {
 });
 
 // Middleware
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname,"public")));
@@ -65,12 +67,15 @@ app.use("/dist", express.static("dist"));
 
 app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
-app.use("/logout",logoutRouter)
+app.use("/logout",logoutRouter);
 
+
+const adminRouter = require("./routes/admin/index.route.js");
+adminRouter(app);
 
 const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
+  console.log(`Server is running on port: http://localhost:${PORT}`);
 });
 
 
