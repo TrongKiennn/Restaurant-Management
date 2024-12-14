@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth font-sans">
+<head>
+    <link rel="shortcut icon" href="./img/Logo.png" type="image/x-icon"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASTEE Admin</title>
+    <link rel="stylesheet" href="/css/all.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="../dist/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div id="main" class="relative">
+        <!-- #region Header -->
+        <% include('./layouts/header') %>
+        <!-- #endregion Header -->
+
+        <!-- #region Sidebar -->
+        <% include ('./layouts/sidebar') %>
+        <!-- #endregion Sidebar -->
+
+        <%- content %>
+
+    </div>
+
+    <script>
+        // Lấy các phần tử liên quan
+        const checkBox = document.getElementById('check');
+        const btn = document.getElementById('btn');
+        const cancel = document.getElementById('cancel');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+
+        // Hàm khi checkbox được checked
+        function toggleSidebar() {
+            // Kiểm tra xem checkbox có đang checked hay không
+            if (checkBox.checked) {
+                // Nếu checked, mở sidebar và hiển thị icon xmark
+                sidebarMenu.style.left = '0px';
+                cancel.style.left = '215px'; // Di chuyển icon xmark
+                btn.style.left = '250px';
+                btn.style.opacity = '0';  // Ẩn icon bars
+                btn.style.pointerEvents = 'none';  // Tắt sự kiện của btn khi sidebar mở
+            } else {
+                // Nếu không checked, đóng sidebar và hiển thị lại icon bars
+                sidebarMenu.style.left = '-250px';
+                cancel.style.left = '-215px'; // Di chuyển icon xmark ra ngoài
+                btn.style.left = '40px';
+                btn.style.opacity = '1';  // Hiển thị lại icon bars
+                btn.style.pointerEvents = 'auto';  // Bật sự kiện của btn khi sidebar đóng
+            }
+        }
+
+        // Thêm sự kiện thay đổi cho checkbox
+        checkBox.addEventListener('change', toggleSidebar);
+    </script>
+</body>
+</html>

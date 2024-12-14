@@ -65,6 +65,48 @@ module.exports = {
           900: "#12201f",
         },
       },
+
+      boxShadow: {
+        customY: '0 6px 4px rgba(0, 0, 0, 0.25)',
+        customX: '6px 0px 4px rgba(0, 0, 0, 0.25)',
+      },
+
+      colors: {
+        customOrange: "#984B01", 
+      },
+
+      fontFamily: {
+        lalezar: ['Lalezar', 'system-ui', 'sans-serif'],  
+        'roboto-condensed': ['"Roboto Condensed"', 'sans-serif'],
+      },
+
+      margin: {
+        '75p': '75%',
+      },
+
+      backgroundImage: {
+        'burger': "url('/assets/img/Combo 1 - Burger.jpg')",
+        'content': "url('/assets/img/fini.jpg')",
+      },
+
+      keyframes: {
+        modalFadeIn: {
+          from: {
+            opacity: '0',
+            transform: 'translateY(-140px)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+      },
+
+      animation: {
+        modalFadeIn: 'modalFadeIn 0.5s ease',
+      },
+
+      
     },
     plugins: [],
   },
