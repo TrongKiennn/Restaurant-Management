@@ -73,14 +73,11 @@ app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
 app.use("/logout",logoutRouter)
 app.use("/category",categoryRouter)
-// app.use("/admin", adminRouter);
 
 const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
-
-
 
 setInterval(() => {
   store.clear().then((length) => {
@@ -88,7 +85,10 @@ setInterval(() => {
   });
 }, 1000000);
 
-
 app.get('/admin_views/admin_index',(req,res)=>{
   res.render('admin_index')
  });
+
+app.get("/admin_views/admin_manager_menu", (req, res) => {
+  res.render('admin_manager_menu')
+});
