@@ -44,8 +44,12 @@ const categoryRouter=require('./customer/category/categoryRouter');
 const adminRouter = require('./admin/adminRouter');
 
 // Set the view engine to EJS
+app.set('views', [
+  path.join(__dirname, 'views'),
+  path.join(__dirname, 'views', 'admin_views')
+]);
 app.set("view engine", "ejs");
-app.set("views", "views");
+
 
 app.use((req, res, next) => {
   if (req.isAuthenticated()) {
@@ -69,7 +73,7 @@ app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
 app.use("/logout",logoutRouter)
 app.use("/category",categoryRouter)
-app.use("/admin", adminRouter);
+// app.use("/admin", adminRouter);
 
 const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {

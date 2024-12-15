@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth font-sans">
 <head>
-    <link rel="shortcut icon" href="./admin_img/Logo.png" type="image/x-icon"> 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TASTEE Admin</title>
-    <link rel="stylesheet" href="/css/all.min.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="../dist/main.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link id="favicon" rel="icon" type="image/png" href="/images/shop_icon.ico">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="referrer" content="always" />
+    <meta name="description" content="TailwindCSS Ecommerce Template" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 </head>
 
 <body>
-    <div id="main" class="relative">
+    <div>
         <!-- #region Header -->
-        <% include('./admin_layouts/admin_header') %>
+        <%- include('admin_header') %>
         <!-- #endregion Header -->
 
         <!-- #region Sidebar -->
-        <% include ('./admin_layouts/admin_sidebar') %>
+        <%- include('admin_sidebar') %>
         <!-- #endregion Sidebar -->
 
         <%- content %>
