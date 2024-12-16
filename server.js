@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const flash = require('connect-flash');
 require("dotenv").config();
+const cors = require("cors");
 
 const {ConnectSessionKnexStore} = require('connect-session-knex'); 
 const knexConstructor= require('knex') ;
@@ -41,6 +42,7 @@ app.use(passport.session())
 const registrationRouter = require("./customer/registration/registrationRouter");
 const loginRouter=require('./customer/login/loginRouter');
 const logoutRouter=require('./customer/logout/logoutRouter')
+const categoryRouter=require('./customer/category/categoryRouter')
 
 // Set the view engine to EJS
 app.set("view engine", "ejs");
@@ -57,7 +59,7 @@ app.use((req, res, next) => {
 });
 
 // Middleware
-
+app.use(cors());  // Enable CORS
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname,"public")));
@@ -67,8 +69,13 @@ app.use("/dist", express.static("dist"));
 
 app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
+// <<<<<<< HEAD
 app.use("/logout",logoutRouter);
 
+// =======
+app.use("/logout",logoutRouter)
+app.use("/category",categoryRouter)
+// >>>>>>> ea88e49ab8bd9533b122b713e7f2b78f97194d5b
 
 const adminRouter = require("./routes/admin/index.route.js");
 adminRouter(app);
