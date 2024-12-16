@@ -41,12 +41,17 @@ app.use(passport.session())
 
 const registrationRouter = require("./customer/registration/registrationRouter");
 const loginRouter=require('./customer/login/loginRouter');
-const logoutRouter=require('./customer/logout/logoutRouter')
-const categoryRouter=require('./customer/category/categoryRouter')
+const logoutRouter=require('./customer/logout/logoutRouter');
+const categoryRouter=require('./customer/category/categoryRouter');
+const adminRouter = require('./admin/adminRouter');
 
 // Set the view engine to EJS
+app.set('views', [
+  path.join(__dirname, 'views'),
+  path.join(__dirname, 'views', 'admin_views')
+]);
 app.set("view engine", "ejs");
-app.set("views", "views");
+
 
 app.use((req, res, next) => {
   if (req.isAuthenticated()) {
@@ -85,11 +90,16 @@ app.listen(PORT, () => {
   console.log(`Server is running on port: http://localhost:${PORT}`);
 });
 
-
-
 setInterval(() => {
   store.clear().then((length) => {
     console.log(`Cleared ${JSON.stringify(length)} sessions`);
   });
 }, 1000000);
 
+app.get('/admin_views/admin_index',(req,res)=>{
+  res.render('admin_index')
+ });
+
+app.get("/admin_views/admin_manager_menu", (req, res) => {
+  res.render('admin_manager_menu')
+});

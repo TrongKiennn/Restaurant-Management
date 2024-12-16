@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth font-sans">
+<head>
+    <link rel="shortcut icon" href="/images/Logo.png" type="image/x-icon"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASTEE Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div id="main" class="relative">
+        <!-- #region Header -->
+        <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
+        <!-- #endregion Header -->
+
+        <div id="content" class="z-0 absolute w-full h-lvh font-roboto-condensed bg-content bg-repeat">
+            <div class="mt-[100px] flex ml-75p">
+                <div class="h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
+                    Thêm món
+                    <i class="fa-solid fa-circle-plus ml-2"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px]">
+                <!-- Item 1 -->
+                <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden">
+                    <div class="image bg-gray-200 h-[150px] w-full rounded-t-lg"></div>
+                    <div class="content p-4">
+                        <h3 class="title font-bold text-lg mb-2">Tên món ăn</h3>
+                        <p class="description text-sm text-gray-600">Mô tả ngắn gọn về món ăn.</p>
+                    </div>
+                    <!-- Menu chi tiết -->
+                    <div class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-black opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
+                        <button class="bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Hết món</button>
+                        <button class="js-delete bg-red-500 px-4 py-2 rounded-md mb-2 hover:opacity-80">Xóa</button>
+                        <button class="bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh sửa</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
+        <div class="modal-container js-modal-container bg-white w-[500px] min-h-[165px] rounded-xl relative animate-modalFadeIn">
+            <header class="modal-header text-[25px] font-bold text-center mt-5 mb-5">
+                Bạn chắc chắn muốn xóa món chứ?
+            </header>
+
+            <div class="mt-9 ml-[4.5rem] mr-[4.5rem] flex justify-between">
+                <button class="js-modal-Yes w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none p-[1px] cursor-pointer leading-[37px] rounded-2xl hover:opacity-80">
+                    Có
+                </button>
+    
+                <button class="js-modal-No w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none cursor-pointer p-[1px] leading-[37px] rounded-2xl hover:opacity-80">
+                    Không
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //Xóa items
+        const Deletes = document.querySelectorAll('.js-delete')
+        const modalDelete = document.querySelector('.js-modal-delete')
+        const modalNo = document.querySelector('.js-modal-No')
+        const modalYes = document.querySelector('.js-modal-Yes')
+        const modalContainer = document.querySelector('.js-modal-container')
+
+        let currentItemToDelete = null; // Biến lưu trữ item đang được chọn để xóa
+
+        function showConfirmDelete(){
+            modalDelete.classList.add('flex')
+            modalDelete.classList.remove('hidden')
+            currentItemToDelete = event.target.closest('.item') // Lưu trữ item cha của nút "Xóa"
+        }
+
+        function hideConfirmDelete(){
+            modalDelete.classList.remove('flex')
+            modalDelete.classList.add('hidden')
+            currentItemToDelete = null
+        }
+
+        function deleteItem() {
+            if (currentItemToDelete) {
+                currentItemToDelete.remove(); // Xóa item khỏi DOM
+                hideConfirmDelete(); // Ẩn modal sau khi xóa
+            }
+        }
+
+        for(const Delete of Deletes){
+            Delete.addEventListener('click', showConfirmDelete)
+        }
+
+        modalNo.addEventListener('click', hideConfirmDelete)
+        modalYes.addEventListener('click', deleteItem)
+    </script>
+
+</body>
+</html>

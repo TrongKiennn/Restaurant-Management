@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>
         <%= title %>
@@ -55,7 +54,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
            
-            const user = <%- JSON.stringify(user) %>; 
+            const user = <%- JSON.stringify(user) %>;
 
             if (user) {
                 const loginLink = document.querySelector('a[href="/login"]');
