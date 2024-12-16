@@ -43,7 +43,7 @@ const registrationRouter = require("./customer/registration/registrationRouter")
 const loginRouter=require('./customer/login/loginRouter');
 const logoutRouter=require('./customer/logout/logoutRouter');
 const categoryRouter=require('./customer/category/categoryRouter');
-const adminRouter = require('./admin/adminRouter');
+const adminRouters = require('./admin/adminRouter');
 
 // Set the view engine to EJS
 app.set('views', [
@@ -85,17 +85,6 @@ app.use("/category",categoryRouter)
 const adminRouter = require("./routes/admin/index.route.js");
 adminRouter(app);
 
-const PORT = process.env.SERVER_PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port: http://localhost:${PORT}`);
-});
-
-setInterval(() => {
-  store.clear().then((length) => {
-    console.log(`Cleared ${JSON.stringify(length)} sessions`);
-  });
-}, 1000000);
-
 app.get('/admin_views/admin_index',(req,res)=>{
   res.render('admin_index')
  });
@@ -103,3 +92,18 @@ app.get('/admin_views/admin_index',(req,res)=>{
 app.get("/admin_views/admin_manager_menu", (req, res) => {
   res.render('admin_manager_menu')
 });
+
+const PORT = process.env.SERVER_PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port: http://localhost:${PORT}`);
+});
+
+
+
+setInterval(() => {
+  store.clear().then((length) => {
+    console.log(`Cleared ${JSON.stringify(length)} sessions`);
+  });
+}, 1000000);
+
+

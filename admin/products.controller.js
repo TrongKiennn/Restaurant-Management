@@ -1,6 +1,6 @@
 // Description: 'Products' page controller.
 const { restart } = require("nodemon");
-const productService = require("./products.servive");
+const productService = require("./products.service");
 const { parse } = require("dotenv");
 const { json } = require("express");
 
