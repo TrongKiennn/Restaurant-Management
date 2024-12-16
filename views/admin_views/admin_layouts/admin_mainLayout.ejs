@@ -62,13 +62,24 @@
         // Thêm sự kiện thay đổi cho checkbox
         checkBox.addEventListener('change', toggleSidebar);
 
+        //Đổi màu thẻ li trong sidebar
         document.addEventListener("DOMContentLoaded", function () {
-            const links = document.querySelectorAll("a");
+            const links = document.querySelectorAll(".nav-link");
+            const currentPath = window.location.pathname; // Lấy URL hiện tại
+
+            // Đặt class cho link tương ứng với URL hiện tại
             links.forEach(link => {
+                if (link.getAttribute("href") === currentPath) {
+                    link.classList.add("bg-black", "text-white");
+                } else {
+                    link.classList.remove("bg-black", "text-white");
+                    link.classList.add("text-black");
+                }
+
+                // Thêm sự kiện click để thay đổi class khi nhấp
                 link.addEventListener("click", function() {
                     links.forEach(l => l.classList.remove("bg-black", "text-white"));
                     this.classList.add("bg-black", "text-white");
-                    this.classList.remove("text-black")
                 });
             });
         });
