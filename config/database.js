@@ -3,7 +3,7 @@ require("dotenv").config();
 
 let pool;
 
-if (process.env.NODE_ENV === "PROD") 
+if (process.env.NODE_ENV === "PROD")
 {
     // Production Pool
     pool = new Pool({
