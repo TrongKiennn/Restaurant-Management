@@ -11,7 +11,9 @@ module.exports.getProductById = async (req, res) => {
     try {
         const product = await productService.getProductById(id);
         if(product){
-            return res.status(200).json({ok: true, data: product});
+            return res.render("",{
+                product : product
+            });
         }
         else{
             return res.status(400).json({ok: false, message: "Product not found"});
@@ -21,7 +23,7 @@ module.exports.getProductById = async (req, res) => {
     }
 }
 
-
+// LẤY DANH SÁCH SẢN PHẨM
 module.exports.index = async (req, res) => {
   try {
     const productList = await productService.getAllProduct();
@@ -30,21 +32,18 @@ module.exports.index = async (req, res) => {
         .status(400)
         .json({ ok: false, message: "list item are empty" });
     }
-    return res.json({ ok: true, data: productList });
+    return res.render("",{
+        productList: productList
+    });
   } catch (error) {
     res.status(500).json({
         ok: false,
       message: error.message,
     });
   }
-//   const productList = await productService.getAllProduct();
-//     res.render('admin/pages/product/products', {
-//         title: 'Products',
-//         productList: productList
-//     });
 };
-
-// xóa mềm
+ 
+// xóa mềm (cập nhật deleted = true)
 module.exports.deleteItem = async (req, res) => {   
     const id = parseInt(req.body.id);
     
@@ -53,7 +52,8 @@ module.exports.deleteItem = async (req, res) => {
     try {
         const result = await productService.deleteProduct(id);
         if(result){
-            return res.status(200).json({ok: true, message: "Delete product successfully"});    
+            req.flash("success", "Deleted successfully !");
+            res.redirect("back");  
         }
         return res.status(400).json({ok: false, message: "Delete product failed"});
     } catch (error) {
@@ -69,14 +69,17 @@ module.exports.deleteItemForever = async (req, res) => {
     try {
         const result = await productService.deleteProductForever(id);
         if(result){
-            return res.status(200).json({ok: true, message: "Delete product successfully"});    
+            req.flash("success", "Deleted successfully !");
+            return res.redirect("back");
         }
-        return res.status(400).json({ok: false, message: "Delete product failed"});
+        else 
+            return res.status(400).json({ok: false, message: "Delete product failed"});
     } catch (error) {
         return res.status(500).json({ok: false, message: error.message});
     }
 }
 
+//XÓA NHIỀU ITEM 
 module.exports.deleteMulti = async (req, res) => {  
     const ids = req.body.ids;
     console.log(ids);
@@ -84,7 +87,8 @@ module.exports.deleteMulti = async (req, res) => {
     try {
         const result = await productService.deleteMultiProduct(ids);
         if(result){
-            return res.status(200).json({ok: true, message: "Delete products successfully"});    
+            req.flash("success", "Deleted successfully !");
+            return res.redirect("back"); 
         }
         return res.status(400).json({ok: false, message: "Delete products failed"});
     } catch (error) {
@@ -92,7 +96,7 @@ module.exports.deleteMulti = async (req, res) => {
     }
 }
 
-
+// thêm một sản phẩm mới
 module.exports.createProduct = async (req, res) => {
     const productData = req.body;
     // console.log(productData);
