@@ -124,7 +124,7 @@ function updateProductList(products) {
 
         <!-- Nút Xem chi tiết -->
         <a href="#"
-           class="block w-full text-center text-white bg-green-700 py-3 hover:bg-green-500 transition">
+           class="block w-full text-center text-white bg-[#984B01] py-3 hover:bg-gray-300 transition">
            Xem chi tiết
         </a>
       </div>
