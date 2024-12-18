@@ -21,7 +21,7 @@
   <!-- #region Header -->
   <%- include('layouts/mainLayout', { content: locals.body }) %>
   <!--region get user_id to put into cart-->
-  <input type="hidden" id="user-id" value="<%= user_id %>">
+  <!-- <input type="hidden" id="user-id" value="<%= user_id %>"> -->
 
   <!-- #endregion Header -->
   <div x-data="{ cartOpen: false , isOpen: false }">
@@ -66,9 +66,19 @@
         <div class="container grid grid-cols-4 gap-6 pt-4 pb-16 items-start mx-auto">
           
           <!-- #region Sidebar -->
-          <%- include('layouts/filter') %>
-          <%- include('layouts/sort_filter') %>
-          <!-- #endregion Sidebar -->
+        <div class="col-span-1 bg-white px-4 pb-6 shadow overflow-hidden rounded-lg divide-y divide-gray-200 space-y-5">
+          <!-- Filter -->
+          <div>
+            <%- include('layouts/filter') %>
+          </div>
+          
+          <!-- Sort Filter -->
+          <div>
+            <%- include('layouts/sort_filter') %>
+          </div>
+        </div>
+        <!-- #endregion Sidebar -->
+
           
           <!-- #region Products -->
           <div class="col-span-3">
@@ -96,11 +106,11 @@
                       </h4>
                     </a>
 
-                    <div class="flex justify-between mb-1 space-x-2">
+                   <!--  <div class="flex justify-between mb-1 space-x-2">
                       <p class="text-xl text-primary font-semibold">
                         <%= product.category_name %>
                       </p>
-                    </div>
+                    </div> -->
 
                     <div class="flex items-baseline mb-1 space-x-2">
                       <p class="text-xl text-primary font-semibold">
@@ -109,22 +119,24 @@
 
                     </div>
                     
-                    <div class="flex gap-1 text-sm text-yellow-400">
+                    <!-- <div class="flex gap-1 text-sm text-yellow-400">
                       <i class="star"></i>
                       <i class="star"></i>
                       <i class="star"></i>
                       <i class="star"></i>
                       <i class="star"></i>
-                    </div>
+                    </div> -->
                   </div> 
 
-                  <!-- Nút Add to Cart -->
-                  <a href="#"
-                    class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition"
-                    data-product-id="<%= product.id %>"
-                    data-product-price="<%= product.price %>">
-                    Add to cart
-                  </a>
+                  <!-- Nút Xem chi tiết -->
+                  <button 
+                  type="button"
+                  class="block w-full py-3 mt-auto text-center text-white bg-[#984B01] border border-primary hover:bg-gray-300 transition"
+                  data-product-id="<%= product.id %>"
+                  data-product-price="<%= product.price %>"
+                  >
+                  Xem chi tiết
+                  </button>
                 </div>
                 <% }); %>
 

@@ -11,8 +11,10 @@ module.exports.getProductById = async (req, res) => {
     try {
         const product = await productService.getProductById(id);
         if(product){
+// <<<<<<< HEAD
             return res.render("",{
                 title: "Manager Menu",
+// =======
                 product : product
             });
         }
@@ -33,8 +35,11 @@ module.exports.index = async (req, res) => {
         .status(400)
         .json({ ok: false, message: "list item are empty" });
     }
+// <<<<<<< HEAD
     return res.render("admin_views/admin_manager_menu",{
         products: productList
+// =======
+// >>>>>>> 3f6cd69fb00cfb6b024932ccdad85b3a37ac35d8
     });
   } catch (error) {
     res.status(500).json({
