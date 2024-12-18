@@ -4,7 +4,7 @@ const productService = require("./products.service");
 const { parse } = require("dotenv");
 const { json } = require("express");
 
-
+// lấy một sản phẩm theo id
 module.exports.getProductById = async (req, res) => {
     const id = parseInt(req.params.id);
     // console.log(id); 
@@ -12,6 +12,7 @@ module.exports.getProductById = async (req, res) => {
         const product = await productService.getProductById(id);
         if(product){
             return res.render("",{
+                title: "Manager Menu",
                 product : product
             });
         }
@@ -32,13 +33,13 @@ module.exports.index = async (req, res) => {
         .status(400)
         .json({ ok: false, message: "list item are empty" });
     }
-    return res.render("",{
-        productList: productList
+    return res.render("admin_views/admin_manager_menu",{
+        products: productList
     });
   } catch (error) {
     res.status(500).json({
         ok: false,
-      message: error.message,
+        message: error.message,
     });
   }
 };
@@ -100,7 +101,6 @@ module.exports.deleteMulti = async (req, res) => {
 module.exports.createProduct = async (req, res) => {
     const productData = req.body;
     // console.log(productData);
-
     try {
         if(!productData.name || !productData.category_id || !productData.price){
             return res.status(400).json({ok: false, message: "Please enter all fields"});
@@ -112,7 +112,7 @@ module.exports.createProduct = async (req, res) => {
         const result = await productService.createProduct(productData);
         console.log(result);
         if(result){
-            return res.status(201).json({ok: true, message: "Create product successfully", product: result.rows[0]});    
+            return res.redirect("back");
         }
         return res.status(400).json({ok: false, message: "Create product failed"});
     } 
