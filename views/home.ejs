@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="referrer" content="always" />
+  <meta name="description" content="TailwindCSS Ecommerce Template" />
+  <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet" />
+  <link href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet" />
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/all.min.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link id="favicon" rel="icon" type="image/png" href="/images/store_icon.ico">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../dist/main.css" />
+</head>
+
+<body>
+  <div>
+  <!-- #region Header -->
+  <%- include('layouts/mainLayout', { content: locals.body }) %>
+  <!-- #endregion Header -->
+   <!-- Hình của trang chủ -->
+   <div class="relative flex items-center justify-center overflow-hidden" style="width: 1500px; height: 700px;">
+    <div id="imageSlider" class="flex transition-transform duration-500 ease-in-out" style="width: 100%; height: 100%;">
+      <img src="/images/homepage7.png" alt="Image 1" class="flex-shrink-0 w-full h-full object-cover">
+      <img src="/images/homepage6.png" alt="Image 2" class="flex-shrink-0 w-full h-full object-cover">
+      <img src="/images/homepage2.png" alt="Image 3" class="flex-shrink-0 w-full h-full object-cover">
+    </div>
+    <!-- Nút chuyển ảnh -->
+    <button id="prev" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-600 text-white px-4 py-2 rounded">‹</button>
+    <button id="next" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-600 text-white px-4 py-2 rounded">›</button>
+  </div>  
+  <!-- Di chuyển ảnh -->
+  <script>
+    const slider = document.getElementById("imageSlider");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+  
+    let currentIndex = 0; // Vị trí ảnh hiện tại
+  
+    function updateSlider() {
+      const offset = currentIndex * -100; // Dịch chuyển -100% mỗi slide
+      slider.style.transform = `translateX(${offset}%)`;
+    }
+  
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < slider.children.length - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0; // Quay lại ảnh đầu tiên
+      }
+      updateSlider();
+    });
+  
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+      } else {
+        currentIndex = slider.children.length - 1; // Chuyển đến ảnh cuối cùng
+      }
+      updateSlider();
+    });
+  </script>
+  
+  
+  <div class="flex-grow pt-4 pb-3 px-4 flex flex-col justify-center items-center">
+    <h2 class="uppercase font-semibold text-xl mb-2 text-gray-800 text-center transition">
+      Combo đặc biệt
+    </h2>
+  </div>
+  
+  
+  
+    
+
+  <!-- #region Footer-->
+  <%- include('layouts/footer') %>
+  <!-- #endregion Footer -->
+   </div>
+</body>
+</html>
