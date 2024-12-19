@@ -11,7 +11,7 @@ module.exports.getProductById = async (req, res) => {
     try {
         const product = await productService.getProductById(id);
         if(product){
-            return res.render("admin_manager_menu",{
+            return res.render("admin_views/admin_manager_menu",{
                 product : product
             });
         }
@@ -32,7 +32,7 @@ module.exports.index = async (req, res) => {
         .status(400)
         .json({ ok: false, message: "list item are empty" });
     }
-    return res.render("admin_manager_menu",{
+    return res.render("admin_views/admin_manager_menu",{
         productList: productList
     });
   } catch (error) {
