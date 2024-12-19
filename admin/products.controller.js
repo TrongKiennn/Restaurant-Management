@@ -17,7 +17,7 @@ module.exports.getProductById = async (req, res) => {
             });
         }
         else{
-            return res.status(400).json({ok: false, message: "Product not found"});
+            return res.status(4.00).json({ok: false, message: "Product not found"});
         }
     } catch (error) {
         return res.status(500).json({ok: false, message: error.message});
