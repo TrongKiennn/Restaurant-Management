@@ -26,23 +26,28 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px]">                
-                <!-- Item 1 -->
-                <% for (let i = 0; i < 8; i++) { %>
-                <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden">
-                    <div class="image bg-gray-200 h-[150px] w-full rounded-t-lg"></div>
-                    <div class="content p-4">
-                        <h3 class="title font-bold text-lg mb-2">Tên món ăn <%= i + 1 %></h3>
-                        <p class="description text-sm text-gray-600">Mô tả ngắn gọn về món ăn.</p>
+            <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px]">
+                <!-- Dynamically generate menu items -->
+                <% products.forEach(item => { %>
+                    <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden">
+                        <!-- Image -->
+                        <div 
+                            class="image bg-gray-200 h-[150px] w-full rounded-t-lg"
+                            style="background-image: url('<%= item.image_url %>'); background-size: cover; background-position: center;">
+                        </div>
+                        <!-- Content -->
+                        <div class="content p-4">
+                            <h3 class="title font-bold text-lg mb-2"><%= item.name %></h3>
+                            <p class="description text-sm text-gray-600"><%= item.description %></p>
+                        </div>
+                        <!-- Detail menu -->
+                        <div class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-white opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
+                            <button class="bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Hết món</button>
+                            <button class="js-delete bg-red-500 px-4 py-2 rounded-md mb-2 hover:opacity-80">Xóa</button>
+                            <button class="bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh sửa</button>
+                        </div>
                     </div>
-                    
-                    <div class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-black opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
-                        <button class="bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Hết món</button>
-                        <button class="js-delete bg-red-500 px-4 py-2 rounded-md mb-2 hover:opacity-80">Xóa</button>
-                        <button class="bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh sửa</button>
-                    </div>
-                </div>
-                <% } %>
+                <% }); %>
             </div>
         </div>
     </div>
