@@ -20,16 +20,13 @@
 
         <div id="content" class="z-0 absolute w-full h-lvh font-roboto-condensed bg-content bg-repeat">
             <div  class="mt-[100px] flex ml-75p">
-                <div create-btn class="h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
+                <div class="js-add h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
                     Thêm món
                     <i class="fa-solid fa-circle-plus ml-2"></i>
                 </div>
             </div>
 
             <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px]">
-<!-- <<<<<<< HEAD -->
-                <!-- Item 1 -->
-<!-- ======= -->
                 <!-- Dynamically generate menu items -->
                 <% products.forEach(item => { %>
                     <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden">
@@ -51,14 +48,12 @@
                         </div>
                     </div>
                 <% }); %>
-<!-- >>>>>>> 3f6cd69fb00cfb6b024932ccdad85b3a37ac35d8 -->
             </div>
-            
         </div>
     </div>
 
     <div class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
-        <div class="modal-container js-modal-container bg-white w-[500px] min-h-[165px] rounded-xl relative animate-modalFadeIn">
+        <div class="modal-container js-modal-container bg-white w-[500px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <header class="modal-header text-[25px] font-bold text-center mt-5 mb-5">
                 Bạn chắc chắn muốn xóa món chứ?
             </header>
@@ -75,13 +70,42 @@
         </div>
     </div>
 
+    <div class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
+        <div class="modal-container js-modal-container bg-white min-w-[500px] min-h-[165px] rounded-xl animate-modalFadeIn">
+            <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Thêm Món</h2>
+            <div class="flex gap-6 p-6">
+                <div id="drop-area" class="w-45 h-45 border-dashed border-2 border-gray-400 rounded-lg p-6 text-center flex justify-center items-center flex-1 flex-col">
+                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-600"></i>
+                    <label for="file-input" class="text-lg text-white cursor-pointer bg-[#984B01] rounded-md pl-3 pr-3 mt-2">
+                        Chọn hình ảnh 
+                    </label>
+                    <input type="file" id="file-input" hidden>
+                    <p class="text-sm text-gray-600 mt-2">Hoặc kéo thả hình ảnh vào đây</p>
+                    <div id="previewContainer" class=" mt-4 border-2 border-dashed border-gray-300 rounded-lg w-full h-48 flex items-center justify-center bg-gray-50" >
+                        <p class='text-gray-500'>Ảnh xem trước</p>
+                    </div>
+                </div>
+                
+                <form class="space-y-4 flex flex-col flex-2 gap-3">
+                    <input id="dishName" type="text" placeholder="Tên món" class="w-[450px] border p-2 rounded" required>
+                    <textarea id="dishDesc" placeholder="Mô tả" class="w-full border p-2 rounded h-[100px]" required></textarea>
+                    <input id="dishPrice" type="number" placeholder="Giá" class="w-full border p-2 rounded" required>
+                    <div class="flex items-center justify-between">
+                        <button type="button" class="js-modal-Cancel bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Hủy</button>
+                        <button type="submit" class="js-modal-Save bg-[#984B01] text-white px-4 py-2 rounded hover:bg-[#733601]">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Xóa item -->
     <script>
-        //Xóa items
         const Deletes = document.querySelectorAll('.js-delete')
         const modalDelete = document.querySelector('.js-modal-delete')
         const modalNo = document.querySelector('.js-modal-No')
         const modalYes = document.querySelector('.js-modal-Yes')
-        const modalContainer = document.querySelector('.js-modal-container')
+        // const modalContainer = document.querySelector('.js-modal-container')
 
         let currentItemToDelete = null; // Biến lưu trữ item đang được chọn để xóa
 
@@ -125,5 +149,125 @@
         
     </script>
 
+    <!-- Thêm items -->
+    <script>
+        const Add = document.querySelector('.js-add')
+        const modalAdd = document.querySelector('.js-modal-add')
+        const modalCancel = document.querySelector('.js-modal-Cancel')
+        const modalSave = document.querySelector('.js-modal-Save')
+        const fileInput = document.getElementById('file-input')
+        const previewContainer = document.getElementById('previewContainer')
+        const dropArea = document.getElementById('drop-area')
+
+        Add.addEventListener("click", () => {
+            modalAdd.classList.remove("hidden"); 
+        });
+
+        modalCancel.addEventListener("click", () => {
+            modalAdd.classList.add("hidden"); 
+            resetForm();
+        });
+
+        fileInput.addEventListener("change", function () {
+            const file = fileInput.files[0]; // Lấy file được chọn
+
+            if (file) {
+                if (!file.type.startsWith("image/")) {
+                    alert("Vui lòng chọn file ảnh!");
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                // Khi file đã được đọc xong
+                reader.onload = function (e) {
+                    // Tạo và hiển thị thẻ img
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.className = "max-w-full max-h-full object-contain"; // Tailwind: hiển thị vừa vặn khung
+
+                    // Xóa nội dung cũ và thêm ảnh mới
+                    previewContainer.innerHTML = "";
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file); // Đọc file dưới dạng Data URL
+            } else {
+                // Nếu không chọn file, hiển thị lại văn bản mặc định
+                previewContainer.innerHTML = "<p class='text-gray-500'>Ảnh xem trước</p>";
+            }
+        });
+
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('dragging'); // Thêm hiệu ứng kéo
+        });
+
+        dropArea.addEventListener('dragenter', () => {
+            dropArea.classList.add('dragging');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('dragging');
+        });
+
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('dragging');
+
+            // Lấy file từ sự kiện drop
+            const file = e.dataTransfer.files[0];
+
+            if (file) {
+                if (!file.type.startsWith("image/")) {
+                    alert("Vui lòng kéo thả file ảnh hợp lệ!");
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                // Khi file đã được đọc xong
+                reader.onload = function (e) {
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.className = "max-w-full max-h-full object-contain"; // Tailwind: ảnh vừa khung
+
+                    // Xóa nội dung cũ và hiển thị ảnh mới
+                    previewContainer.innerHTML = "";
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file); // Đọc file dưới dạng Data URL
+            } else {
+                previewContainer.innerHTML = "<p class='text-gray-500'>Ảnh xem trước</p>";
+            }
+        });
+
+        modalSave.addEventListener("click", () => {
+            const name = document.getElementById("dishName").value.trim();
+            const desc = document.getElementById("dishDesc").value.trim();
+            const price = document.getElementById("dishPrice").value.trim();
+
+            if (!name || !desc || !price) {
+                alert("Vui lòng điền đầy đủ thông tin món ăn.");
+            } else {
+                // Thực hiện lưu thông tin (gửi API, cập nhật danh sách...)
+                console.log("Tên món:", name);
+                console.log("Mô tả:", desc);
+                console.log("Giá:", price);
+                alert("Món ăn đã được thêm thành công!");
+                modalAdd.classList.add("hidden");
+                resetForm();
+            }
+        });
+
+        // Reset modal sau khi thêm món
+        function resetForm() {
+            document.getElementById("dishName").value = "";
+            document.getElementById("dishDesc").value = "";
+            document.getElementById("dishPrice").value = "";
+            previewContainer.innerHTML = "<p class='text-gray-500'>Ảnh xem trước</p>";
+        }
+    </script>
 </body>
 </html>

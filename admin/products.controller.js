@@ -11,10 +11,8 @@ module.exports.getProductById = async (req, res) => {
     try {
         const product = await productService.getProductById(id);
         if(product){
-// <<<<<<< HEAD
             return res.render("",{
                 title: "Manager Menu",
-// =======
                 product : product
             });
         }
