@@ -43,7 +43,6 @@ const registrationRouter = require("./customer/registration/registrationRouter")
 const loginRouter=require('./customer/login/loginRouter');
 const logoutRouter=require('./customer/logout/logoutRouter');
 const categoryRouter=require('./customer/category/categoryRouter');
-const adminRouters = require('./admin/adminRouter');
 
 // Set the view engine to EJS
 app.set('views', [
@@ -82,16 +81,10 @@ app.use("/logout",logoutRouter)
 app.use("/category",categoryRouter)
 // >>>>>>> ea88e49ab8bd9533b122b713e7f2b78f97194d5b
 
+
+// Call the adminRouter function and pass the app as an argument
 const adminRouter = require("./routes/admin/index.route.js");
 adminRouter(app);
-
-app.get('/admin_views/admin_index',(req,res)=>{
-  res.render('admin_index')
- });
-
-app.get("/admin_views/admin_manager_menu", (req, res) => {
-  res.render('admin_manager_menu')
-});
 
 app.get('/home', (req, res) => {
   res.render('home', { title: 'Trang chủ' });

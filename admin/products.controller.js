@@ -100,7 +100,9 @@ module.exports.deleteMulti = async (req, res) => {
 //[GET] render trang tạo sản phẩm mới
 module.exports.createPage = async (req, res) => {   
     try {
-        return res.render("admin_views/backend_test/createItem.ejs");
+        return res.render("admin_views/createItem",{
+            title: "Create new item"
+        });
     } catch (error) {
         return res.status(500).json({ok: false, message: error.message});
     }
