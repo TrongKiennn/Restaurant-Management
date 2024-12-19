@@ -26,7 +26,7 @@ module.exports.getProductById = async (req, res) => {
     }
 }
 
-// LẤY DANH SÁCH SẢN PHẨM
+//[GET] LẤY DANH SÁCH SẢN PHẨM
 module.exports.index = async (req, res) => {
   try {
     const productList = await productService.getAllProduct();
@@ -35,11 +35,8 @@ module.exports.index = async (req, res) => {
         .status(400)
         .json({ ok: false, message: "list item are empty" });
     }
-// <<<<<<< HEAD
     return res.render("admin_views/admin_manager_menu",{
         products: productList
-// =======
-// >>>>>>> 3f6cd69fb00cfb6b024932ccdad85b3a37ac35d8
     });
   } catch (error) {
     res.status(500).json({
@@ -49,7 +46,7 @@ module.exports.index = async (req, res) => {
   }
 };
  
-// xóa mềm (cập nhật deleted = true)
+//[PATCH] xóa mềm (cập nhật deleted = true)
 module.exports.deleteItem = async (req, res) => {   
     const id = parseInt(req.body.id);
     
@@ -67,7 +64,7 @@ module.exports.deleteItem = async (req, res) => {
     }
 };
 
-// xóa vĩnh viễn
+//[DELETE] xóa vĩnh viễn
 module.exports.deleteItemForever = async (req, res) => {
     const id = parseInt(req.body.id);
     console.log(id);
@@ -85,7 +82,7 @@ module.exports.deleteItemForever = async (req, res) => {
     }
 }
 
-//XÓA NHIỀU ITEM 
+//[PATCH]XÓA NHIỀU ITEM 
 module.exports.deleteMulti = async (req, res) => {  
     const ids = req.body.ids;
     console.log(ids);
@@ -102,7 +99,17 @@ module.exports.deleteMulti = async (req, res) => {
     }
 }
 
-// thêm một sản phẩm mới
+//[GET] render trang tạo sản phẩm mới
+module.exports.createPage = async (req, res) => {   
+    try {
+        return res.render("admin_views/backend_test/createItem.ejs");
+    } catch (error) {
+        return res.status(500).json({ok: false, message: error.message});
+    }
+}
+
+
+//[POST] thêm một sản phẩm mới
 module.exports.createProduct = async (req, res) => {
     const productData = req.body;
     // console.log(productData);

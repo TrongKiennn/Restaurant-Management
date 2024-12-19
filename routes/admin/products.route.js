@@ -8,5 +8,6 @@ Router.get("/:id", productController.getProductById);
 Router.patch("/delete", productController.deleteItem);
 Router.delete("/delete-forever", productController.deleteItemForever);
 Router.patch("/delete-multi", productController.deleteMulti);
-Router.post("/", productController.createProduct);
+Router.get("/createPage", productController.createPage);    // trang tạo món mới
+Router.post("/createItem", productController.createProduct);// tạo món mới
 module.exports = Router;

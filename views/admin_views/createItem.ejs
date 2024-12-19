@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10">
+        <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <h1 class="text-2xl font-bold mb-6">Create New Product</h1>
+            <form action="/admin/products/create" method="POST">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700">Name</label>
+                    <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="description" class="block text-gray-700">Description</label>
+                    <textarea id="description" name="description" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="category_id" class="block text-gray-700">Category</label>
+                    <select id="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <option value="1">Burger</option>
+                        <option value="2">Pizza</option>
+                        <option value="3">Gà rán</option>
+                        <option value="4">Đồ ăn nhẹ</option>
+                        <option value="5">Đồ uống</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="price" class="block text-gray-700">Price</label>
+                    <input type="number" id="price" name="price" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="product_url" class="block text-gray-700">Image URL</label>
+                    <input type="url" id="product_url" name="product_url" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Create Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

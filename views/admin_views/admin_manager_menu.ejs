@@ -19,8 +19,8 @@
         <!-- #endregion Header -->
 
         <div id="content" class="z-0 absolute w-full h-lvh font-roboto-condensed bg-content bg-repeat">
-            <div class="mt-[100px] flex ml-75p">
-                <div class="h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
+            <div  class="mt-[100px] flex ml-75p">
+                <div create-btn class="h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
                     Thêm món
                     <i class="fa-solid fa-circle-plus ml-2"></i>
                 </div>
@@ -110,6 +110,19 @@
 
         modalNo.addEventListener('click', hideConfirmDelete)
         modalYes.addEventListener('click', deleteItem)
+
+
+
+        // xử lý logic thêm món
+        const createBtn = document.querySelector('[create-btn]');
+        console.log(createBtn);
+
+        if(createBtn){
+            createBtn.addEventListener('click', () => {
+                window.location.href = '/admin/products/create';
+            });
+        }
+        
     </script>
 
 </body>
