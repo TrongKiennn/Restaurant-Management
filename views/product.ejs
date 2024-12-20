@@ -63,10 +63,13 @@
             <!-- #region Product Info -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mx-3 max-w-screen-xl">
                 <div>
-                    <img src="<%= product.product_url %>" alt="product's image" class="w-96 h-96 object-contain">
+                    <img src="<%= product.product_url %>" alt="product's image" class="w-98 h-98 object-contain">
                 </div>
                 <div class="px-3">
                     <h2 class="text-3xl font-medium uppercase mb-2"><%= product.name %></h2>
+                    <div class="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
+                        <p class="text-xl text-primary font-semibold">$<%= product.price %></p>
+                    </div>
                     <div class="flex items-center mb-4">
                         <div class="flex gap-1 text-sm text-yellow-400">
                             <i class="fas fa-star"></i>
@@ -82,9 +85,6 @@
                             <span class="text-gray-600"><%= product.category_name %></span>
                         </p>
                     </div>
-                    <div class="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
-                        <p class="text-xl text-primary font-semibold">$<%= product.price %></p>
-                    </div>
                     <div class="mt-4">
                         <h3 class="text-sm text-gray-800 uppercase mb-1">Số lượng</h3>
                         <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
@@ -96,7 +96,7 @@
 
                     <div class="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
                         <a href="#"
-                            class="bg-[#984B01] opacity-70 border border-gray-500 text-black px-8 py-2 font-medium uppercase flex items-center gap-2 hover:bg-green-500 transition">
+                            class="bg-[#984B01] opacity-70 border border-gray-500 text-white px-8 py-2 font-medium uppercase flex items-center gap-2 hover:bg-green-500 transition">
                             Thêm vào giỏ hàng
                         </a>
                         <a href="#"
@@ -121,14 +121,14 @@
 
             <!-- related product -->
             <div class="pb-16 mx-3 w-full">
-                <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6 w-full text-center">Related products</h2>
+                <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6 w-full text-center">Sản phẩm liên quan</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 xl:gap-9 lg:p-5">
                     <% relatedProducts.forEach(product => { %>
                         <div class="bg-white shadow-md flex flex-col h-full">
                             <div class="relative group w-full h-80 flex items-center justify-center">
                                 <img src="<%= product.product_url %>" alt="<%= product.name %>" class="w-96 h-96 object-contain">
                                 <a href="/category/<%= product.product_id %>" class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                                    <span class="text-white">View Details</span>
+                                    <span class="text-white">Xem chi tiết</span>
                                 </a>
                             </div>
                             <div class="flex-grow pt-4 pb-3 px-4 flex flex-col">
@@ -140,18 +140,9 @@
                                 <div class="flex items-baseline mb-1 space-x-2">
                                     <p class="text-xl text-primary font-semibold">$<%= product.price %></p>
                                 </div>
-                                <div class="flex">
-                                    <div class="flex gap-1">
-                                        <i class="fas fa-star text-yellow-400"></i>
-                                        <i class="fas fa-star text-yellow-400"></i>
-                                        <i class="fas fa-star text-yellow-400"></i>
-                                        <i class="fas fa-star text-yellow-400"></i>
-                                        <i class="fas fa-star text-yellow-400"></i>
-                                    </div>
-                                </div>
                             </div>
                             <a href="#"
-                                class="block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition">Add to cart</a>
+                                class="block w-full py-3 mt-auto text-center text-white bg-[#984B01] border border-primary hover:bg-gray-300 transition">Xem chi tiết</a>
                         </div>
                     <% }); %>
                 </div>
