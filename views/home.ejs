@@ -23,7 +23,7 @@
   <%- include('layouts/mainLayout', { content: locals.body }) %>
   <!-- #endregion Header -->
    <!-- Hình của trang chủ -->
-   <div class="relative flex items-center justify-center overflow-hidden" style="width: 1500px; height: 700px;">
+   <div class="relative flex items-center justify-center overflow-hidden w-full" style=" height: 700px;">
     <div id="imageSlider" class="flex transition-transform duration-500 ease-in-out" style="width: 100%; height: 100%;">
       <img src="/images/homepage7.png" alt="Image 1" class="flex-shrink-0 w-full h-full object-cover">
       <img src="/images/homepage6.png" alt="Image 2" class="flex-shrink-0 w-full h-full object-cover">
@@ -33,6 +33,77 @@
     <button id="prev" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-600 text-white px-4 py-2 rounded">‹</button>
     <button id="next" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-600 text-white px-4 py-2 rounded">›</button>
   </div>  
+
+  <div class="flex-grow  py-4 flex flex-col justify-center items-center mt-8">
+    <h2 class="uppercase font-bold text-2xl  text-gray-800 text-center transition">
+     Best Seller
+    </h2>
+  </div>
+  
+  <main class="mb-8">
+    <!-- #region Body -->
+    <div class="container grid grid-cols-4 gap-8  pb-16 items-start mx-auto">
+      
+      <!-- #region Products -->
+      <div class="col-span-4">
+        <div class="flex items-center mb-4"></div>
+
+        <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <% products.forEach( product => { %>
+            <div class="bg-white shadow-md flex flex-col h-full rounded-lg">
+              <!-- Phần hình ảnh sản phẩm -->
+              <div class="relative group w-full h-80 flex items-center justify-center">
+                <img src="<%= product.imageurl %>" alt="<%= product.name %>" class="max-w-full max-h-full" />
+                <a href="/category/<%= product.type_name %>/<%= product.id %>">
+                  <div
+                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
+                  </div>
+                </a>
+              </div>
+
+              <div class="flex-grow pt-4 pb-3 px-4 flex flex-col">
+                <!-- Tên sản phẩm -->
+                <a href="/category/<%= product.type_name %>/<%= product.id %>">
+                  <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
+                    <%= product.name %>
+                  </h4>
+                </a>
+
+                <div class="flex justify-between mb-1 space-x-2">
+                  <p class="text-xl text-primary font-semibold">
+                    <%= product.brand %>
+                  </p>
+                  <% if (product.numberofpro > 0) {%>
+                    <p class="text-right text-base text-green-600">In stock</p>
+                  <% }else{ %>
+                    <p class="text-right text-base text-red-600">Out of stock</p>
+                  <% } %>
+                </div>
+
+                <div class="flex items-baseline mb-1 space-x-2">
+                  <p class="text-xl text-primary font-semibold">
+                    $<%= product.price %>
+                  </p>
+
+                  <% if (product.discount > 0) {%>
+                      <p class="text-base text-red-600 font-extrabold">-<%= product.discount %>%</p>
+                  <% } %>
+                </div>
+              </div> 
+
+              <!-- Nút Add to Cart -->
+              <a href="#"
+                class="block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition">
+                Add to cart
+              </a>
+            </div>
+            <% }); %>
+
+        </div>
+      </div>
+                 
+    </div>
+  </main>   
   <!-- Di chuyển ảnh -->
   <script>
     const slider = document.getElementById("imageSlider");
@@ -66,16 +137,7 @@
   </script>
   
   
-  <div class="flex-grow pt-4 pb-3 px-4 flex flex-col justify-center items-center">
-    <h2 class="uppercase font-semibold text-xl mb-2 text-gray-800 text-center transition">
-      Combo đặc biệt
-    </h2>
-  </div>
   
-  
-  
-    
-
   <!-- #region Footer-->
   <%- include('layouts/footer') %>
   <!-- #endregion Footer -->

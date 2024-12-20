@@ -43,6 +43,7 @@ const registrationRouter = require("./customer/registration/registrationRouter")
 const loginRouter=require('./customer/login/loginRouter');
 const logoutRouter=require('./customer/logout/logoutRouter');
 const categoryRouter=require('./customer/category/categoryRouter');
+const homeRouter = require("./customer/home/homeRouter");
 
 // Set the view engine to EJS
 app.set('views', [
@@ -70,6 +71,8 @@ app.use(express.static(path.join(__dirname,"public")));
 
 app.use(express.urlencoded({ extended: true }));
 app.use("/dist", express.static("dist"));
+
+app.use("/", homeRouter);
 
 app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
