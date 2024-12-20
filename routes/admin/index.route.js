@@ -14,5 +14,4 @@ module.exports = (app) => {
     app.use("/admin/products/delete-multi", productRouter); // delete multiple products
 
     app.use("/admin/create", createRouter); // create new product page
-   
 }

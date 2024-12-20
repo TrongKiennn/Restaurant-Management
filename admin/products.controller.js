@@ -11,10 +11,7 @@ module.exports.getProductById = async (req, res) => {
     try {
         const product = await productService.getProductById(id);
         if(product){
-            return res.render("",{
-                title: "Manager Menu",
-                product : product
-            });
+           return res.status(200).json({ok: true, product: product});
         }
         else{
             return res.status(4.00).json({ok: false, message: "Product not found"});
@@ -54,7 +51,8 @@ module.exports.deleteItem = async (req, res) => {
         const result = await productService.deleteProduct(id);
         if(result){
             req.flash("success", "Deleted successfully !");
-            res.redirect("back");  
+
+            return res.status(200).json({ok: true, message: "Deleted successfully !"});    
         }
         return res.status(400).json({ok: false, message: "Delete product failed"});
     } catch (error) {
@@ -89,7 +87,7 @@ module.exports.deleteMulti = async (req, res) => {
         const result = await productService.deleteMultiProduct(ids);
         if(result){
             req.flash("success", "Deleted successfully !");
-            return res.redirect("back"); 
+            return res.status(200).json({ok: true, message: "Deleted successfully !"});
         }
         return res.status(400).json({ok: false, message: "Delete products failed"});
     } catch (error) {
@@ -97,6 +95,8 @@ module.exports.deleteMulti = async (req, res) => {
     }
 }
 
+
+/*
 //[GET] render trang tạo sản phẩm mới
 module.exports.createPage = async (req, res) => {   
     try {
@@ -130,5 +130,28 @@ module.exports.createProduct = async (req, res) => {
     } 
     catch (error) {
         return res.status(500).json({ok: false, message: error.message});
+    }
+}
+*/
+
+
+// [PATCH] cập nhật sản phẩm
+module.exports.updateProduct = async (req, res) => {
+    const productData = req.body;
+
+    console.log(productData);
+
+    try{
+        const result = await productService.updateProduct(productData);
+        if(result){
+            return res.redirect("back");
+        }
+        return res.status(400).json({ok: false, message: "Update product failed"});
+    }
+    catch(error){
+        return res.status(500).json({ok: false, message: error.message});
+    }
+    finally{
+        console.log("Update product successfully !");
     }
 }
