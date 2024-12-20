@@ -93,6 +93,10 @@ app.get("/admin_views/admin_manager_menu", (req, res) => {
   res.render('admin_manager_menu')
 });
 
+app.get('/home',(req,res)=>{
+  res.render('home',{title: 'Home Page - Superstore - GA05'})
+ });
+
 const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port: http://localhost:${PORT}`);
