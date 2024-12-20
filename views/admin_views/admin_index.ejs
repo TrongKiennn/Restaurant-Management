@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth font-sans">
+<head>
+    <link rel="shortcut icon" href="/images/Logo.png" type="image/x-icon"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASTEE Admin</title>
+    <link rel="stylesheet" href="/css/all.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div id="main" class="relative">
+        
+        <!-- #region Header -->
+        <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
+        <!-- #endregion Header -->
+
+        <div id="content" class="z-[0] absolute w-full h-lvh font-roboto-condensed">
+            <ul class="grid gap-10 justify-center items-center pt-[130px] bg-content bg-repeat">
+                <li class="flex w-[1000px] justify-between ">
+                    <div class="h-[50px] w-[170px] text-[25px] text-white font-bold bg-[#984B01] rounded-[20px] text-center leading-[3rem]">
+                        Báo cáo tháng
+                    </div>
+                    <div class="w-fit max-w-max p-6 bg-white rounded-[20px] flex items-center gap-6">
+                        <i class="fa-solid fa-sack-dollar w-20 h-20 bg-[#D9BB1C] rounded-[50px] text-[36px] p-[22px]"></i>
+                        <span class="leading-[35px]">
+                            <h3 class="text-xl font-bold text-center">10.000.000đ</h3>
+                            <p>Tổng thu</p>
+                        </span>
+                    </div>
+                    <div class="h-[50px] w-[170px] text-[20px] bg-white rounded-[20px] text-center leading-[3rem]">
+                        Tháng 10
+                        <i class="fa-solid fa-caret-down ml-2"></i>
+                    </div>
+                </li>
+                <li class="flex w-[1000px] justify-between">
+                    <div class="h-[50px] w-[170px] text-[25px] text-white font-bold bg-[#984B01] rounded-[20px] text-center leading-[3rem]">
+                        Báo cáo ngày
+                    </div>
+                    <div class="max-w-max p-6 bg-white rounded-[20px] flex items-center gap-6">
+                        <i class="fa-solid fa-sack-dollar w-20 h-20 bg-[#D9BB1C] rounded-[50px] text-[36px] p-[22px]"></i>
+                        <span class="leading-[35px]">
+                            <h3 class="text-xl font-bold text-center">1.000.000đ</h3>
+                            <p>Tổng thu</p>
+                        </span>
+                    </div>
+                    <div class="h-[50px] w-[170px] text-[20px] bg-white rounded-[20px] text-center leading-[3rem] ">
+                        11/12/2024
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="grid grid-cols-4 gap-10 px-[50px] py-[20px]">
+                        <!-- Item 1 -->
+                        <div class="item bg-[#C9C9C9] rounded-lg shadow-xl relative group">
+                            <div class="image bg-burger bg-cover bg-no-repeat h-[170px] mt-[10px] ml-[10px] mr-[10px] rounded-t-lg "></div>
+                            <div class="content p-4">
+                                <h3 class="title font-bold text-lg mb-2">Tên món ăn</h3>
+                                <p class="description text-lg leading-5">SL: 5</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>
