@@ -44,7 +44,7 @@
                         <div class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-white opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
                             <button class="bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Hết món</button>
                             <button class="js-delete bg-red-500 px-4 py-2 rounded-md mb-2 hover:opacity-80">Xóa</button>
-                            <button class="bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh sửa</button>
+                            <button class="js-edit bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh sửa</button>
                         </div>
                     </div>
                 <% }); %>
@@ -87,13 +87,13 @@
                 </div>
                 
                 <div class="space-y-4 flex flex-col flex-2 gap-3 w-1/2">
-                    <input id="dishName" type="text" placeholder="Tên món" class="w-full border p-2 rounded" required>
-                    <textarea id="dishDesc" placeholder="Mô tả" class="w-full border p-2 rounded h-[100px]" required></textarea>
-                    <input id="dishPrice" type="number" placeholder="Giá" class="w-full border p-2 rounded" required>
+                    <input id="dishName" name="name" type="text" placeholder="Tên món" class="w-full border p-2 rounded" required>
+                    <textarea id="dishDesc" name="description" placeholder="Mô tả" class="w-full border p-2 rounded h-[100px]" required></textarea>
+                    <input id="dishPrice" name="price" type="number" placeholder="Giá" class="w-full border p-2 rounded" required>
                     <div>
-                        <label for="category_id" class="block text-gray-700">Category</label>
-                        <select id="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                            <option disabled value="">--- Select Category ---</option>
+                        <label for="category_id" class="block text-gray-700">Phân loại</label>
+                        <select id="category_id" name="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <option disabled value="">--- Chọn phân loại ---</option>
                             <option value="1">Burger</option>
                             <option value="2">Pizza</option>
                             <option value="3">Gà rán</option>
@@ -281,21 +281,12 @@
             }
         });
 
-        modalSave.addEventListener("click", () => {
-            const name = document.getElementById("dishName").value.trim();
-            const desc = document.getElementById("dishDesc").value.trim();
-            const price = document.getElementById("dishPrice").value.trim();
-            const categoryId = categorySelect.value;
-
-            if (!name || !desc || isNaN(price) || price <= 0) {
-                showToast("Vui lòng nhập thông tin hợp lệ", "error");
-                return;
+        modalSave.addEventListener("click", (e) => {
+            const form = document.querySelector("form");
+            if (form.checkValidity()) {
+                form.submit(); 
             } else {
-                const data = { name, description: desc, price, category_id: categoryId };
-                saveDish(data);
-                showToast("Món ăn đã được thêm thành công!");
-                modalAdd.classList.add("hidden");
-                resetForm();
+                showToast("Vui lòng nhập thông tin hợp lệ", "error");
             }
         });
 
@@ -328,7 +319,11 @@
                 showToast(error.message, "error");
             }
         }
-
     </script>
+
+    <!-- <script>
+        
+        js-edit
+    </script> -->
 </body>
 </html>
