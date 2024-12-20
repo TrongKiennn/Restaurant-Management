@@ -99,40 +99,73 @@ async function changePage(page) {
 
 // Hàm để cập nhật danh sách sản phẩm
 function updateProductList(products) {
-  const productContainer = document.getElementById('product-list'); // Lấy container
+  const productContainer = document.getElementById('product-list'); // Class container sản phẩm
   productContainer.innerHTML = ''; // Xóa danh sách cũ
 
   // Render danh sách sản phẩm mới
   products.forEach((product) => {
     let productHTML = `
-      <div class="bg-white shadow-md flex flex-col h-full overflow-hidden">
-        <!-- Phần hình ảnh sản phẩm -->
-        <div class="relative w-full h-72 bg-gray-200 flex items-center justify-center">
-          <img src="${product.product_url}" 
-               alt="${product.name}" 
-               class="w-full h-full object-cover"
-               onerror="this.onerror=null; this.src='/images/placeholder.png';" />
-        </div>
+      <div class="bg-white shadow-md flex flex-col h-full rounded-lg">
+        <div class="relative group w-full h-80 flex items-center justify-center">
+          <img src="${product.image_url}" alt="${product.name}" class="max-w-full max-h-full" />
+          <a href="/category/${product.category_name}/${product.id}">
+                      <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
+                      </div>
+                    </a>
+                  </div>
 
-        <!-- Nội dung sản phẩm -->
-        <div class="p-4 flex-grow">
-          <h4 class="uppercase font-bold text-lg mb-2 text-gray-800">${product.name}</h4>
-          <p class="text-xl text-black font-semibold mb-4">
-            $${product.price}
-          </p>
-        </div>
+                  <div class="flex-grow pt-4 pb-3 px-4 flex flex-col">
+                    <a href="/category/${product.category_name}/${product.id}">
+                      <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
+                        ${product.name}
+                      </h4>
+                    </a>
 
-        <!-- Nút Xem chi tiết -->
-        <a href="#"
-           class="block w-full text-center text-white bg-[#984B01] py-3 hover:bg-gray-300 transition">
-           Xem chi tiết
-        </a>
-      </div>
-    `;
+                    <div class="flex justify-between mb-1 space-x-2">
+                      <p class="text-xl text-primary font-semibold">
+                        ${product.manufacturer_name}
+                      </p>`;
+    if (product.number > 0) {
+      productHTML += `<p class="text-right text-base text-green-600">In stock</p>`;
+    } else {
+      productHTML += `<p class="text-right text-base text-red-600">Out of stock</p>`;
+    }
+    productHTML += `
+                    </div>
+                    <div class="flex items-baseline mb-1 space-x-2">
+                      <p class="text-xl text-primary font-semibold">
+                        $${product.price}
+                      </p>`;
+
+    if (product.discount > 0) {
+      productHTML += `<p class="text-base text-red-600 font-extrabold">-${product.discount}%</p>`;
+    }
+    productHTML += `
+                    </div>
+                    
+                    <div class="flex gap-1 text-sm text-yellow-400">
+                      <i class="star"></i>
+                      <i class="star"></i>
+                      <i class="star"></i>
+                      <i class="star"></i>
+                      <i class="star"></i>
+                    </div>
+                  </div> 
+
+                  <!-- Nút Add to Cart -->
+                  <a href="#"
+                    class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition"
+                    data-product-id="${product.id}"
+                    data-product-price="${product.price}">
+                    Add to cart
+                  </a>
+                </div>`;
 
     productContainer.insertAdjacentHTML('beforeend', productHTML);
   });
 }
+
 
 async function fetchAndRender(newURL) {
   try {
