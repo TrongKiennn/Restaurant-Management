@@ -18,7 +18,7 @@
         <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
         <!-- #endregion Header -->
 
-        <div id="content" class="z-0 absolute w-full h-lvh font-roboto-condensed bg-content bg-repeat">
+        <div id="content" class="z-0 absolute w-full font-roboto-condensed bg-content bg-repeat">
             <div  class="mt-[100px] flex ml-75p">
                 <div class="js-add h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
                     Thêm món
@@ -71,10 +71,10 @@
     </div>
 
     <div class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
-        <div class="modal-container js-modal-container bg-white min-w-[500px] min-h-[165px] rounded-xl animate-modalFadeIn">
+        <div class="modal-container js-modal-container bg-white w-[900px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Thêm Món</h2>
-            <div class="flex gap-6 p-6">
-                <div id="drop-area" class="w-45 h-45 border-dashed border-2 border-gray-400 rounded-lg p-6 text-center flex justify-center items-center flex-1 flex-col">
+            <form action="/admin/create" method="post" class="flex flex-row p-6 gap-6">
+                <div id="drop-area" class="w-1/2 h-45 border-dashed border-2 border-gray-400 rounded-lg p-6 text-center flex justify-center items-center flex-1 flex-col">
                     <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-600"></i>
                     <label for="file-input" class="text-lg text-white cursor-pointer bg-[#984B01] rounded-md pl-3 pr-3 mt-2">
                         Chọn hình ảnh 
@@ -86,18 +86,45 @@
                     </div>
                 </div>
                 
-                <form class="space-y-4 flex flex-col flex-2 gap-3">
-                    <input id="dishName" type="text" placeholder="Tên món" class="w-[450px] border p-2 rounded" required>
+                <div class="space-y-4 flex flex-col flex-2 gap-3 w-1/2">
+                    <input id="dishName" type="text" placeholder="Tên món" class="w-full border p-2 rounded" required>
                     <textarea id="dishDesc" placeholder="Mô tả" class="w-full border p-2 rounded h-[100px]" required></textarea>
                     <input id="dishPrice" type="number" placeholder="Giá" class="w-full border p-2 rounded" required>
+                    <div>
+                        <label for="category_id" class="block text-gray-700">Category</label>
+                        <select id="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <option disabled value="">--- Select Category ---</option>
+                            <option value="1">Burger</option>
+                            <option value="2">Pizza</option>
+                            <option value="3">Gà rán</option>
+                            <option value="4">Đồ ăn nhẹ</option>
+                            <option value="5">Đồ uống</option>
+                        </select>
+                    </div>
+                    
                     <div class="flex items-center justify-between">
                         <button type="button" class="js-modal-Cancel bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Hủy</button>
                         <button type="submit" class="js-modal-Save bg-[#984B01] text-white px-4 py-2 rounded hover:bg-[#733601]">Lưu</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
+        <div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded hidden"></div>
     </div>
+
+
+    <script>
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `fixed bottom-4 right-4 px-4 py-2 rounded ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white`;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+    </script>
 
     <!-- Xóa item -->
     <script>
@@ -105,7 +132,6 @@
         const modalDelete = document.querySelector('.js-modal-delete')
         const modalNo = document.querySelector('.js-modal-No')
         const modalYes = document.querySelector('.js-modal-Yes')
-        // const modalContainer = document.querySelector('.js-modal-container')
 
         let currentItemToDelete = null; // Biến lưu trữ item đang được chọn để xóa
 
@@ -121,10 +147,30 @@
             currentItemToDelete = null
         }
 
-        function deleteItem() {
+        async function deleteItem() {
             if (currentItemToDelete) {
-                currentItemToDelete.remove(); // Xóa item khỏi DOM
-                hideConfirmDelete(); // Ẩn modal sau khi xóa
+                const itemId = currentItemToDelete.dataset.id; // Giả sử mỗi item có `data-id` chứa ID của nó
+                try {
+                    // Gửi yêu cầu DELETE tới backend
+                    const response = await fetch(`/admin/delete/${itemId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (response.ok) {
+                        // Nếu thành công, xóa item khỏi DOM
+                        currentItemToDelete.remove();
+                        hideConfirmDelete();
+                        showToast('Xóa món thành công!');
+                    } else {
+                        showToast('Có lỗi xảy ra khi xóa món!');
+                    }
+                } catch (error) {
+                    console.error('Lỗi khi gửi yêu cầu xóa:', error);
+                    showToast('Không thể xóa món, vui lòng thử lại sau!');
+                }
             }
         }
 
@@ -134,19 +180,6 @@
 
         modalNo.addEventListener('click', hideConfirmDelete)
         modalYes.addEventListener('click', deleteItem)
-
-
-
-        // xử lý logic thêm món
-        const createBtn = document.querySelector('[create-btn]');
-        console.log(createBtn);
-
-        if(createBtn){
-            createBtn.addEventListener('click', () => {
-                window.location.href = '/admin/products/create';
-            });
-        }
-        
     </script>
 
     <!-- Thêm items -->
@@ -158,6 +191,7 @@
         const fileInput = document.getElementById('file-input')
         const previewContainer = document.getElementById('previewContainer')
         const dropArea = document.getElementById('drop-area')
+        const categorySelect = document.getElementById('category_id')
 
         Add.addEventListener("click", () => {
             modalAdd.classList.remove("hidden"); 
@@ -173,7 +207,7 @@
 
             if (file) {
                 if (!file.type.startsWith("image/")) {
-                    alert("Vui lòng chọn file ảnh!");
+                    showToast("Vui lòng chọn file ảnh!");
                     return;
                 }
 
@@ -220,7 +254,7 @@
 
             if (file) {
                 if (!file.type.startsWith("image/")) {
-                    alert("Vui lòng kéo thả file ảnh hợp lệ!");
+                    showToast("Vui lòng kéo thả file ảnh hợp lệ!");
                     return;
                 }
 
@@ -247,15 +281,15 @@
             const name = document.getElementById("dishName").value.trim();
             const desc = document.getElementById("dishDesc").value.trim();
             const price = document.getElementById("dishPrice").value.trim();
+            const categoryId = categorySelect.value;
 
-            if (!name || !desc || !price) {
-                alert("Vui lòng điền đầy đủ thông tin món ăn.");
+            if (!name || !desc || isNaN(price) || price <= 0) {
+                showToast("Vui lòng nhập thông tin hợp lệ", "error");
+                return;
             } else {
-                // Thực hiện lưu thông tin (gửi API, cập nhật danh sách...)
-                console.log("Tên món:", name);
-                console.log("Mô tả:", desc);
-                console.log("Giá:", price);
-                alert("Món ăn đã được thêm thành công!");
+                const data = { name, description: desc, price, category_id: categoryId };
+                saveDish(data);
+                showToast("Món ăn đã được thêm thành công!");
                 modalAdd.classList.add("hidden");
                 resetForm();
             }
@@ -268,6 +302,29 @@
             document.getElementById("dishPrice").value = "";
             previewContainer.innerHTML = "<p class='text-gray-500'>Ảnh xem trước</p>";
         }
+
+        async function saveDish(data) {
+            try {
+                const response = await fetch('/admin/products/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showToast("Món ăn đã được lưu!", "success");
+                    console.log(result);
+                } else {
+                    throw new Error("Không thể lưu món ăn.");
+                }
+            } catch (error) {
+                showToast(error.message, "error");
+            }
+        }
+
     </script>
 </body>
 </html>
