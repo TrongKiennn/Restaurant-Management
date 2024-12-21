@@ -148,10 +148,10 @@ async function getAlltypeProductOfCategory() {
 async function getProductById(id) {
   try {
     const query = `
-    SELECT p.*, c.category_name, p.status
+    SELECT p.*, c.name as category_name, p.status
     FROM products p
     JOIN categories c ON p.category_id = c.category_id
-    WHERE p.id = $1
+    WHERE p.product_id = $1
     `;
     const result = await pool.query(query, [id]);
     return result.rows[0];

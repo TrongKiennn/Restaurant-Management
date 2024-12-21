@@ -15,40 +15,18 @@
 </head>
 
 <body class="bg-gray-100">
-    <div x-data="{ cartOpen: false, isOpen: false }">
-        <!-- #region Header -->
-        <!-- <div class="bg-slate-900 py-2 px-4 hidden md:block">
-            <div class="flex justify-between items-center">
-                <div class="flex space-x-4">
-                    <a href="tel:+123-456-7890" class="text-white flex items-center">
-                        <i class="fa fa-phone-square mr-2"></i>+123-456-7890
-                    </a>
-                    <a href="mailto:mail@ecom.com" class="text-white flex items-center">
-                        <i class="fa fa-envelope mr-2"></i>mail@ecom.com
-                    </a>
-                </div>
-                <div class="flex space-x-4">
-                    <a href="/register" class="text-white flex items-center">
-                        <i class="fas fa-user-edit mr-2"></i>Register
-                    </a>
-                    <a href="/login" class="text-white flex items-center">
-                        <i class="fas fa-sign-in-alt mr-2"></i>Login
-                    </a>
-                </div>
-            </div>
-        </div>  -->
+    <div class="bg-[#984B01]">
         <%- include('header') %>
         <!-- #endregion Header -->
 
-        <main class="my-8">
-            <!-- Page-specific content here -->
+        <!-- <main class="">
             <%- content %>
-        </main>
-
-        <!-- #region Footer-->
-        <!-- Add footer content here -->
-        <!-- #endregion Footer -->
+        </main> -->
+        <%- include('layouts/search')%>
     </div>
+
+   
+
     <script src="/js/header.js"></script>
 
     <script>

@@ -21,6 +21,7 @@
   <div>
   <!-- #region Header -->
   <%- include('layouts/mainLayout', { content: locals.body }) %>
+  <input type="hidden" id="user-id" value="<%= user_id %>">
   <!-- #endregion Header -->
    <!-- Hình của trang chủ -->
    <div class="relative flex items-center justify-center overflow-hidden w-full" style=" height: 700px;">
@@ -73,28 +74,22 @@
                   <p class="text-xl text-primary font-semibold">
                     <%= product.brand %>
                   </p>
-                  <% if (product.numberofpro > 0) {%>
-                    <p class="text-right text-base text-green-600">In stock</p>
-                  <% }else{ %>
-                    <p class="text-right text-base text-red-600">Out of stock</p>
-                  <% } %>
+                 
                 </div>
 
                 <div class="flex items-baseline mb-1 space-x-2">
                   <p class="text-xl text-primary font-semibold">
                     $<%= product.price %>
                   </p>
-
-                  <% if (product.discount > 0) {%>
-                      <p class="text-base text-red-600 font-extrabold">-<%= product.discount %>%</p>
-                  <% } %>
                 </div>
               </div> 
 
               <!-- Nút Add to Cart -->
               <a href="#"
-                class="block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition">
-                Add to cart
+                    class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
+                    data-product-id="<%= product.product_id %>"
+                    data-product-price="<%= product.price %>">
+                    Add to cart
               </a>
             </div>
             <% }); %>
@@ -105,6 +100,7 @@
     </div>
   </main>   
   <!-- Di chuyển ảnh -->
+  <script src="/js/cart.js"></script>
   <script>
     const slider = document.getElementById("imageSlider");
     const prevBtn = document.getElementById("prev");

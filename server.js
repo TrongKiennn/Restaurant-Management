@@ -40,10 +40,12 @@ app.use(passport.session())
 
 
 const registrationRouter = require("./customer/registration/registrationRouter");
+const searchRouter = require("./customer/search/searchRouter");
 const loginRouter=require('./customer/login/loginRouter');
 const logoutRouter=require('./customer/logout/logoutRouter');
 const categoryRouter=require('./customer/category/categoryRouter');
 const homeRouter = require("./customer/home/homeRouter");
+const cartRouter = require("./customer/cart/cartRouter");
 
 // Set the view engine to EJS
 app.set('views', [
@@ -76,13 +78,11 @@ app.use("/", homeRouter);
 
 app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
-// <<<<<<< HEAD
 app.use("/logout",logoutRouter);
-
-// =======
-app.use("/logout",logoutRouter)
+app.use("/search", searchRouter);
 app.use("/category",categoryRouter)
-// >>>>>>> ea88e49ab8bd9533b122b713e7f2b78f97194d5b
+app.use("/cart", cartRouter);
+
 
 
 // Call the adminRouter function and pass the app as an argument

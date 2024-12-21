@@ -7,6 +7,8 @@ async function renderHomePage(req, res) {
     const search = req.query.search || '';
     const userID = res.locals.user ? res.locals.user.id : null;
 
+    console.log(userID);
+    
     const { products } =
       await homeService.getBestSallerFood();
 

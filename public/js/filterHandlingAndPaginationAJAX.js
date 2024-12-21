@@ -106,9 +106,9 @@ function updateProductList(products) {
   products.forEach((product) => {
     let productHTML = `
       <div class="bg-white shadow-md flex flex-col h-full rounded-lg">
-        <div class="relative group w-full h-80 flex items-center justify-center">
-          <img src="${product.image_url}" alt="${product.name}" class="max-w-full max-h-full" />
-          <a href="/category/${product.category_name}/${product.id}">
+                  <div class="relative group w-full h-80 flex items-center justify-center">
+                    <img src="${product.image_url}" alt="${product.name}" class="max-w-full max-h-full" />
+                    <a href="/category/${product.product_id}">
                       <div
                         class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                       </div>
@@ -116,47 +116,21 @@ function updateProductList(products) {
                   </div>
 
                   <div class="flex-grow pt-4 pb-3 px-4 flex flex-col">
-                    <a href="/category/${product.category_name}/${product.id}">
+                    <a href="/category/${product.product_id}">
                       <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
                         ${product.name}
                       </h4>
                     </a>
-
-                    <div class="flex justify-between mb-1 space-x-2">
-                      <p class="text-xl text-primary font-semibold">
-                        ${product.manufacturer_name}
-                      </p>`;
-    if (product.number > 0) {
-      productHTML += `<p class="text-right text-base text-green-600">In stock</p>`;
-    } else {
-      productHTML += `<p class="text-right text-base text-red-600">Out of stock</p>`;
-    }
-    productHTML += `
-                    </div>
                     <div class="flex items-baseline mb-1 space-x-2">
                       <p class="text-xl text-primary font-semibold">
                         $${product.price}
-                      </p>`;
-
-    if (product.discount > 0) {
-      productHTML += `<p class="text-base text-red-600 font-extrabold">-${product.discount}%</p>`;
-    }
-    productHTML += `
-                    </div>
-                    
-                    <div class="flex gap-1 text-sm text-yellow-400">
-                      <i class="star"></i>
-                      <i class="star"></i>
-                      <i class="star"></i>
-                      <i class="star"></i>
-                      <i class="star"></i>
-                    </div>
-                  </div> 
-
-                  <!-- Nút Add to Cart -->
+                      </p>
+                    </div> 
+                  </div>
+                
                   <a href="#"
-                    class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition"
-                    data-product-id="${product.id}"
+                    class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
+                    data-product-id="${product.product_id}"
                     data-product-price="${product.price}">
                     Add to cart
                   </a>
@@ -164,6 +138,8 @@ function updateProductList(products) {
 
     productContainer.insertAdjacentHTML('beforeend', productHTML);
   });
+
+  
 }
 
 
@@ -220,8 +196,8 @@ function renderPagination(totalPage, page) {
   for (let i = 1; i <= totalPage; i++) {
     paginationElement.innerHTML += `
         <button onclick="changePage(${i})" class="relative ${
-      i === page ? 'z-10 bg-slate-800 text-white' : 'text-gray-900'
-    } inline-flex items-center px-6 py-4 text-lg font-semibold ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+      i === page ? 'z-10 bg-[#9c5e25]  text-white' : 'text-gray-900'
+    } inline-flex items-center px-6 py-4 text-lg font-semibold ring-1 ring-inset ring-gray-300 hover:bg-[#b87434] focus:z-20 focus:outline-offset-0">
             ${i}
         </button>
     `;

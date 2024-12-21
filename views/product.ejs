@@ -3,22 +3,27 @@
 
 <head>
     <title><%= product.name %> - Superstore - GA05</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="referrer" content="always">
-    <meta name="description" content="TailwindCSS Ecommerce Template">
-    <link rel="stylesheet" href="/dist/main.css">
-    <link href='https://unpkg.com/css.gg/icons/all.css' rel='stylesheet'>
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <script src="/public/js/main.js" defer></script>
-    <link id="favicon" rel="icon" type="image/png" href="/images/shop_icon.ico">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="referrer" content="always" />
+    <meta name="description" content="TailwindCSS Ecommerce Template" />
+    <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/all.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link id="favicon" rel="icon" type="image/png" href="/images/store_icon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../dist/main.css" />
 </head>
 
-<body class="w-full overflow-x-hidden">
+<body>
+    <%- include('layouts/mainLayout', { content: locals.body }) %>
     <div x-data="{ cartOpen: false , isOpen: false }">
         <!-- #region Header -->
-        <%- include('layouts/mainLayout', { content: locals.body }) %>
+        
+        <input type="hidden" id="user-id" value="<%= user_id %>">
         <!-- #endregion Header -->
 
         <!-- #region Cart -->
@@ -66,28 +71,10 @@
                 <div>
                     <img src="<%= product.product_url %>" alt="product's image" class="w-full">
 
-                    <!-- <img src="images/tshirt-front-white-large.png" alt="product" class="w-full">
-                    <div class="grid grid-cols-5 gap-4 mt-4">
-                        <img src="images/tshirt-front-white-small.png" alt="product"
-                            class="w-full cursor-pointer border border-gray-400">
-                        <img src="images/tshirt-side-white-small.png" alt="product"
-                            class="w-full cursor-pointer border">
-                        <img src="images/tshirt-back-white-small.png" alt="product"
-                            class="w-full cursor-pointer border">
-                    </div> -->
                 </div>
 
                 <div class="px-3">
                     <h2 class="text-3xl font-medium uppercase mb-2"><%= product.name %></h2>
-                    <div class="flex items-center mb-4">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <i class="star"></i>
-                            <i class="star"></i>
-                            <i class="star"></i>
-                            <i class="star"></i>
-                            <i class="star"></i>
-                        </div>
-                    </div>
                     <div class="space-y-2">
                         <p class="space-x-2">
                             <span class="text-gray-800 font-semibold">Type: </span>
@@ -100,19 +87,19 @@
                     <div class="mt-4">
                         <h3 class="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
                         <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
-                            <div class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">-
-                            </div>
-                            <div class="h-8 w-8 text-base flex items-center justify-center">4</div>
-                            <div class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">+
-                            </div>
+                            <div id="decrease" class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">-</div>
+                            <div id="quantity" class="h-8 w-8 text-base flex items-center justify-center">4</div>
+                            <div id="increase" class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">+</div>
                         </div>
                     </div>
 
                     <div class="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
                         <a href="#"
-                            class="bg-green-700 border border-primary text-white px-8 py-2 font-medium uppercase flex items-center gap-2 hover:bg-green-500 transition">
-                            Add to cart
-                        </a>
+                    class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
+                    data-product-id="<%= product.product_id %>"
+                    data-product-price="<%= product.price %>">
+                    Add to cart
+                  </a>
                         <a href="#"
                             class="border border-gray-300 text-gray-600 px-8 py-2 font-medium uppercase flex items-center gap-2 hover:text-primary transition">
                             <i class="gg-heart"></i> Wishlist
@@ -156,19 +143,13 @@
                                     <p class="text-xl text-primary font-semibold">$ <%= product.price %></p>
                                 </div>
                             
-                                <div class="flex p-3">
-                                    <div class="flex gap-1">
-                                        <i class="star"></i>
-                                        <i class="star"></i>
-                                        <i class="star"></i>
-                                        <i class="star"></i>
-                                        <i class="star"></i>
-                                    </div>
-                                </div>
                             </div> 
-                                <a href="#"
-                                class="block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition">Add
-                                to cart</a>
+                            <a href="#"
+                            class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
+                            data-product-id="<%= product.product_id %>"
+                            data-product-price="<%= product.price %>">
+                            Add to cart
+                          </a>
                             </div>
                         
                     <% }); %>
@@ -184,6 +165,8 @@
         <%- include('layouts/footer') %>
         <!-- #endregion Footer -->
     </div>
+    <script src="/js/cart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </body>
 
 </html>
