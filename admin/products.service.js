@@ -14,12 +14,13 @@
         return result.rows[0];
     }
 
+    // LẤY TẤT CẢ SẢN PHẨM
     async function getAllProduct(){
         const result = await pool.query(
             `
             SELECT products.*, categories.name as category_name 
             FROM products join categories on products.category_id = categories.category_id 
-            WHERE deleted = false
+            WHERE deleted = false and products.status = true
             `
         );
         return result.rows;
@@ -78,8 +79,25 @@
         const result = await pool.query(query, values);
         return result.rowCount > 0;
     }
+//XÓA NHIỀU ITEM VĨNH VIEN
+async function deleteMultiForever(ids){
+    if (ids.length === 0) {
+        throw new Error("Invalid product ID");
+    }
+
+    const query = `
+        DELETE FROM products
+        WHERE product_id = ANY($1::int[])
+    `;
+
+    const values = [ids];
+
+    const result = await pool.query(query, values);
+    return result.rowCount > 0;
+}
 
 
+// TẠO SẢN PHẨM
     async function createProduct(productData){  
         const { name, description, category_id, price, product_url } = productData;
 
@@ -146,9 +164,10 @@
         getProductById,
         getAllProduct,
         deleteProduct,
+        deleteMultiForever,
         deleteMultiProduct,
         createProduct,
         deleteProductForever,
-        updateProduct
+        updateProduct,
     }
 

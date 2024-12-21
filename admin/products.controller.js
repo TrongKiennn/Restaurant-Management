@@ -77,6 +77,24 @@ module.exports.deleteItemForever = async (req, res) => {
         return res.status(500).json({ok: false, message: error.message});
     }
 }
+//[DELETE] xóa vĩnh viễn nhiều sp
+module.exports.deleteMultiForever = async (req, res) => {
+    const ids = req.body.ids;
+    console.log(ids);
+
+    try {
+        const result = await productService.deleteMultiForever(ids);
+        if(result){
+            req.flash("success", "Deleted successfully !");
+            return res.status(200).json({ok: true, message: "Deleted successfully !"});
+        }
+        return res.status(400).json({ok: false, message: "Delete products failed"});
+    } catch (error) {
+        return res.status(500).json({ok: false, message: error.message});
+    }
+}
+
+
 
 //[PATCH]XÓA NHIỀU ITEM 
 module.exports.deleteMulti = async (req, res) => {  

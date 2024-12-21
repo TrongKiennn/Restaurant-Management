@@ -6,7 +6,8 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const flash = require('connect-flash');
 require("dotenv").config();
-const cors = require("cors");
+const cors = require('cors');
+
 
 const {ConnectSessionKnexStore} = require('connect-session-knex'); 
 const knexConstructor= require('knex') ;
@@ -73,13 +74,12 @@ app.use("/dist", express.static("dist"));
 
 app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
-// <<<<<<< HEAD
+
 app.use("/logout",logoutRouter);
 
-// =======
+
 app.use("/logout",logoutRouter)
 app.use("/category",categoryRouter)
-// >>>>>>> ea88e49ab8bd9533b122b713e7f2b78f97194d5b
 
 
 // Call the adminRouter function and pass the app as an argument

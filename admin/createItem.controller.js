@@ -6,9 +6,12 @@ const { json } = require("express");
 
 
 module.exports.createItem = async (req, res) => {
-    const productData = req.body;
+    console.log(req.body);
+
+    const productData = (req.body);
+
     console.log(productData);
-        // console.log(productData);
+
         try {  
             const result = await productService.createProduct(productData);
             console.log(result);
