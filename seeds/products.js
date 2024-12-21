@@ -15,7 +15,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 120,
       avg_rating: 4.5,
-      product_url: 'https://images.unsplash.com/photo-1550547660-d9450f859349'
+      product_url: 'https://i.postimg.cc/fTTFkBZP/temp-Image-SZca7k.avif'
     },
     {
       product_id: 2,
@@ -26,7 +26,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 95,
       avg_rating: 4.3,
-      product_url: 'https://images.unsplash.com/photo-1604908176340-8bd5d536c9c3'
+      product_url: 'https://i.postimg.cc/G3X0PHL9/temp-Imageg6-Y1x8.avif'
     },
     {
       product_id: 3,
@@ -37,7 +37,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 80,
       avg_rating: 4.7,
-      product_url: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f'
+      product_url: 'https://i.postimg.cc/vTpVR0vm/temp-Imageza-Gp3m.avif'
     },
     // Pizza
     {
@@ -49,7 +49,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 150,
       avg_rating: 4.6,
-      product_url: 'https://images.unsplash.com/photo-1548365328-4180a5a2ae04'
+      product_url: 'https://i.postimg.cc/8k3WrCVV/temp-Imagein-OQi-W.avif'
     },
     {
       product_id: 5,

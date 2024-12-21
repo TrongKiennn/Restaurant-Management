@@ -16,6 +16,19 @@
     <link id="favicon" rel="icon" type="image/png" href="/images/store_icon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../dist/main.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="referrer" content="always" />
+    <meta name="description" content="TailwindCSS Ecommerce Template" />
+    <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/all.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link id="favicon" rel="icon" type="image/png" href="/images/store_icon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../dist/main.css" />
 </head>
 
 <body>
@@ -28,27 +41,27 @@
 
         <!-- #region Cart -->
         <div :class="cartOpen ? 'translate-x-0 ease-out' : 'translate-x-full ease-in'"
-            class="fixed right-0 top-0 max-w-xs w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300 hidden"
-            x-init="() => { $el.classList.remove('hidden'); }">
+            class="fixed right-0 top-0 max-w-xs w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300"
+            x-init="$el.classList.remove('hidden')">
             <div class="flex items-center justify-between">
                 <h3 class="text-2xl font-medium text-gray-700">Your cart</h3>
                 <button @click="cartOpen = !cartOpen" class="text-gray-600 focus:outline-none">
-                    <i class="gg-close"></i>
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
             <hr class="my-3">
             <div class="flex justify-between mt-6">
                 <div class="flex">
-                    <img class="h-20 w-20 object-cover" src="images/tshirt-front-white-small.png" alt="">
+                    <img class="h-20 w-20 object-cover" src="images/tshirt-front-white-small.png" alt="T-shirt">
                     <div class="mx-3">
                         <h3 class="text-sm text-gray-600">T-Shirt</h3>
                         <div class="flex items-center mt-2">
                             <button class="text-gray-500 focus:outline-none focus:text-gray-600">
-                                <i class="gg-remove"></i>
+                                <i class="fas fa-minus"></i>
                             </button>
                             <span class="text-gray-700 mx-2">2</span>
                             <button class="text-gray-500 focus:outline-none focus:text-gray-600">
-                                <i class="gg-add"></i>
+                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
                     </div>
@@ -58,34 +71,28 @@
             <a
                 class="flex cursor-pointer items-center justify-center mt-4 px-3 py-2 bg-green-700 text-white text-sm uppercase font-medium hover:bg-green-500 focus:outline-none focus:bg-green-500">
                 <span>Checkout</span>
-                <i class="px-2 gg-arrow-right"></i>
+                <i class="px-2 fas fa-arrow-right"></i>
             </a>
         </div>
         <!-- #endregion Cart -->
 
         <main class="my-8">
-            <!-- #region Body -->
-
             <!-- #region Product Info -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mx-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mx-3 max-w-screen-xl">
                 <div>
                     <img src="<%= product.product_url %>" alt="product's image" class="w-full">
 
                 </div>
-
                 <div class="px-3">
                     <h2 class="text-3xl font-medium uppercase mb-2"><%= product.name %></h2>
                     <div class="space-y-2">
                         <p class="space-x-2">
-                            <span class="text-gray-800 font-semibold">Type: </span>
+                            <span class="text-gray-800 font-semibold">Phân loại: </span>
                             <span class="text-gray-600"><%= product.category_name %></span>
                         </p>
                     </div>
-                    <div class="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
-                        <p class="text-xl text-primary font-semibold">$<%= product.price %></p>
-                    </div>
                     <div class="mt-4">
-                        <h3 class="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
+                        <h3 class="text-sm text-gray-800 uppercase mb-1">Số lượng</h3>
                         <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
                             <div id="decrease" class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">-</div>
                             <div id="quantity" class="h-8 w-8 text-base flex items-center justify-center">4</div>
@@ -101,8 +108,8 @@
                     Add to cart
                   </a>
                         <a href="#"
-                            class="border border-gray-300 text-gray-600 px-8 py-2 font-medium uppercase flex items-center gap-2 hover:text-primary transition">
-                            <i class="gg-heart"></i> Wishlist
+                            class="bg-[#984B01] text-white px-8 py-2 font-medium uppercase flex items-center gap-2 hover:bg-green-500 transition">
+                            <i class="fas fa-heart"></i> Đặt ngay
                         </a>
                     </div>
                 </div>
@@ -110,34 +117,33 @@
             <!-- #endregion Product Info -->
 
             <!-- description -->
-            <div class="py-16 text-base text-wrap px-3 lg:text-lg lg:px-6">
-                <h3 class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium">
-                    <%= product.name %>
-                </h3>
-                <hr>
+            <div class="py-16 text-base px-3 lg:text-lg lg:px-6">
+                <h2 class="border-b border-gray-200 font-roboto text-gray-800 pb-2 font-medium">
+                    Mô tả:
+                </h2>
+                <div>
+                    <%= product.description %>
+                </div>
             </div>
             <!-- ./description -->
-            
+
             <!-- related product -->
             <div class="pb-16 mx-3 w-full">
-                <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6 w-full text-center">Related products</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-3 xl:gap-9 lg:p-5">
-                    <% relatedProducts.forEach( product => { %>
-                        <div class="bg-white shadow-md flex flex-col h-full justify-around">
+                <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6 w-full text-center">Sản phẩm liên quan</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 xl:gap-9 lg:p-5">
+                    <% relatedProducts.forEach(product => { %>
+                        <div class="bg-white shadow-md flex flex-col h-full">
                             <div class="relative group w-full h-80 flex items-center justify-center">
-                                <img src="<%= product.product_url %>" alt="<%= product.name %>" class="max-w-full max-h-full" />
-                                <a href="/category/<%= product.product_id %>">
-                                    <div
-                                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                                </div>
+                                <img src="<%= product.product_url %>" alt="<%= product.name %>" class="w-96 h-96 object-contain">
+                                <a href="/category/<%= product.product_id %>" class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                    <span class="text-white">Xem chi tiết</span>
                                 </a>
                             </div>
-
                             <div class="flex-grow pt-4 pb-3 px-4 flex flex-col">
                                 <a href="/category/<%= product.product_id %>">
-                                    <h4
-                                    class="text-wrap uppercase font-medium text-base lg:text-xl mb-2 text-gray-800 hover:text-primary transition">
-                                    <%= product.name %></h4>
+                                    <h4 class="text-wrap uppercase font-medium text-base lg:text-xl mb-2 text-gray-800 hover:text-primary transition">
+                                        <%= product.name %>
+                                    </h4>
                                 </a>
                                 <div class="flex items-baseline mb-1 space-x-2">
                                     <p class="text-xl text-primary font-semibold">$ <%= product.price %></p>
@@ -156,12 +162,9 @@
                 </div>
             </div>
             <!-- ./related product -->
-
-            
-            <!-- #endregion Body -->
         </main>
 
-        <!-- #region Footer-->
+        <!-- #region Footer -->
         <%- include('layouts/footer') %>
         <!-- #endregion Footer -->
     </div>
