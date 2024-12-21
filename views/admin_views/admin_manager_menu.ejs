@@ -75,11 +75,9 @@
     <div class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[900px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Thêm Món</h2>
-<<<<<<< HEAD
-            <form create-form action="/admin/create" method="post" class="flex flex-row p-6 gap-6">
-=======
+
             <form action="/admin/create" method="POST" class="flex flex-row p-6 gap-6">
->>>>>>> 3a9e077cf53eb18da4808aa4bbaf2eddcd682ea9
+
                 <div id="drop-area" class="w-1/2 h-45 border-dashed border-2 border-gray-400 rounded-lg p-6 text-center flex justify-center items-center flex-1 flex-col">
                     <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-600"></i>
                     <label for="file-input" class="text-lg text-white cursor-pointer bg-[#984B01] rounded-md pl-3 pr-3 mt-2">
@@ -93,23 +91,14 @@
                 </div>
                 
                 <div class="space-y-4 flex flex-col flex-2 gap-3 w-1/2">
-<<<<<<< HEAD
+
                     <input name="name" id="name" type="text" placeholder="Tên món" class="w-full border p-2 rounded form-control" required>
                     <textarea name="description" id="description" placeholder="Mô tả" class="w-full border p-2 rounded h-[100px] form-control" required></textarea>
                     <input name="price" id="price" type="number" placeholder="Giá" class="w-full border p-2 rounded form-control" required>
                     <div>
-                        <label for="category_id" class="block text-gray-700">Category</label>
-                        <select id="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 form-control" required>
-                            <option disabled value="">--- Select Category ---</option>
-=======
-                    <input id="dishName" name="name" type="text" placeholder="Tên món" class="w-full border p-2 rounded" required>
-                    <textarea id="dishDesc" name="description" placeholder="Mô tả" class="w-full border p-2 rounded h-[100px]" required></textarea>
-                    <input id="dishPrice" name="price" type="number" placeholder="Giá" class="w-full border p-2 rounded" required>
-                    <div>
                         <label for="category_id" class="block text-gray-700">Phân loại</label>
                         <select id="category_id" name="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                             <option disabled value="">--- Chọn phân loại ---</option>
->>>>>>> 3a9e077cf53eb18da4808aa4bbaf2eddcd682ea9
                             <option value="1">Burger</option>
                             <option value="2">Pizza</option>
                             <option value="3">Gà rán</option>
@@ -319,7 +308,7 @@
             previewContainer.innerHTML = "<p class='text-gray-500'>Ảnh xem trước</p>";
         }
 
-<<<<<<< HEAD
+
         async function saveDish(data) {
             try {
                 const response = await fetch('/admin/create', {
@@ -341,7 +330,7 @@
                 showToast(error.message, "error");
             }
         }
-=======
+
         // async function saveDish(data) {
         //     try {
         //         const response = await fetch('/admin/create', {
@@ -351,7 +340,7 @@
         //             },
         //             body: JSON.stringify(data),
         //         });
->>>>>>> 3a9e077cf53eb18da4808aa4bbaf2eddcd682ea9
+
 
         //         if (response.ok) {
         //             const result = await response.json();
