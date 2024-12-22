@@ -37,7 +37,7 @@
 
   <div class="flex-grow  py-4 flex flex-col justify-center items-center mt-8">
     <h2 class="uppercase font-bold text-2xl  text-gray-800 text-center transition">
-     Best Seller
+     Bán chạy nhất
     </h2>
   </div>
   
@@ -54,8 +54,8 @@
             <div class="bg-white shadow-md flex flex-col h-full rounded-lg">
               <!-- Phần hình ảnh sản phẩm -->
               <div class="relative group w-full h-80 flex items-center justify-center">
-                <img src="<%= product.imageurl %>" alt="<%= product.name %>" class="max-w-full max-h-full" />
-                <a href="/category/<%= product.type_name %>/<%= product.id %>">
+                <img src="<%= product.product_url %>" alt="<%= product.name %>" class="max-w-full max-h-full" />
+                <a href="/category/<%= product.product_id %>">
                   <div
                     class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                   </div>
@@ -79,7 +79,7 @@
 
                 <div class="flex items-baseline mb-1 space-x-2">
                   <p class="text-xl text-primary font-semibold">
-                    $<%= product.price %>
+                    <%= product.price %> VNĐ
                   </p>
                 </div>
               </div> 
@@ -89,7 +89,7 @@
                     class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
                     data-product-id="<%= product.product_id %>"
                     data-product-price="<%= product.price %>">
-                    Add to cart
+                    Thêm vào giỏ hàng
               </a>
             </div>
             <% }); %>
@@ -131,6 +131,35 @@
       updateSlider();
     });
   </script>
+  
+  <div class="bg-black text-white py-12">
+    <div class="container mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+      <!-- Thức ăn tươi -->
+      <div>
+        <div class="flex items-center justify-center w-20 h-20 mx-auto bg-yellow-500 rounded-full mb-4">
+          <i class="fas fa-utensils text-4xl text-black"></i>
+        </div>
+        <h3 class="text-xl font-bold text-yellow-400">Thức ăn tươi ngon 100%</h3>
+        <p>Thưởng thức đồ ăn tươi ngon ngay trong ngày.</p>
+      </div>
+      <!-- Mát lạnh -->
+      <div>
+        <div class="flex items-center justify-center w-20 h-20 mx-auto bg-yellow-500 rounded-full mb-4">
+          <i class="fas fa-glass-whiskey text-4xl text-black"></i>
+        </div>
+        <h3 class="text-xl font-bold text-yellow-400">Mát lạnh - Sảng khoái</h3>
+        <p>Ly nước ngọt mát lạnh kết hợp cùng món ăn yêu thích mang lại cảm giác thật yomost.</p>
+      </div>
+      <!-- Dịch vụ chuyên nghiệp -->
+      <div>
+        <div class="flex items-center justify-center w-20 h-20 mx-auto bg-yellow-500 rounded-full mb-4">
+          <i class="fas fa-bell text-4xl text-black"></i>
+        </div>
+        <h3 class="text-xl font-bold text-yellow-400">Dịch vụ chuyên nghiệp - Không gian mát mẻ</h3>
+        <p>Trải nghiệm sự phục tận tình cùng không gian thông thoáng cực thư giãn.</p>
+      </div>
+    </div>
+  </div>
   
   
   
