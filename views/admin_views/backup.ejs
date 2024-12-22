@@ -31,21 +31,29 @@
                 <% products.forEach(item => { %>
                     <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden">
                         <!-- Image -->
+                        
                         <div 
                             class="image bg-gray-200 h-[150px] w-full rounded-t-lg"
                             style="background-image: url('<%= item.image_url %>'); background-size: cover; background-position: center;">
                             <img 
-                            src="<%= item.product_url %>"
-                            alt="<%= item.name %>"
-                            class="w-full h-full object-cover transition-opacity duration-300"
-                            onerror="this.onerror=null; this.src='/admin/images/default-food.png';"
-                            />
+                        src="<%= item.product_url %>"
+                        alt="<%= item.name %>"
+                        class="w-full h-full object-cover transition-opacity duration-300"
+                        onerror="this.onerror=null; this.src='/admin/images/default-food.png';"
+                    />
+
                         </div>
                         
                         <!-- Content -->
                         <div class="content p-4">
                             <h3 class="title font-bold text-lg mb-2"><%= item.name %></h3>
+                            <h4 class="title font-bold text-lg mb-2"><%= item.price %>$</h4>
                             <p class="description text-sm text-gray-600"><%= item.description %></p>
+                            <% if(item.status == true) { %>
+                                <h4 class="text-green-500 title font-bold text-lg mb-2">Còn món</h4>
+                            <% } else { %>
+                                <h4 class="text-red-500 title font-bold text-lg mb-2">Hết món</h4>
+                            <% } %>
                         </div>
                         <!-- Detail menu -->
                         <div class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-white opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
@@ -54,34 +62,36 @@
                             <button class="js-edit bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh sửa</button>
                         </div>
                     </div>
+                    <div class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
+                        <div class="modal-container js-modal-container bg-white w-[500px] min-h-[165px] rounded-xl animate-modalFadeIn">
+                            <header class="modal-header text-[25px] font-bold text-center mt-5 mb-5">
+                                Bạn chắc chắn muốn xóa món chứ?
+                            </header>
+                
+                            <div class="mt-9 ml-[4.5rem] mr-[4.5rem] flex justify-between">
+                                <button itemID="<% item.product_id %>" confirm-delete class="js-modal-Yes w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none p-[1px] cursor-pointer leading-[37px] rounded-2xl hover:opacity-80">
+                                    Có
+                                </button>
+                    
+                                <button class="js-modal-No w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none cursor-pointer p-[1px] leading-[37px] rounded-2xl hover:opacity-80">
+                                    Không
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 <% }); %>
+                
             </div>
         </div>
     </div>
 
-    <div class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
-        <div class="modal-container js-modal-container bg-white w-[500px] min-h-[165px] rounded-xl animate-modalFadeIn">
-            <header class="modal-header text-[25px] font-bold text-center mt-5 mb-5">
-                Bạn chắc chắn muốn xóa món chứ?
-            </header>
-
-            <div class="mt-9 ml-[4.5rem] mr-[4.5rem] flex justify-between">
-                <button class="js-modal-Yes w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none p-[1px] cursor-pointer leading-[37px] rounded-2xl hover:opacity-80">
-                    Có
-                </button>
     
-                <button class="js-modal-No w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none cursor-pointer p-[1px] leading-[37px] rounded-2xl hover:opacity-80">
-                    Không
-                </button>
-            </div>
-        </div>
-    </div>
 
     <div class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[900px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Thêm Món</h2>
 
-            <form action="/admin/create" method="POST" class="flex flex-row p-6 gap-6" enctype="multipart/form-data" > 
+            <form action="/admin/create" method="POST" class="flex flex-row p-6 gap-6" enctype="multipart/form-data">
 
                 <div id="drop-area" class="w-1/2 h-45 border-dashed border-2 border-gray-400 rounded-lg p-6 text-center flex justify-center items-center flex-1 flex-col">
                     <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-600"></i>
@@ -102,7 +112,7 @@
                     <input name="price" id="price" type="number" placeholder="Giá" class="w-full border p-2 rounded form-control" required>
                     <div>
                         <label for="category_id" class="block text-gray-700">Phân loại</label>
-                        <select id="category_id" name="category_id" name="category_id" class="form-control w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <select id="category_id" name="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                             <option disabled value="">--- Chọn phân loại ---</option>
                             <option value="1">Burger</option>
                             <option value="2">Pizza</option>
@@ -364,5 +374,6 @@
         
         js-edit
     </script> -->
+    <script src="/admin/js/script.js"></script>
 </body>
 </html>

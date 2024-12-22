@@ -20,7 +20,7 @@
             `
             SELECT products.*, categories.name as category_name 
             FROM products join categories on products.category_id = categories.category_id 
-            WHERE deleted = false and products.status = true
+            WHERE deleted = false
             `
         );
         return result.rows;
@@ -160,6 +160,23 @@ async function deleteMultiForever(ids){
             throw new Error("Error updating product");
         }
     }
+
+    // thay đổi trạng thái sản phẩm
+async function updateStatus(id, status){
+    const query = `
+        UPDATE products
+        SET status = $1
+        WHERE product_id = $2
+        RETURNING *
+    `
+    const values = [!status, id];
+    const result = await pool.query(query, values);
+
+    return result.rows[0];
+}
+
+
+
     module.exports = {
         getProductById,
         getAllProduct,
@@ -169,5 +186,6 @@ async function deleteMultiForever(ids){
         createProduct,
         deleteProductForever,
         updateProduct,
+        updateStatus
     }
 

@@ -30,7 +30,7 @@ module.exports.index = async (req, res) => {
         .status(400)
         .json({ ok: false, message: "list item are empty" });
     }
-    return res.render("admin_views/admin_manager_menu",{
+    return res.render("admin_views/backup",{
         products: productList
     });
   } catch (error) {
@@ -171,5 +171,26 @@ module.exports.updateProduct = async (req, res) => {
     }
     finally{
         console.log("Update product successfully !");
+    }
+}
+
+// [PATCH] cập nhật trạng thái sản phẩm
+module.exports.updateStatus = async (req, res) => {
+    const id = req.body.id;
+    const status = req.body.status; // status là trạng thái hiện tại của item
+
+    console.log(id);
+    console.log(status);
+
+    try{
+        const result = await productService.updateStatus(id, status);
+        if(result){
+            console.log("Update status successfully !");
+            return res.status(200).json({ok: true, message: "Update status successfully !"});
+        }
+        return res.status(400).json({ok: false, message: "Update product failed"});
+    }
+    catch(error){
+        return res.status(500).json({ok: false, message: error.message});
     }
 }

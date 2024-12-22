@@ -13,5 +13,7 @@ Router.delete("/delete-multi-forever", productController.deleteMultiForever); //
 
 Router.patch("/delete-multi", productController.deleteMulti); // soft delete multiple items
 
+Router.patch("/", productController.updateStatus); // change status
+
 
 module.exports = Router;
