@@ -117,7 +117,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 300,
       avg_rating: 4.5,
-      product_url: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90'
+      product_url: 'https://i.postimg.cc/tTh8vV0s/temp-Imagebymkjc.avif'
     },
     {
       product_id: 11,
