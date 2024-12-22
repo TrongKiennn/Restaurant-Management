@@ -49,6 +49,30 @@
                 <div class="px-3">
                     <h2 class="text-3xl font-medium uppercase mb-2"><%= product.name %></h2>
                     <h3 class="text-2xl font-medium mb-2"><%= product.price %> VNĐ</h3>
+                    <div class="flex items-center space-x-2">
+                        <!-- Numerical Rating -->
+                        <span class="text-sm text-gray-600">
+                            <%= product.avg_rating%>
+                        </span>
+                        <!-- Star Ratings -->
+                        <div class="flex space-x-1">
+                            <!-- Full Stars -->
+                            <% for (let i = 1; i <= Math.floor(product.avg_rating); i++) { %>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            <% } %>
+                    
+                            <!-- Half Star -->
+                            <% if (product.avg_rating % 1 !== 0) { %>
+                                <i class="fas fa-star-half-alt text-yellow-400"></i>
+                            <% } %>
+                    
+                            <!-- Gray Stars -->
+                            <% for (let i = Math.ceil(product.avg_rating); i < 5; i++) { %>
+                                <i class="far fa-star text-gray-300"></i>
+                            <% } %>
+                        </div>
+                    </div>
+                    
                     <div class="space-y-2">
                         <p class="space-x-2">
                             <span class="text-gray-800 font-semibold">Phân loại: </span>
@@ -135,5 +159,6 @@
     <script src="/js/cart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </body>
+
 
 </html>
