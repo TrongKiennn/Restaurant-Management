@@ -107,7 +107,7 @@ function updateProductList(products) {
     let productHTML = `
       <div class="bg-white shadow-md flex flex-col h-full rounded-lg">
                   <div class="relative group w-full h-80 flex items-center justify-center">
-                    <img src="${product.image_url}" alt="${product.name}" class="max-w-full max-h-full" />
+                    <img src="${product.product_url}" alt="${product.name}" class="max-w-full max-h-full" />
                     <a href="/category/${product.product_id}">
                       <div
                         class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
@@ -123,7 +123,7 @@ function updateProductList(products) {
                     </a>
                     <div class="flex items-baseline mb-1 space-x-2">
                       <p class="text-xl text-primary font-semibold">
-                        $${product.price}
+                        ${product.price} VNĐ
                       </p>
                     </div> 
                   </div>
@@ -132,7 +132,7 @@ function updateProductList(products) {
                     class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
                     data-product-id="${product.product_id}"
                     data-product-price="${product.price}">
-                    Add to cart
+                    Thêm vào giỏ hàng
                   </a>
                 </div>`;
 

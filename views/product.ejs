@@ -43,11 +43,12 @@
             <!-- #region Product Info -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mx-3 max-w-screen-xl">
                 <div>
-                    <img src="<%= product.product_url %>" alt="product's image" class="w-full">
+                    <img src="<%= product.product_url %>" alt="product's image" class="w-98 h-98">
 
                 </div>
                 <div class="px-3">
                     <h2 class="text-3xl font-medium uppercase mb-2"><%= product.name %></h2>
+                    <h3 class="text-2xl font-medium mb-2"><%= product.price %> VNĐ</h3>
                     <div class="space-y-2">
                         <p class="space-x-2">
                             <span class="text-gray-800 font-semibold">Phân loại: </span>
@@ -65,14 +66,14 @@
 
                     <div class="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
                         <a href="#"
-                    class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
+                    class="add-to-cart-btn block w-96 py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-lg"
                     data-product-id="<%= product.product_id %>"
                     data-product-price="<%= product.price %>">
-                    Add to cart
+                    Thêm vào giỏ hàng
                   </a>
                         <a href="#"
-                            class="bg-[#984B01] text-white px-8 py-2 font-medium uppercase flex items-center gap-2 hover:bg-green-500 transition">
-                            <i class="fas fa-heart"></i> Đặt ngay
+                            class="bg-[#984B01] text-white px-8 py-2 font-medium uppercase flex items-center gap-2 hover:bg-[#b87434] transition">
+                            Đặt ngay
                         </a>
                     </div>
                 </div>
@@ -109,7 +110,7 @@
                                     </h4>
                                 </a>
                                 <div class="flex items-baseline mb-1 space-x-2">
-                                    <p class="text-xl text-primary font-semibold">$ <%= product.price %></p>
+                                    <p class="text-xl text-primary font-semibold"><%= product.price %> VNĐ</p>
                                 </div>
                             
                             </div> 
@@ -117,7 +118,7 @@
                             class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
                             data-product-id="<%= product.product_id %>"
                             data-product-price="<%= product.price %>">
-                            Add to cart
+                            Thêm vào giỏ hàng
                           </a>
                             </div>
                         

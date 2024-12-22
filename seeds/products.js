@@ -15,7 +15,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 120,
       avg_rating: 4.5,
-      product_url: 'https://i.postimg.cc/fTTFkBZP/temp-Image-SZca7k.avif'
+      product_url: 'https://i.postimg.cc/XqNrP4Cb/temp-Imagep0-OZtx.avif'
     },
     {
       product_id: 2,
@@ -26,7 +26,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 95,
       avg_rating: 4.3,
-      product_url: 'https://i.postimg.cc/G3X0PHL9/temp-Imageg6-Y1x8.avif'
+      product_url: 'https://i.postimg.cc/tJ2GrHh8/temp-Image1o5-Ben.avif'
     },
     {
       product_id: 3,
@@ -37,7 +37,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 80,
       avg_rating: 4.7,
-      product_url: 'https://i.postimg.cc/vTpVR0vm/temp-Imageza-Gp3m.avif'
+      product_url: 'https://i.postimg.cc/q78XVBzh/temp-Image-YRZMJL.avif'
     },
     // Pizza
     {
@@ -49,7 +49,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 150,
       avg_rating: 4.6,
-      product_url: 'https://i.postimg.cc/8k3WrCVV/temp-Imagein-OQi-W.avif'
+      product_url: 'https://i.postimg.cc/PqGzRvrn/temp-Image-Dlaugb.avif'
     },
     {
       product_id: 5,
@@ -60,7 +60,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 85,
       avg_rating: 4.2,
-      product_url: 'https://images.unsplash.com/photo-1601924638867-3fb62e8d6e9c'
+      product_url: 'https://i.postimg.cc/50b5xcCP/temp-Image-Mzum-R1.avif'
     },
     {
       product_id: 6,
@@ -71,7 +71,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 60,
       avg_rating: 4.1,
-      product_url: 'https://images.unsplash.com/photo-1552332386-f8dd00dc2f55'
+      product_url: 'https://i.postimg.cc/d1FMw06z/temp-Image4y-Jngp.avif'
     },
     // Gà rán
     {
@@ -83,7 +83,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 200,
       avg_rating: 4.7,
-      product_url: 'https://images.unsplash.com/photo-1601925082571-2a903c7985c1'
+      product_url: 'https://i.postimg.cc/yNzpSbRR/temp-Image-QQw-BLs.avif'
     },
     {
       product_id: 8,
@@ -94,7 +94,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 175,
       avg_rating: 4.4,
-      product_url: 'https://images.unsplash.com/photo-1626081132321-798c3d378ae7'
+      product_url: 'https://i.postimg.cc/T3vJkWPM/temp-Image9-AXVi-N.avif'
     },
     {
       product_id: 9,
@@ -105,7 +105,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 90,
       avg_rating: 4.6,
-      product_url: 'https://images.unsplash.com/photo-1637322522455-c43d1dff6058'
+      product_url: 'https://i.postimg.cc/rst5j8Xw/temp-Imageg-PPAgk.avif'
     },
     // Đồ ăn nhẹ
     {
@@ -128,7 +128,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 120,
       avg_rating: 4.3,
-      product_url: 'https://images.unsplash.com/photo-1626543491176-0b22ac92b4db'
+      product_url: 'https://i.postimg.cc/52mKLmSk/temp-Image-LG9i-LS.avif'
     },
     {
       product_id: 12,
@@ -139,7 +139,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 75,
       avg_rating: 4.8,
-      product_url: 'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2'
+      product_url: 'https://i.postimg.cc/Hn5Bx0Lz/temp-Image-RQxj2f.avif'
     },
     // Đồ uống
     {
@@ -151,7 +151,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 500,
       avg_rating: 4.8,
-      product_url: 'https://images.unsplash.com/photo-1590845947671-805c963fc2e2'
+      product_url: 'https://i.postimg.cc/65rMxhg5/temp-Imagei-G1jv-L.avif'
     },
     {
       product_id: 14,
@@ -162,7 +162,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 90,
       avg_rating: 4.6,
-      product_url: 'https://images.unsplash.com/photo-1543353071-873f17a7a088'
+      product_url: 'https://i.postimg.cc/j2V4GWh7/temp-Imagekron-VZ.avif'
     },
     {
       product_id: 15,
@@ -173,7 +173,7 @@ exports.seed = async function(knex) {
       status: true,
       sold: 180,
       avg_rating: 4.5,
-      product_url: 'https://images.unsplash.com/photo-1518674660708-6c8228aeae61'
+      product_url: 'https://i.postimg.cc/9QPK12Cb/temp-Imagel39au-D.avif'
     }
   ]);
 };
