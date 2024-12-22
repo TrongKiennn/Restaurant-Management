@@ -20,9 +20,10 @@
 <body>
   <!-- #region Header -->
   <%- include('layouts/mainLayout', { content: locals.body }) %>
+  <%- include('layouts/search')%>
   <!--region get user_id to put into cart-->
   <!-- <input type="hidden" id="user-id" value="<%= user_id %>"> -->
-
+  <input type="hidden" id="user-id" value="<%= user_id %>">
   <!-- #endregion Header -->
   <div x-data="{ cartOpen: false , isOpen: false }">
       <div :class="cartOpen ? 'translate-x-0 ease-out' : 'translate-x-full ease-in'"
@@ -66,7 +67,7 @@
         <div class="container grid grid-cols-4 gap-6 pt-4 pb-16 items-start mx-auto">
           
           <!-- #region Sidebar -->
-        <div class="col-span-1 bg-white px-4 pb-6 shadow overflow-hidden rounded-lg divide-y divide-gray-200 space-y-5">
+        <div class="col-span-1 bg-white px-4 pb-6 shadow overflow-hidden rounded-lg divide-y divide-gray-200 space-y-5 ">
           <!-- Filter -->
           <div>
             <%- include('layouts/filter') %>
@@ -82,7 +83,7 @@
           
           <!-- #region Products -->
           <div class="col-span-3">
-            <div class="flex items-center mb-4"></div>
+            <!-- <div class="flex items-center mb-4"></div> -->
 
             <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <% products.forEach( product => { %>
@@ -105,38 +106,20 @@
                         <%= product.name %>
                       </h4>
                     </a>
-
-                   <!--  <div class="flex justify-between mb-1 space-x-2">
-                      <p class="text-xl text-primary font-semibold">
-                        <%= product.category_name %>
-                      </p>
-                    </div> -->
-
                     <div class="flex items-baseline mb-1 space-x-2">
                       <p class="text-xl text-primary font-semibold">
-                        $<%= product.price %>
+                        <%= product.price %> VNĐ
                       </p>
 
                     </div>
-                    
-                    <!-- <div class="flex gap-1 text-sm text-yellow-400">
-                      <i class="star"></i>
-                      <i class="star"></i>
-                      <i class="star"></i>
-                      <i class="star"></i>
-                      <i class="star"></i>
-                    </div> -->
                   </div> 
 
-                  <!-- Nút Xem chi tiết -->
-                  <button 
-                  type="button"
-                  class="block w-full py-3 mt-auto text-center text-white bg-[#984B01] border border-primary hover:bg-gray-300 transition"
-                  data-product-id="<%= product.id %>"
-                  data-product-price="<%= product.price %>"
-                  >
-                  Xem chi tiết
-                  </button>
+                  <a href="#"
+                    class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
+                    data-product-id="<%= product.product_id %>"
+                    data-product-price="<%= product.price %>">
+                    Thêm vào giỏ hàng
+                  </a>
                 </div>
                 <% }); %>
 
