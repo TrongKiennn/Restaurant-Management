@@ -14,8 +14,8 @@ async function updateCartList(products){
                         <table class="w-full text-gray-700 h-60">
                             <tr>
                                 <td colspan="6" class="text-center py-8 col-span-2 rounded-xl overflow-hidden">
-                                    <p class="text-gray-300 text-lg mb-4">Oh My Gosh! Your cart is empty.</p>
-                                    <a href="/" class="bg-blue-500 text-white rounded-md px-6 py-2">EXPLORE OUR ITEM</a>
+                                    <p class="text-gray-300 text-lg mb-4">Giỏ hàng trống.</p>
+                                    <a href="/" class="bg-[#9c5e25] text-white rounded-md px-6 py-2">Quay về trang chủ</a>
                                 </td>
                             </tr>
                         </table>
@@ -24,7 +24,7 @@ async function updateCartList(products){
   products.forEach((product) => {
     let productHTML = `
     <tr class="border-b bg-white">          
-      <td><img class="ml-8 max-w-xs w-12 rounded-md" src="${product.image_url}" alt="Product image" /></td>
+      <td><img class="ml-8 max-w-xs w-12 rounded-md" src="${product.product_url}" alt="Product image" /></td>
       <td class="py-4 px-6 text-left">${product.name}</td>
       <td class="py-4 px-6 text-left">
           <div class="flex items-center">
@@ -37,11 +37,11 @@ async function updateCartList(products){
               </button>
           </div>
       </td>
-      <td class="py-4 px-6 text-right">$${product.price}</td>
-      <td class="py-4 px-6 text-right">$${product.discount_price}</td>
+      <td class="py-4 px-6 text-right">${product.price} VNĐ</td>
+      <!-- <td class="py-4 px-6 text-right">$${product.discount_price}</td> -->
       <td class="py-4 px-6 text-center">
           <button class="text-red-600 hover:text-red-800 delete-btn" product-id="${product.product_id}">
-              Delete
+              Xoá
           </button>
       </td>
     </tr>`;
@@ -52,9 +52,9 @@ async function updateCartList(products){
 }
 
 async function updateCartTotal(totalSum, totalDiscount, totalPay){
-  totalSumElement.innerHTML = `$${totalSum}`;
-  totalDiscountElement.innerHTML = `-$${totalDiscount}`;
-  totalPayElement.innerHTML = `$${totalPay}`;
+  totalSumElement.innerHTML = `${totalSum} VNĐ`;
+  totalDiscountElement.innerHTML = `- ${totalDiscount} VNĐ`;
+  totalPayElement.innerHTML = `${totalPay} VNĐ`;
 }
 
 async function fetchAndRenderTotalOnly(newURL) {
