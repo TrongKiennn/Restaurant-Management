@@ -42,9 +42,12 @@ app.use(passport.session())
 
 
 const registrationRouter = require("./customer/registration/registrationRouter");
+const searchRouter = require("./customer/search/searchRouter");
 const loginRouter=require('./customer/login/loginRouter');
 const logoutRouter=require('./customer/logout/logoutRouter');
 const categoryRouter=require('./customer/category/categoryRouter');
+const homeRouter = require("./customer/home/homeRouter");
+const cartRouter = require("./customer/cart/cartRouter");
 
 // Set the view engine to EJS
 app.set('views', [
@@ -73,8 +76,11 @@ app.use(express.static(path.join(__dirname,"public")));
 app.use(express.urlencoded({ extended: true }));
 app.use("/dist", express.static("dist"));
 
+app.use("/", homeRouter);
+
 app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
+<<<<<<< HEAD
 
 app.use("/logout",logoutRouter);
 
@@ -85,6 +91,13 @@ app.use("/category",categoryRouter)
 
 // Cung cấp thư mục chứa ảnh
 app.use('/uploads', express.static('uploads'));
+=======
+app.use("/logout",logoutRouter);
+app.use("/search", searchRouter);
+app.use("/category",categoryRouter)
+app.use("/cart", cartRouter);
+
+>>>>>>> main
 
 
 // Call the adminRouter function and pass the app as an argument
@@ -94,6 +107,10 @@ adminRouter(app);
 app.get('/home', (req, res) => {
   res.render('home', { title: 'Trang chủ' });
 });
+
+app.get('/home',(req,res)=>{
+  res.render('home',{title: 'Home Page - Superstore - GA05'})
+ });
 
 const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {

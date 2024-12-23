@@ -12,6 +12,7 @@
   <meta name="description" content="Search Results" />
   <link rel="stylesheet" href="/css/all.min.css" />
   <link rel="stylesheet" href="/css/style.css" />
+  <link id="favicon" rel="icon" type="image/png" href="/images/store_icon.ico">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -22,18 +23,27 @@
     <%- include('layouts/mainLayout', { content: locals.body }) %>
     <!-- #endregion Header -->
 
-      <main class="my-8">
-        <div class="container mx-auto px-6">
-          <h1 class="text-2xl font-semibold mb-6">
+    <!-- #region Search -->
+    <%- include('layouts/search')%>
+    <!-- #endregion Search -->
+
+    <main class="my-8">
+      <!-- #region Body -->
+      <div class="container grid grid-cols-4 gap-6 pt-4 pb-16 items-start mx-auto">
+       
+        <!-- #region Products -->
+        <div class="col-span-4">
+          <div class="flex items-center mb-4"></div>
+          <h1 id="search-query" class="text-2xl font-semibold mb-6">
             Search Results for "<%= query %>"
           </h1>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <% products.forEach(product=> { %>
+          <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <% products.forEach( product => { %>                
               <div class="bg-white shadow-md flex flex-col h-full rounded-lg">
                 <!-- Phần hình ảnh sản phẩm -->
                 <div class="relative group w-full h-80 flex items-center justify-center">
-                  <img src="<%= product.imageurl %>" alt="<%= product.name %>" class="max-w-full max-h-full" />
-                  <a href="/category/<%= product.type_name %>/<%= product.id %>">
+                  <img src="<%= product.product_url %>" alt="<%= product.name %>" class="max-w-full max-h-full" />
+                  <a href="/category/<%= product.product_id %>">
                     <div
                       class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                     </div>
@@ -42,7 +52,7 @@
 
                 <div class="flex-grow pt-4 pb-3 px-4 flex flex-col">
                   <!-- Tên sản phẩm -->
-                  <a href="/category/<%= product.type_name %>/<%= product.id %>">
+                  <a href="/category/<%= product.id %>">
                     <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
                       <%= product.name %>
                     </h4>
@@ -50,13 +60,8 @@
 
                   <div class="flex justify-between mb-1 space-x-2">
                     <p class="text-xl text-primary font-semibold">
-                      <%= product.brand %>
+                      <%= product.category_name %>
                     </p>
-                    <% if (product.numberofpro > 0) {%>
-                      <p class="text-right text-base text-green-600">In stock</p>
-                    <% }else{ %>
-                      <p class="text-right text-base text-red-600">Out of stock</p>
-                    <% } %>
                   </div>
 
                   <div class="flex items-baseline mb-1 space-x-2">
@@ -64,35 +69,35 @@
                       $<%= product.price %>
                     </p>
 
-                    <% if (product.discount > 0) {%>
-                        <p class="text-base text-red-600 font-extrabold">-<%= product.discount %>%</p>
-                    <% } %>
                   </div>
                   
-                  <div class="flex gap-1 text-sm text-yellow-400">
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                  </div>
-                </div> 
 
                 <!-- Nút Add to Cart -->
                 <a href="#"
-                  class="block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition">
+                  class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition"
+                  data-product-id="<%= product.id %>"
+                  data-product-price="<%= product.price %>">
                   Add to cart
                 </a>
               </div>
-              <% }) %>
-          </div>
-        </div>
-      </main>
+              <% }); %>
 
-      <!-- #region Footer-->
-      <%- include('layouts/footer') %>
-        <!-- #endregion Footer -->
+          </div>
+          <!-- #endregion Products -->
+
+          
+        </div>
+                   
+      </div>
+    </main> 
+
+        <!-- #region Footer-->
+        <%- include('layouts/footer') %>
+          <!-- #endregion Footer -->
   </div>
+  <script src="/js/cart.js"></script>
+  <script src="/js/searchWithAJAXHandling.js"></script>
+  <script src="/layouts/search"></script>
 </body>
 
 </html>

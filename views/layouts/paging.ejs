@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between px-6 py-4 sm:px-8">
+<div class="flex items-center justify-between px-6 py-4 sm:px-8 mt-6">
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center">
         <div>
             <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination" id="Pagination">
@@ -9,7 +9,7 @@
                     </svg>
                 </button>
                 <% for (let i = 1; i <= totalPages; i++) { %>
-                    <button onclick="changePage(<%= i %>)" class="relative <%= i === page? 'z-10 text-white bg-slate-800' : 'text-gray-900' %> inline-flex items-center px-6 py-4 text-lg font-semibold ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                    <button onclick="changePage(<%= i %>)" class="relative <%= i === page? 'z-10 text-white bg-[#9c5e25]' : 'text-gray-900' %> inline-flex items-center px-6 py-4 text-lg font-semibold ring-1 ring-inset ring-gray-300   hover:bg-[#b87434] focus:z-20 focus:outline-offset-0">
                         <%= i %>
                     </button>
                 <% } %>
