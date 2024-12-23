@@ -7,7 +7,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 require("dotenv").config();
 const cors = require('cors');
-const multer = require('multer');
+
 
 
 const {ConnectSessionKnexStore} = require('connect-session-knex'); 
@@ -80,7 +80,7 @@ app.use("/", homeRouter);
 
 app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
-<<<<<<< HEAD
+
 
 app.use("/logout",logoutRouter);
 
@@ -91,13 +91,14 @@ app.use("/category",categoryRouter)
 
 // Cung cấp thư mục chứa ảnh
 app.use('/uploads', express.static('uploads'));
-=======
+
 app.use("/logout",logoutRouter);
 app.use("/search", searchRouter);
 app.use("/category",categoryRouter)
 app.use("/cart", cartRouter);
 
->>>>>>> main
+
+
 
 
 // Call the adminRouter function and pass the app as an argument

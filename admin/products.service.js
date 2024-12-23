@@ -99,23 +99,18 @@ async function deleteMultiForever(ids){
 
 // TẠO SẢN PHẨM
     async function createProduct(productData){  
-        const { name, description, category_id, price, product_url } = productData;
 
         const query =  `
-            INSERT INTO products (name, description, category_id, price, status, sold, avg_rating, product_url, deleted)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            INSERT INTO products (name, description, category_id, price, product_url)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING *
         `;
         const values = [
-            name,
-            description || "No description provided",
-            category_id,
-            price,
-            true,
-            0,
-            0,
-            product_url || "No image provided",
-            false
+            productData.name,
+            productData.description || "No description provided",
+            productData.category_id,
+            productData.price,
+            productData.product_url
         ];
 
         try {

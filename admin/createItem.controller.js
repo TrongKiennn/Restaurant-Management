@@ -28,7 +28,9 @@ module.exports.createItem = async (req, res) => {
             console.log(productData);
 
             const result = await productService.createProduct(productData);
+
             console.log(result);
+            
             if(result){
                 return res.redirect("/admin/products");
             }
