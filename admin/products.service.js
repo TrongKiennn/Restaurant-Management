@@ -43,7 +43,7 @@
     }
 
     // XÓA VĨNH VIỄN
-    async function deleteProductForever(id){
+    async function deleteProductForever(id){    
         if (isNaN(id)) {
             throw new Error("Invalid product ID");
         }
@@ -127,8 +127,6 @@ async function deleteMultiForever(ids){
 
     // Update product
     async function updateProduct(productData){
-        const { product_id, name, description, category_id, price, product_url } = productData;
-    
         const query = `
             UPDATE products
             SET name = $1, description = $2, category_id = $3, price = $4, product_url = $5
@@ -137,12 +135,12 @@ async function deleteMultiForever(ids){
         `;
     
         const values = [
-            name,
-            description || "No description provided",
-            category_id,
-            price,
-            product_url || "No image provided",
-            product_id
+            productData.name,
+            productData.description,
+            productData.category_id,
+            productData.price,
+            productData.product_url,
+            productData.product_id
         ];
     
         try {

@@ -18,6 +18,7 @@ module.exports.createItem = async (req, res) => {
             }
 
             const productData = {
+                product_id: req.body.product_id,
                 name: req.body.name,
                 description: req.body.description,
                 category_id: req.body.category_id,
@@ -32,9 +33,9 @@ module.exports.createItem = async (req, res) => {
             console.log(result);
             
             if(result){
-                return res.redirect("/admin/products");
+                return res.json({ok: true, message: "Update product successfully"});
             }
-            else return res.status(400).json({ok: false, message: "Create product failed"});
+            else return res.status(400).json({ok: false, message: "Update product failed"});
         } 
         catch (error) {
             return res.status(500).json({ok: false, message: error.message});

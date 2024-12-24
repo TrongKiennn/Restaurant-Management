@@ -1,87 +1,108 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth font-sans">
+
 <head>
-    <link rel="shortcut icon" href="/images/Logo.png" type="image/x-icon"> 
+    <link rel="shortcut icon" href="/images/Logo.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TASTEE Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
     <div id="main" class="relative">
         <!-- #region Header -->
         <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
-        <!-- #endregion Header -->
+            <!-- #endregion Header -->
 
-        <div id="content" class="z-0 absolute w-full font-roboto-condensed bg-content bg-repeat">
-            <div  class="mt-[100px] flex ml-75p">
-                <div class="js-add h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
-                    Thêm món
-                    <i class="fa-solid fa-circle-plus ml-2"></i>
+            <div id="content" class="z-0 absolute w-full font-roboto-condensed bg-content bg-repeat">
+                <div class="mt-[100px] flex ml-75p">
+                    <div
+                        class="js-add h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
+                        Thêm món
+                        <i class="fa-solid fa-circle-plus ml-2"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px]">
+                    <!-- Dynamically generate menu items -->
+                    <% products.forEach(item=> { %>
+                        <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden"
+                            data-id="<%= item.product_id %>" data-img="<%= item.product_url %>"
+                            data-name="<%= item.name %>" data-description="<%= item.description %>"
+                            data-price="<%= item.price %>" data-category="<%= item.category_id %>">
+                            <!-- Image -->
+                            <div class="image bg-gray-200 h-[150px] w-full rounded-t-lg"
+                                style="background-image: url('<%= item.image_url %>'); background-size: cover; background-position: center;">
+                                <img src="<%= item.product_url %>" alt="<%= item.name %>"
+                                    class="w-full h-full object-cover transition-opacity duration-300"
+                                    onerror="this.onerror=null; this.src='/admin/images/default-food.png';" />
+                            </div>
+
+                            <!-- Content -->
+                            <div class="content p-4">
+                                <h3 class="title font-bold text-lg mb-2">
+                                    <%= item.name %>
+                                </h3>
+                                <h4 class="title font-bold text-lg mb-2">
+                                    <%= item.price %>
+                                </h4>
+                                <p class="description text-sm text-gray-600">
+                                    <%= item.description %>
+                                </p>
+                                <% if(item.status==true) { %>
+                                    <h4 class="text-green-500 title font-bold text-lg mt-2">Còn món</h4>
+                                    <% } else { %>
+                                        <h4 class="text-red-500 title font-bold text-lg mt-2">Hết món</h4>
+                                        <% } %>
+                            </div>
+                            <!-- Detail menu -->
+                            <div
+                                class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-white opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
+                                <% if (item.status) { %>
+                                    <button
+                                        class="js-toggle-status bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Hết
+                                        món</button>
+                                    <% } else { %>
+                                        <button
+                                            class="js-toggle-status bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Còn
+                                            món</button>
+                                        <% } %>
+                                            <button
+                                                class="js-delete bg-red-500 px-4 py-2 rounded-md mb-2 hover:opacity-80">Xóa</button>
+                                            <button
+                                                class="js-edit bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh
+                                                sửa</button>
+                            </div>
+                        </div>
+                        <% }); %>
                 </div>
             </div>
-
-            <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px]">
-                <!-- Dynamically generate menu items -->
-                <% products.forEach(item => { %>
-                    <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden" data-id="<%= item.product_id %>" data-img="<%= item.product_url %>" data-name="<%= item.name %>" data-description="<%= item.description %>" data-price="<%= item.price %>" data-category="<%= item.category_id %>">
-                        <!-- Image -->
-                        <div 
-                            class="image bg-gray-200 h-[150px] w-full rounded-t-lg"
-                            style="background-image: url('<%= item.image_url %>'); background-size: cover; background-position: center;">
-                            <img 
-                            src="<%= item.product_url %>"
-                            alt="<%= item.name %>"
-                            class="w-full h-full object-cover transition-opacity duration-300"
-                            onerror="this.onerror=null; this.src='/admin/images/default-food.png';"
-                            />
-                        </div>
-                        
-                        <!-- Content -->
-                        <div class="content p-4">
-                            <h3 class="title font-bold text-lg mb-2"><%= item.name %></h3>
-                            <h4 class="title font-bold text-lg mb-2"><%= item.price %></h4>
-                            <p class="description text-sm text-gray-600"><%= item.description %></p>
-                            <% if(item.status == true) { %>
-                                <h4 class="text-green-500 title font-bold text-lg mt-2">Còn món</h4>
-                            <% } else { %>
-                                <h4 class="text-red-500 title font-bold text-lg mt-2">Hết món</h4>
-                            <% } %>
-                        </div>
-                        <!-- Detail menu -->
-                        <div class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-white opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
-                            <% if (item.status) { %>
-                                <button class="js-toggle-status bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Hết món</button>
-                            <% } else { %>
-                                <button class="js-toggle-status bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Còn món</button>
-                            <% } %>
-                            <button class="js-delete bg-red-500 px-4 py-2 rounded-md mb-2 hover:opacity-80">Xóa</button>
-                            <button class="js-edit bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh sửa</button>
-                        </div>
-                    </div>
-                <% }); %>
-            </div>
-        </div>
     </div>
 
     <!-- MODAL Xóa món -->
-    <div class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
+    <div
+        class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[500px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <header class="modal-header text-[25px] font-bold text-center mt-5 mb-5">
                 Bạn chắc chắn muốn xóa món chứ?
             </header>
 
             <div class="mt-9 ml-[4.5rem] mr-[4.5rem] flex justify-between">
-                <button class="js-modal-Yes w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none p-[1px] cursor-pointer leading-[37px] rounded-2xl hover:opacity-80">
+                <button
+                    class="js-modal-Yes w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none p-[1px] cursor-pointer leading-[37px] rounded-2xl hover:opacity-80">
                     Có
                 </button>
-    
-                <button class="js-modal-No w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none cursor-pointer p-[1px] leading-[37px] rounded-2xl hover:opacity-80">
+
+                <button
+                    class="js-modal-No w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none cursor-pointer p-[1px] leading-[37px] rounded-2xl hover:opacity-80">
                     Không
                 </button>
             </div>
@@ -89,32 +110,41 @@
     </div>
 
     <!-- MODAL Thêm món -->
-    <div class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
+    <div
+        class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[900px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Thêm Món</h2>
 
-            <form action="/admin/create" method="POST" class="flex flex-row p-6 gap-6" enctype="multipart/form-data" > 
+            <form action="/admin/create" method="POST" class="flex flex-row p-6 gap-6" enctype="multipart/form-data">
 
-                <div id="drop-area" class="w-1/2 h-45 border-dashed border-2 border-gray-400 rounded-lg p-6 text-center flex justify-center items-center flex-1 flex-col">
+                <div id="drop-area"
+                    class="w-1/2 h-45 border-dashed border-2 border-gray-400 rounded-lg p-6 text-center flex justify-center items-center flex-1 flex-col">
                     <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-600"></i>
-                    <label for="file-input" class="text-lg text-white cursor-pointer bg-[#984B01] rounded-md pl-3 pr-3 mt-2">
-                        Chọn hình ảnh 
+                    <label for="file-input"
+                        class="text-lg text-white cursor-pointer bg-[#984B01] rounded-md pl-3 pr-3 mt-2">
+                        Chọn hình ảnh
                     </label>
                     <input class="form-control" name="product_url" type="file" id="file-input" hidden>
                     <p class="text-sm text-gray-600 mt-2">Hoặc kéo thả hình ảnh vào đây</p>
-                    <div id="previewContainer" class=" mt-4 border-2 border-dashed border-gray-300 rounded-lg w-full h-48 flex items-center justify-center bg-gray-50" >
+                    <div id="previewContainer"
+                        class=" mt-4 border-2 border-dashed border-gray-300 rounded-lg w-full h-48 flex items-center justify-center bg-gray-50">
                         <p class='text-gray-500'>Ảnh xem trước</p>
                     </div>
                 </div>
-                
+
                 <div class="space-y-4 flex flex-col flex-2 gap-3 w-1/2">
 
-                    <input name="name" id="name" type="text" placeholder="Tên món" class="w-full border p-2 rounded form-control" required>
-                    <textarea name="description" id="description" placeholder="Mô tả" class="w-full border p-2 rounded h-[100px] form-control" required></textarea>
-                    <input name="price" id="price" type="number" placeholder="Giá" class="w-full border p-2 rounded form-control" required>
+                    <input name="name" id="name" type="text" placeholder="Tên món"
+                        class="w-full border p-2 rounded form-control" required>
+                    <textarea name="description" id="description" placeholder="Mô tả"
+                        class="w-full border p-2 rounded h-[100px] form-control" required></textarea>
+                    <input name="price" id="price" type="number" placeholder="Giá"
+                        class="w-full border p-2 rounded form-control" required>
                     <div>
                         <label for="category_id" class="block text-gray-700">Phân loại</label>
-                        <select id="category_id" name="category_id" name="category_id" class="form-control w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <select id="category_id" name="category_id" name="category_id"
+                            class="form-control w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
                             <option disabled value="">--- Chọn phân loại ---</option>
                             <option value="1">Burger</option>
                             <option value="2">Pizza</option>
@@ -123,10 +153,12 @@
                             <option value="5">Đồ uống</option>
                         </select>
                     </div>
-                    
+
                     <div class="flex items-center justify-between">
-                        <button no-btn type="button" class="js-modal-Cancel bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Hủy</button>
-                        <button yes-btn type="submit" class="js-modal-Save bg-[#984B01] text-white px-4 py-2 rounded hover:bg-[#733601]">Lưu</button>
+                        <button no-btn type="button"
+                            class="js-modal-Cancel bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Hủy</button>
+                        <button yes-btn type="submit"
+                            class="js-modal-Save bg-[#984B01] text-white px-4 py-2 rounded hover:bg-[#733601]">Lưu</button>
                     </div>
                 </div>
             </form>
@@ -135,62 +167,57 @@
     </div>
 
     <!-- MODAL Sửa món -->
-    <div class="modal-edit js-modal-edit z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
+    <div
+        class="modal-edit js-modal-edit z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[900px] min-h-[165px] rounded-xl animate-modalFadeIn">
-            <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Chỉnh sửa món</h2>
-            <form action="" method="POST" id="editFoodForm" class="flex flex-row p-6 gap-6" enctype="multipart/form-data">
-                <div id="drop-area-fix" class="w-1/2 h-45 border-dashed border-2 border-gray-400 rounded-lg p-6 text-center flex justify-center items-center flex-1 flex-col">
+            <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Chỉnh sửa món
+            </h2>
+            <form action="" method="POST" id="editFoodForm" class="flex flex-row p-6 gap-6"
+                enctype="multipart/form-data">
+                <div id="drop-area-fix"
+                    class="w-1/2 h-45 border-dashed border-2 border-gray-400 rounded-lg p-6 text-center flex justify-center items-center flex-1 flex-col">
                     <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-600"></i>
-                    <label for="file-input-fix" class="text-lg text-white cursor-pointer bg-[#984B01] rounded-md pl-3 pr-3 mt-2">
-                        Chọn hình ảnh 
+                    <label for="file-input-fix"
+                        class="text-lg text-white cursor-pointer bg-[#984B01] rounded-md pl-3 pr-3 mt-2">
+                        Chọn hình ảnh
                     </label>
                     <input class="form-control" type="file" id="file-input-fix" hidden>
                     <p class="text-sm text-gray-600 mt-2">Hoặc kéo thả hình ảnh vào đây</p>
-                    <div id="previewContainerFix" class=" mt-4 border-2 border-dashed border-gray-300 rounded-lg w-full h-48 flex items-center justify-center bg-gray-50" >
-                        <img id="editFoodImage" src="" alt="Hình ảnh món ăn" class="w-full h-full object-cover hidden" />
+                    <div id="previewContainerFix"
+                        class=" mt-4 border-2 border-dashed border-gray-300 rounded-lg w-full h-48 flex items-center justify-center bg-gray-50">
+                        <img id="editFoodImage" src="" alt="Hình ảnh món ăn"
+                            class="w-full h-full object-cover hidden" />
                         <p class='text-gray-500'>Ảnh xem trước</p>
                     </div>
                 </div>
-                
+
                 <div class="space-y-4 flex flex-col flex-2 gap-3 w-1/2">
                     <!-- Tên món -->
                     <div>
                         <label for="editFoodName" class="block text-sm font-medium text-gray-700">Tên món ăn</label>
-                        <input 
-                            type="text" 
-                            id="editFoodName" 
-                            name="name" 
-                            placeholder="Tên món"
+                        <input type="text" id="editFoodName" name="name" placeholder="Tên món"
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 form-control"
-                            required
-                        /> 
+                            required />
                     </div>
                     <!-- Mô tả -->
                     <div>
                         <label for="editFoodDescription" class="block text-sm font-medium text-gray-700">Mô tả</label>
-                        <textarea 
-                            id="editFoodDescription" 
-                            name="description" 
-                            placeholder="Nhập mô tả món ăn"
+                        <textarea id="editFoodDescription" name="description" placeholder="Nhập mô tả món ăn"
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 form-control"
-                            required
-                        ></textarea>
+                            required></textarea>
                     </div>
                     <!-- Giá -->
                     <div>
                         <label for="editFoodPrice" class="block text-sm font-medium text-gray-700">Giá (VNĐ)</label>
-                        <input 
-                            type="number" 
-                            id="editFoodPrice" 
-                            name="price" 
-                            placeholder="Nhập giá món ăn"
+                        <input type="number" id="editFoodPrice" name="price" placeholder="Nhập giá món ăn"
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 form-control"
-                            required
-                        />
+                            required />
                     </div>
                     <div>
                         <label for="editCategory_id" class="block text-sm font-medium text-gray-700">Phân loại</label>
-                        <select id="editCategory_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 form-control" required>
+                        <select id="editCategory_id" name="category_id"
+                            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 form-control"
+                            required>
                             <option disabled value="">--- Chọn phân loại ---</option>
                             <option value="1">Burger</option>
                             <option value="2">Pizza</option>
@@ -199,10 +226,12 @@
                             <option value="5">Đồ uống</option>
                         </select>
                     </div>
-                    
+
                     <div class="flex items-center justify-between">
-                        <button type="button" class="js-modal-edit-Cancel bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Hủy</button>
-                        <button type="submit" class="js-modal-edit-Save bg-[#984B01] text-white px-4 py-2 rounded hover:bg-[#733601]">Lưu</button>
+                        <button type="button"
+                            class="js-modal-edit-Cancel bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Hủy</button>
+                        <button type="submit"
+                            class="js-modal-edit-Save bg-[#984B01] text-white px-4 py-2 rounded hover:bg-[#733601]">Lưu</button>
                     </div>
                 </div>
             </form>
@@ -232,13 +261,13 @@
 
         let currentItemToDelete = null; // Biến lưu trữ item đang được chọn để xóa
 
-        function showConfirmDelete(){
+        function showConfirmDelete() {
             modalDelete.classList.add('flex')
             modalDelete.classList.remove('hidden')
             currentItemToDelete = event.target.closest('.item') // Lưu trữ item cha của nút "Xóa"
         }
 
-        function hideConfirmDelete(){
+        function hideConfirmDelete() {
             modalDelete.classList.remove('flex')
             modalDelete.classList.add('hidden')
             currentItemToDelete = null
@@ -255,8 +284,8 @@
                 }
                 try {
                     // Gửi yêu cầu DELETE tới backend
-                    const response = await fetch(`/admin/delete`, {
-                        method: 'DELETE',
+                    const response = await fetch(`/admin/products/delete`, {
+                        method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',
                         },
@@ -268,6 +297,8 @@
                         currentItemToDelete.remove();
                         hideConfirmDelete();
                         showToast('Xóa món thành công!');
+                        // Redirect after successful deletion
+                        window.location.href = result.redirectUrl;
                     } else {
                         showToast('Có lỗi xảy ra khi xóa món!');
                     }
@@ -278,7 +309,7 @@
             }
         }
 
-        for(const Delete of Deletes){
+        for (const Delete of Deletes) {
             Delete.addEventListener('click', showConfirmDelete)
         }
 
@@ -298,11 +329,11 @@
         const categorySelect = document.getElementById('category_id')
 
         Add.addEventListener("click", () => {
-            modalAdd.classList.remove("hidden"); 
+            modalAdd.classList.remove("hidden");
         });
 
         modalCancel.addEventListener("click", () => {
-            modalAdd.classList.add("hidden"); 
+            modalAdd.classList.add("hidden");
             resetForm();
         });
 
@@ -384,7 +415,7 @@
         modalSave.addEventListener("click", (e) => {
             const form = document.querySelector("form");
             if (form.checkValidity()) {
-                form.submit(); 
+                form.submit();
                 showToast("Món ăn đã được thêm thành công!");
                 modalAdd.classList.add("hidden");
                 resetForm();
@@ -430,7 +461,7 @@
 
     <!-- Sửa items -->
     <script>
-        const Edit = document.querySelectorAll('.js-edit') 
+        const Edit = document.querySelectorAll('.js-edit')
         const editModal = document.querySelector('.modal-edit')
         const modalEditCancel = document.querySelector('.js-modal-edit-Cancel')
         const modalEditSave = document.querySelector('.js-modal-edit-Save')
@@ -445,7 +476,7 @@
                 const item = e.target.closest('.item');
 
                 // Lấy dữ liệu từ thuộc tính `data-*` của hàng
-                const productId = item.getAttribute('data-id'); 
+                const productId = item.getAttribute('data-id');
                 const foodImg = item.getAttribute('data-img');
                 const foodName = item.getAttribute('data-name');
                 const foodDescription = item.getAttribute('data-description');
@@ -463,7 +494,7 @@
                     foodImage.classList.add('hidden'); // Ẩn ảnh nếu không có URL
                     previewContainerFix.innerHTML = "<p class='text-gray-500'>Ảnh xem trước</p>";
                 }
-                
+
                 // Điền dữ liệu vào form trong modal
                 document.getElementById('editFoodName').value = foodName;
                 document.getElementById('editFoodDescription').value = foodDescription;
@@ -488,7 +519,7 @@
             e.preventDefault(); // Ngăn reload trang
 
             const formData = new FormData();
-            formData.append('product_id', window.currentEditingFood.product_id); 
+            formData.append('product_id', window.currentEditingFood.product_id);
             formData.append('name', document.getElementById('editFoodName').value);
             formData.append('description', document.getElementById('editFoodDescription').value);
             formData.append('price', parseInt(document.getElementById('editFoodPrice').value, 10));
@@ -501,22 +532,23 @@
             }
 
             // Gửi yêu cầu PUT đến API để cập nhật món ăn
-            fetch(`http://localhost:4000/admin/update`, {
-                method: 'PUT',
+            fetch(`http://localhost:4000/admin/products/update`, {
+                method: 'PATCH',
                 body: formData
             })
-            .then(response => {
-                if (response.ok) {
-                    showToast('Cập nhật món ăn thành công!');
-                    editModal.classList.add('hidden');
-                } else {
-                    showToast('Có lỗi xảy ra khi cập nhật món ăn.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showToast('Có lỗi xảy ra khi kết nối đến server.');
-            });
+                .then(response => {
+                    if (response.ok) {
+                        showToast('Cập nhật món ăn thành công!');
+                        editModal.classList.add('hidden');
+                        window.location.reload();
+                    } else {
+                        showToast('Có lỗi xảy ra khi cập nhật món ăn.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('Có lỗi xảy ra khi kết nối đến server.');
+                });
         });
 
         // Xử lý kéo thả file ảnh
@@ -602,37 +634,38 @@
                 const isCurrentlyAvailable = this.textContent.trim() === 'Hết món';
 
                 // Gửi yêu cầu cập nhật trạng thái lên server
-                fetch(`/admin/update-status/${productId}`, {
-                    method: 'POST',
+                fetch(`/admin/products/change-status/${productId}`, {
+                    method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ status: !isCurrentlyAvailable }) // Đổi trạng thái
+                    body: JSON.stringify({ status: isCurrentlyAvailable }) // Đổi trạng thái
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Cập nhật giao diện
-                        if (isCurrentlyAvailable) {
-                            // Nếu trước đó là "Còn món", đổi thành "Hết món"
-                            parent.querySelector('.text-green-500').classList.remove('text-green-500');
-                            parent.querySelector('.text-green-500').classList.add('text-red-500');
-                            parent.querySelector('.text-red-500').textContent = 'Hết món';
-                            this.textContent = 'Còn món'; // Đổi nút trong detail menu
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Cập nhật giao diện
+                            if (isCurrentlyAvailable) {
+                                // Nếu trước đó là "Còn món", đổi thành "Hết món"
+                                parent.querySelector('.text-green-500').classList.remove('text-green-500');
+                                parent.querySelector('.text-green-500').classList.add('text-red-500');
+                                parent.querySelector('.text-red-500').textContent = 'Hết món';
+                                this.textContent = 'Còn món'; // Đổi nút trong detail menu
+                            } else {
+                                // Nếu trước đó là "Hết món", đổi thành "Còn món"
+                                parent.querySelector('.text-red-500').classList.remove('text-red-500');
+                                parent.querySelector('.text-red-500').classList.add('text-green-500');
+                                parent.querySelector('.text-green-500').textContent = 'Còn món';
+                                this.textContent = 'Hết món'; // Đổi nút trong detail menu
+                            }
                         } else {
-                            // Nếu trước đó là "Hết món", đổi thành "Còn món"
-                            parent.querySelector('.text-red-500').classList.remove('text-red-500');
-                            parent.querySelector('.text-red-500').classList.add('text-green-500');
-                            parent.querySelector('.text-green-500').textContent = 'Còn món';
-                            this.textContent = 'Hết món'; // Đổi nút trong detail menu
+                            alert('Có lỗi xảy ra khi cập nhật trạng thái.');
                         }
-                    } else {
-                        alert('Có lỗi xảy ra khi cập nhật trạng thái.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+                    })
+                    .catch(error => console.error('Error:', error));
             });
         });
     </script>
 </body>
+
 </html>

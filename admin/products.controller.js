@@ -10,53 +10,55 @@ module.exports.getProductById = async (req, res) => {
     // console.log(id); 
     try {
         const product = await productService.getProductById(id);
-        if(product){
-           return res.status(200).json({ok: true, product: product});
+        if (product) {
+            return res.status(200).json({ ok: true, product: product });
         }
-        else{
-            return res.status(4.00).json({ok: false, message: "Product not found"});
+        else {
+            return res.status(4.00).json({ ok: false, message: "Product not found" });
         }
     } catch (error) {
-        return res.status(500).json({ok: false, message: error.message});
+        return res.status(500).json({ ok: false, message: error.message });
     }
 }
 
 //[GET] LẤY DANH SÁCH SẢN PHẨM
 module.exports.index = async (req, res) => {
-  try {
-    const productList = await productService.getAllProduct();
-    if (productList.length === 0) {
-      return res
-        .status(400)
-        .json({ ok: false, message: "list item are empty" });
+    try {
+        const productList = await productService.getAllProduct();
+        if (productList.length === 0) {
+            return res
+                .status(400)
+                .json({ ok: false, message: "list item are empty" });
+        }
+        return res.render("admin_views/admin_manager_menu", {
+            products: productList
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: error.message,
+        });
     }
-    return res.render("admin_views/admin_manager_menu",{
-        products: productList
-    });
-  } catch (error) {
-    res.status(500).json({
-        ok: false,
-        message: error.message,
-    });
-  }
 };
- 
+
 //[PATCH] xóa mềm (cập nhật deleted = true)
-module.exports.deleteItem = async (req, res) => {   
+module.exports.deleteItem = async (req, res) => {
+
+    console.log(req.body);
+
     const id = parseInt(req.body.id);
-    
+
     console.log(id);
 
     try {
         const result = await productService.deleteProduct(id);
-        if(result){
-            req.flash("success", "Deleted successfully !");
-
-            return res.status(200).json({ok: true, message: "Deleted successfully !"});    
+        if (result) {
+            console.log(result);
+            return res.json({ ok: true, message: "Deleted successfully !" });
         }
-        return res.status(400).json({ok: false, message: "Delete product failed"});
+        return res.status(400).json({ ok: false, message: "Delete product failed" });
     } catch (error) {
-        return res.status(500).json({ok: false, message: error.message});
+        return res.status(500).json({ ok: false, message: error.message });
     }
 };
 
@@ -67,14 +69,14 @@ module.exports.deleteItemForever = async (req, res) => {
 
     try {
         const result = await productService.deleteProductForever(id);
-        if(result){
+        if (result) {
             req.flash("success", "Deleted successfully !");
-            return res.redirect("back");
+            return res.redirect("/admin/products");
         }
-        else 
-            return res.status(400).json({ok: false, message: "Delete product failed"});
+        else
+            return res.status(400).json({ ok: false, message: "Delete product failed" });
     } catch (error) {
-        return res.status(500).json({ok: false, message: error.message});
+        return res.status(500).json({ ok: false, message: error.message });
     }
 }
 //[DELETE] xóa vĩnh viễn nhiều sp
@@ -84,32 +86,32 @@ module.exports.deleteMultiForever = async (req, res) => {
 
     try {
         const result = await productService.deleteMultiForever(ids);
-        if(result){
+        if (result) {
             req.flash("success", "Deleted successfully !");
-            return res.status(200).json({ok: true, message: "Deleted successfully !"});
+            return res.status(200).json({ ok: true, message: "Deleted successfully !" });
         }
-        return res.status(400).json({ok: false, message: "Delete products failed"});
+        return res.status(400).json({ ok: false, message: "Delete products failed" });
     } catch (error) {
-        return res.status(500).json({ok: false, message: error.message});
+        return res.status(500).json({ ok: false, message: error.message });
     }
 }
 
 
 
 //[PATCH]XÓA NHIỀU ITEM 
-module.exports.deleteMulti = async (req, res) => {  
+module.exports.deleteMulti = async (req, res) => {
     const ids = req.body.ids;
     console.log(ids);
 
     try {
         const result = await productService.deleteMultiProduct(ids);
-        if(result){
+        if (result) {
             req.flash("success", "Deleted successfully !");
-            return res.status(200).json({ok: true, message: "Deleted successfully !"});
+            return res.status(200).json({ ok: true, message: "Deleted successfully !" });
         }
-        return res.status(400).json({ok: false, message: "Delete products failed"});
+        return res.status(400).json({ ok: false, message: "Delete products failed" });
     } catch (error) {
-        return res.status(500).json({ok: false, message: error.message});
+        return res.status(500).json({ ok: false, message: error.message });
     }
 }
 
@@ -155,42 +157,65 @@ module.exports.createProduct = async (req, res) => {
 
 // [PATCH] cập nhật sản phẩm
 module.exports.updateProduct = async (req, res) => {
-    const productData = req.body;
+    console.log(req.body);
+    console.log(req.file);
+    // const productData = new FormData(req.body);
 
-    console.log(productData);
+    // console.log(productData);
 
-    try{
-        const result = await productService.updateProduct(productData);
-        if(result){
-            return res.redirect("back");
+    try {
+        const file = req.file;
+
+        if (!file) {
+            return res.status(400).json({ ok: false, message: 'Please upload a file' });
         }
-        return res.status(400).json({ok: false, message: "Update product failed"});
+
+        const productData = {
+            product_id: parseInt(req.body.product_id),
+            name: req.body.name,
+            description: req.body.description,
+            category_id: parseInt(req.body.category_id),
+            price: parseInt(req.body.price),
+            product_url: `/uploads/${file.filename}`
+        }
+
+        console.log(productData);
+
+        const result = await productService.updateProduct(productData);
+
+        console.log(result);
+
+        if (result) {
+            return res.json({
+                ok: true,
+                message: "Create product successfully",
+                redirectUrl: '/admin/products'
+            });
+        }
+        else return res.status(400).json({ ok: false, message: "Create product failed" });
     }
-    catch(error){
-        return res.status(500).json({ok: false, message: error.message});
-    }
-    finally{
-        console.log("Update product successfully !");
+    catch (error) {
+        return res.status(500).json({ ok: false, message: error.message });
     }
 }
 
 // [PATCH] cập nhật trạng thái sản phẩm
 module.exports.updateStatus = async (req, res) => {
-    const id = req.body.id;
+    const id = req.params.productId; // id là id của item
     const status = req.body.status; // status là trạng thái hiện tại của item
 
     console.log(id);
     console.log(status);
 
-    try{
-        const result = await productService.updateStatus(id, status);
-        if(result){
+    try {
+        const result = await productService.updateStatus(id, !status);
+        if (result) {
             console.log("Update status successfully !");
-            return res.status(200).json({ok: true, message: "Update status successfully !"});
+            return res.status(200).json({ ok: true, message: "Update status successfully !" });
         }
-        return res.status(400).json({ok: false, message: "Update product failed"});
+        return res.status(400).json({ ok: false, message: "Update product failed" });
     }
-    catch(error){
-        return res.status(500).json({ok: false, message: error.message});
+    catch (error) {
+        return res.status(500).json({ ok: false, message: error.message });
     }
 }
