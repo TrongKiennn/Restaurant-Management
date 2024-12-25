@@ -162,7 +162,7 @@ async function updateStatus(id, status){
         WHERE product_id = $2
         RETURNING *
     `
-    const values = [!status, id];
+    const values = [status, id];
     const result = await pool.query(query, values);
 
     return result.rows[0];

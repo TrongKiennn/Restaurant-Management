@@ -30,7 +30,7 @@ module.exports.index = async (req, res) => {
                 .status(400)
                 .json({ ok: false, message: "list item are empty" });
         }
-        return res.render("admin_views/admin_manager_menu", {
+        return res.render("admin_views/backup", {
             products: productList
         });
     } catch (error) {
@@ -188,7 +188,7 @@ module.exports.updateProduct = async (req, res) => {
         if (result) {
             return res.json({
                 ok: true,
-                message: "Create product successfully",
+                message: "Update product successfully",
                 redirectUrl: '/admin/products'
             });
         }
@@ -211,7 +211,11 @@ module.exports.updateStatus = async (req, res) => {
         const result = await productService.updateStatus(id, !status);
         if (result) {
             console.log("Update status successfully !");
-            return res.status(200).json({ ok: true, message: "Update status successfully !" });
+            return res.status(200).json({
+                ok: true,
+                message: "Update status successfully !",
+                redirectUrl: '/admin/products'
+            });
         }
         return res.status(400).json({ ok: false, message: "Update product failed" });
     }
