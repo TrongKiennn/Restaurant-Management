@@ -34,8 +34,7 @@ module.exports.createItem = async (req, res) => {
         if (result) {
             return res.json({
                 ok: true,
-                message: "Create product successfully",
-                redirectUrl: '/admin/products'
+                message: "Create product successfully"
             });
         }
         else return res.status(400).json({ ok: false, message: "Create product failed" });

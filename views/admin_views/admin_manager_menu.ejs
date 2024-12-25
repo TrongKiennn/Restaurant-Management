@@ -442,7 +442,6 @@
 
 
         async function saveDish(event, data) {
-            e.preventDefault();
             try {
                 // Tạo một đối tượng FormData để gửi file nếu có
                 const formData = new FormData();
@@ -466,7 +465,7 @@
                     resetForm();
                     setTimeout(() => {
                         // window.location.href = "/admin/products";
-                        window.location.replace("/admin/products");
+                        window.location.reload();
                     }, 1000); 
                 } else {
                     // throw new Error("Không thể lưu món ăn.");
