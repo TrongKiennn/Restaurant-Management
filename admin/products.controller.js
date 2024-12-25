@@ -201,20 +201,21 @@ module.exports.updateProduct = async (req, res) => {
 
 // [PATCH] cập nhật trạng thái sản phẩm
 module.exports.updateStatus = async (req, res) => {
-    const id = req.params.productId; // id là id của item
+    const id = req.body.id; // id là id của item
     const status = req.body.status; // status là trạng thái hiện tại của item
 
     console.log(id);
     console.log(status);
 
     try {
-        const result = await productService.updateStatus(id, !status);
+        const result = await productService.updateStatus(id, status);
         if (result) {
+            console.log(result.product_id + "/" + result.status);
             console.log("Update status successfully !");
             return res.status(200).json({
                 ok: true,
                 message: "Update status successfully !",
-                redirectUrl: '/admin/products'
+                status: result.status
             });
         }
         return res.status(400).json({ ok: false, message: "Update product failed" });

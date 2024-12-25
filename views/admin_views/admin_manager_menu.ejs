@@ -72,7 +72,7 @@
                                         món</button>
                                     <% } else { %>
                                         <button
-                                            class="js-toggle-status bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Còn
+                                            class="js-toggle-status bg-blue-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Còn
                                             món</button>
                                         <% } %>
                                             <button
@@ -664,7 +664,7 @@
                 const data = await response.json();
                 if (data.ok) {
                     // Cập nhật giao diện
-                    if (isCurrentlyAvailable) {
+                    /*if (data.status) {
                         // Nếu trước đó là "Còn món", đổi thành "Hết món"
                         parent.querySelector('.text-green-500').classList.remove('text-green-500');
                         parent.querySelector('.text-green-500').classList.add('text-red-500');
@@ -677,9 +677,9 @@
                         parent.querySelector('.text-red-500').classList.add('text-green-500');
                         parent.querySelector('.text-green-500').textContent = 'Còn món';
                         this.textContent = 'Hết món'; // Đổi nút trong detail menu
-                    }
-                    window.location.reload();
+                    }*/
                     showToast("Trạng thái đã được cập nhật thành công!", "success");
+                    window.location.reload();
                 }else {
                     showToast("Có lỗi xảy ra khi cập nhật trạng thái.", "success");
                 }
