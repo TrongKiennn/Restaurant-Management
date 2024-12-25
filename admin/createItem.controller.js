@@ -18,11 +18,10 @@ module.exports.createItem = async (req, res) => {
         }
 
         const productData = {
-            product_id: req.body.product_id,
             name: req.body.name,
             description: req.body.description,
-            category_id: req.body.category_id,
-            price: req.body.price,
+            category_id: parseInt(req.body.category_id),
+            price: parseInt(req.body.price),
             product_url: `/uploads/${file.filename}`
         }
 
