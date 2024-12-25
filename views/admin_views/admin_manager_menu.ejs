@@ -662,7 +662,7 @@
                 })
 
                 const data = await response.json();
-                if (data.success) {
+                if (data.ok) {
                     // Cập nhật giao diện
                     if (isCurrentlyAvailable) {
                         // Nếu trước đó là "Còn món", đổi thành "Hết món"
@@ -670,6 +670,7 @@
                         parent.querySelector('.text-green-500').classList.add('text-red-500');
                         parent.querySelector('.text-red-500').textContent = 'Hết món';
                         this.textContent = 'Còn món'; // Đổi nút trong detail menu
+
                     } else {
                         // Nếu trước đó là "Hết món", đổi thành "Còn món"
                         parent.querySelector('.text-red-500').classList.remove('text-red-500');
@@ -677,6 +678,7 @@
                         parent.querySelector('.text-green-500').textContent = 'Còn món';
                         this.textContent = 'Hết món'; // Đổi nút trong detail menu
                     }
+                    window.location.reload();
                     showToast("Trạng thái đã được cập nhật thành công!", "success");
                 }else {
                     showToast("Có lỗi xảy ra khi cập nhật trạng thái.", "success");
