@@ -30,7 +30,7 @@ module.exports.index = async (req, res) => {
                 .status(400)
                 .json({ ok: false, message: "list item are empty" });
         }
-        return res.render("admin_views/backup", {
+        return res.render("admin_views/admin_manager_menu", {
             products: productList
         });
     } catch (error) {

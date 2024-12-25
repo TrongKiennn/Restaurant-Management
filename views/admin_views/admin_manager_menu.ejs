@@ -424,7 +424,7 @@
                     // Chuyển đổi file ảnh thành base64 nếu cần
                     product_url: fileInput.files[0] ? fileInput.files[0] : null,
                 };
-                saveDish(data);  // Gọi hàm saveDish để gửi dữ liệu
+                saveDish(event, data);  // Gọi hàm saveDish để gửi dữ liệu
             } else {
                 e.preventDefault(); // Ngăn form gửi nếu thông tin không hợp lệ
                 showToast("Vui lòng nhập thông tin hợp lệ", "error");
@@ -441,7 +441,8 @@
         }
 
 
-        async function saveDish(data) {
+        async function saveDish(event, data) {
+            e.preventDefault();
             try {
                 // Tạo một đối tượng FormData để gửi file nếu có
                 const formData = new FormData();
@@ -457,16 +458,16 @@
                     method: 'POST',
                     body: formData,
                 });
-
-                if (response.ok) {
+                const result = await response.json();
+                if (result.ok) {
                     // const result = await response.json();
                     showToast("Món ăn đã được lưu!", "success");
                     // console.log(result);
                     resetForm();
                     setTimeout(() => {
                         // window.location.href = "/admin/products";
-                        window.location.reload();
-                    }, 2000); 
+                        window.location.replace("/admin/products");
+                    }, 1000); 
                 } else {
                     // throw new Error("Không thể lưu món ăn.");
                     showToast("Không thể tạo món", "error");
