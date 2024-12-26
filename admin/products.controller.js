@@ -41,6 +41,28 @@ module.exports.index = async (req, res) => {
     }
 };
 
+//[GET] LẤY DANH SÁCH SẢN PHẨM THEO KEYWORD
+module.exports.getProductsByKeyword = async (req, res) => {
+    const keyTerm = req.query.keyword;
+
+    console.log(keyTerm);
+
+    try {
+        const productList = await productService.getProductsByKeyword(keyTerm);
+        if (productList.length === 0) {
+            return res
+                .status(400)
+                .json({ ok: false, message: "list item are empty" });
+        }
+        return res.render("admin_views/admin_manager_menu", {products: productList});
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: error.message,
+        });
+    }
+}
+
 //[PATCH] xóa mềm (cập nhật deleted = true)
 module.exports.deleteItem = async (req, res) => {
 

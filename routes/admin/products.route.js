@@ -5,7 +5,7 @@ const upload = require("../../config/multer.config");
 
 Router.get("/", productController.index); // get all products
 
-Router.get("/:id", productController.getProductById);
+Router.get("/search", productController.getProductsByKeyword); // get products by keyword
 
 Router.patch("/delete", productController.deleteItem); // soft delete an item
 

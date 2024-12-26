@@ -16,16 +16,27 @@
 
     // LẤY TẤT CẢ SẢN PHẨM
     async function getAllProduct(){
-        const result = await pool.query(
-            `
+        const query = `
             SELECT products.*, categories.name as category_name 
             FROM products join categories on products.category_id = categories.category_id 
             WHERE deleted = false
-            `
-        );
+            `;
+        const result = await pool.query(query);
         return result.rows;
     }
 
+    // LỌC SẢN PHẨM THEO KEYWORD
+    async function getProductsByKeyword(keyword){
+        const query = `
+            SELECT products.*, categories.name as category_name
+            FROM products join categories on products.category_id = categories.category_id
+            WHERE deleted = false AND products.name ~* $1
+        `;
+        const values = [keyword];
+
+        const result = await pool.query(query, values);
+        return result.rows;
+    }
     //XÓA MỀM
     async function deleteProduct(id){  
         if (isNaN(id)) {
@@ -181,6 +192,7 @@ async function updateStatus(id, status){
         createProduct,
         deleteProductForever,
         updateProduct,
-        updateStatus
+        updateStatus,
+        getProductsByKeyword
     }
 

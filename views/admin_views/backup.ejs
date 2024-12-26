@@ -21,7 +21,8 @@
         <!-- #region Header -->
         <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
             <!-- #endregion Header -->
-
+            <!-- Form-search -->
+             
             <div id="content" class="z-0 absolute w-full font-roboto-condensed bg-content bg-repeat">
                 <div class="mt-[100px] flex ml-75p">
                     <div
@@ -58,9 +59,9 @@
                                     <%= item.description %>
                                 </p>
                                 <% if(item.status==true) { %>
-                                    <h4 class="text-green-500 title font-bold text-lg mt-2">Còn món</h4>
+                                    <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>" class="text-green-500 title font-bold text-lg mt-2">Còn món</h4>
                                     <% } else { %>
-                                        <h4 class="text-red-500 title font-bold text-lg mt-2">Hết món</h4>
+                                        <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>"   class="text-red-500 title font-bold text-lg mt-2">Hết món</h4>
                                         <% } %>
                             </div>
                             <!-- Detail menu -->
@@ -413,13 +414,18 @@
         });
 
         modalSave.addEventListener("click", (e) => {
+            e.preventDefault();  // Ngăn form gửi thông qua submit mặc định
             const form = document.querySelector("form");
-            e.preventDefault(); // Ngăn form gửi mặc định
             if (form.checkValidity()) {
-                form.submit();
-                showToast("Món ăn đã được thêm thành công!");
-                modalAdd.classList.add("hidden");
-                resetForm();
+                const data = {
+                    name: document.getElementById("name").value,
+                    description: document.getElementById("description").value,
+                    price: document.getElementById("price").value,
+                    category_id: document.getElementById("category_id").value,
+                    // Chuyển đổi file ảnh thành base64 nếu cần
+                    product_url: fileInput.files[0] ? fileInput.files[0] : null,
+                };
+                saveDish(event, data);  // Gọi hàm saveDish để gửi dữ liệu
             } else {
                 e.preventDefault(); // Ngăn form gửi nếu thông tin không hợp lệ
                 showToast("Vui lòng nhập thông tin hợp lệ", "error");
@@ -429,31 +435,41 @@
 
         // Reset modal sau khi thêm món
         function resetForm() {
-            document.getElementById("dishName").value = "";
-            document.getElementById("dishDesc").value = "";
-            document.getElementById("dishPrice").value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("description").value = "";
+            document.getElementById("price").value = "";
             previewContainer.innerHTML = "<p class='text-gray-500'>Ảnh xem trước</p>";
         }
 
 
         async function saveDish(event, data) {
-            event.preventDefault();
             try {
+                // Tạo một đối tượng FormData để gửi file nếu có
+                const formData = new FormData();
+                formData.append("name", data.name);
+                formData.append("description", data.description);
+                formData.append("price", data.price);
+                formData.append("category_id", data.category_id);
+                if (data.product_url) {
+                    formData.append("product_url", data.product_url);  // Thêm file nếu có
+                }
+
                 const response = await fetch('/admin/create', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
+                    body: formData,
                 });
                 const result = await response.json();
-                if (response.ok) {
-                    showToast(result.message, "success");
+                if (result.ok) {
+                    // const result = await response.json();
+                    showToast("Món ăn đã được lưu!", "success");
+                    // console.log(result);
+                    resetForm();
                     setTimeout(() => {
-                        window.location = "/admin/products";
-                    }, 1500);
+                        // window.location.href = "/admin/products";
+                        window.location.reload();
+                    }, 1000); 
                 } else {
-                    throw new Error("Không thể lưu món ăn.");
+                    // throw new Error("Không thể lưu món ăn.");
                     showToast("Không thể tạo món", "error");
                 }
             } catch (error) {
@@ -535,7 +551,7 @@
             }
 
             // Gửi yêu cầu PUT đến API để cập nhật món ăn
-            fetch(`http://localhost:4000/admin/products/update`, {
+            fetch('http://localhost:4000/admin/products/update', {
                 method: 'PATCH',
                 body: formData
             })
@@ -630,42 +646,55 @@
     <!-- Cập nhật trạng thái product -->
     <script>
         document.querySelectorAll('.js-toggle-status').forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', async function () {
                 // Lấy thông tin sản phẩm từ thuộc tính data
                 const parent = this.closest('.item');
                 const productId = parent.getAttribute('data-id');
-                const isCurrentlyAvailable = this.textContent.trim() === 'Hết món';
+                //const isCurrentlyAvailable = this.textContent.trim() === 'Hết món';
+                const currentStatus = parent.querySelector("[status]");
 
+                console.log(currentStatus);
+                const isCurrentlyAvailable = currentStatus.getAttribute("status");
+                console.log("current status: ",isCurrentlyAvailable);
+                console.log("Product id: ",productId);
+
+
+                try{
                 // Gửi yêu cầu cập nhật trạng thái lên server
-                fetch(`/admin/products/change-status/${productId}`, {
+                const response = await fetch('/admin/products/change-status', {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ status: isCurrentlyAvailable }) // Đổi trạng thái
+                    body: JSON.stringify({id: productId,  status: isCurrentlyAvailable }) // Đổi trạng thái
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Cập nhật giao diện
-                            if (isCurrentlyAvailable) {
-                                // Nếu trước đó là "Còn món", đổi thành "Hết món"
-                                parent.querySelector('.text-green-500').classList.remove('text-green-500');
-                                parent.querySelector('.text-green-500').classList.add('text-red-500');
-                                parent.querySelector('.text-red-500').textContent = 'Hết món';
-                                this.textContent = 'Còn món'; // Đổi nút trong detail menu
-                            } else {
-                                // Nếu trước đó là "Hết món", đổi thành "Còn món"
-                                parent.querySelector('.text-red-500').classList.remove('text-red-500');
-                                parent.querySelector('.text-red-500').classList.add('text-green-500');
-                                parent.querySelector('.text-green-500').textContent = 'Còn món';
-                                this.textContent = 'Hết món'; // Đổi nút trong detail menu
-                            }
-                        } else {
-                            alert('Có lỗi xảy ra khi cập nhật trạng thái.');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+
+                const data = await response.json();
+                if (data.ok) {
+                    // Cập nhật giao diện
+                    /*if (data.status) {
+                        // Nếu trước đó là "Còn món", đổi thành "Hết món"
+                        parent.querySelector('.text-green-500').classList.remove('text-green-500');
+                        parent.querySelector('.text-green-500').classList.add('text-red-500');
+                        parent.querySelector('.text-red-500').textContent = 'Hết món';
+                        this.textContent = 'Còn món'; // Đổi nút trong detail menu
+
+                    } else {
+                        // Nếu trước đó là "Hết món", đổi thành "Còn món"
+                        parent.querySelector('.text-red-500').classList.remove('text-red-500');
+                        parent.querySelector('.text-red-500').classList.add('text-green-500');
+                        parent.querySelector('.text-green-500').textContent = 'Còn món';
+                        this.textContent = 'Hết món'; // Đổi nút trong detail menu
+                    }*/
+                    showToast("Trạng thái đã được cập nhật thành công!", "success");
+                    window.location.reload();
+                }else {
+                    showToast("Có lỗi xảy ra khi cập nhật trạng thái.", "success");
+                }
+                }catch (error) {
+                    console.error('Error:', error);
+                    showToast("Có lỗi xảy ra khi gửi yêu cầu.", "error");
+                }
             });
         });
     </script>
