@@ -201,14 +201,15 @@ module.exports.updateProduct = async (req, res) => {
 
 // [PATCH] cập nhật trạng thái sản phẩm
 module.exports.updateStatus = async (req, res) => {
+    console.log(req.body);
     const id = req.body.id; // id là id của item
-    const status = req.body.status; // status là trạng thái hiện tại của item
+    const status = req.body.status === 'true'; // status là trạng thái hiện tại của item
 
-    console.log(id);
-    console.log(status);
-
+    const changeStatus = !status;
+    
+    console.log("Change status: ", changeStatus);
     try {
-        const result = await productService.updateStatus(id, status);
+        const result = await productService.updateStatus(id, changeStatus);
         if (result) {
             console.log(result.product_id + "/" + result.status);
             console.log("Update status successfully !");

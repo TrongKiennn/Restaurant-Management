@@ -155,14 +155,15 @@ async function deleteMultiForever(ids){
     }
 
     // thay đổi trạng thái sản phẩm
-async function updateStatus(id, curStatus){
+async function updateStatus(id, status){
     const query = `
         UPDATE products
         SET status = $1
         WHERE product_id = $2
         RETURNING *
     `
-    const status = !curStatus;
+
+    // console.log(status);
     const values = [status, id];
     const result = await pool.query(query, values);
 

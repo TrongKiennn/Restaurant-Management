@@ -58,9 +58,9 @@
                                     <%= item.description %>
                                 </p>
                                 <% if(item.status==true) { %>
-                                    <h4 class="text-green-500 title font-bold text-lg mt-2">Còn món</h4>
+                                    <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>" class="text-green-500 title font-bold text-lg mt-2">Còn món</h4>
                                     <% } else { %>
-                                        <h4 class="text-red-500 title font-bold text-lg mt-2">Hết món</h4>
+                                        <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>"   class="text-red-500 title font-bold text-lg mt-2">Hết món</h4>
                                         <% } %>
                             </div>
                             <!-- Detail menu -->
@@ -649,7 +649,14 @@
                 // Lấy thông tin sản phẩm từ thuộc tính data
                 const parent = this.closest('.item');
                 const productId = parent.getAttribute('data-id');
-                const isCurrentlyAvailable = this.textContent.trim() === 'Hết món';
+                //const isCurrentlyAvailable = this.textContent.trim() === 'Hết món';
+                const currentStatus = parent.querySelector("[status]");
+
+                console.log(currentStatus);
+                const isCurrentlyAvailable = currentStatus.getAttribute("status");
+                console.log("current status: ",isCurrentlyAvailable);
+                console.log("Product id: ",productId);
+
 
                 try{
                 // Gửi yêu cầu cập nhật trạng thái lên server
