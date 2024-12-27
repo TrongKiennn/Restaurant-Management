@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth font-sans">
+
+<head>
+    <link rel="shortcut icon" href="/images/Logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASTEE Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div id="main" class="relative">
+        <!-- #region Header -->
+        <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
+        <!-- #endregion Header -->
+        <div class="z-0 p-4 pt-[200px]">
+            <div class="overflow-x-auto">
+                <table class="min-w-full border-collapse border border-gray-300 text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-2">ID</th>
+                            <th class="border border-gray-300 px-4 py-2">Thời gian</th>
+                            <th class="border border-gray-300 px-4 py-2">Khách hàng</th>
+                            <th class="border border-gray-300 px-4 py-2">Tổng tiền</th>
+                            <th class="border border-gray-300 px-4 py-2">Tình trạng</th>
+                            <th class="border border-gray-300 px-4 py-2">Thanh toán</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-2 text-center align-middle">#01</td>
+                            <td class="border border-gray-300 px-4 py-2 text-center align-middle">25/10/2024 13:58</td>
+                            <td class="border border-gray-300 px-4 py-2 text-center align-middle">Nguyen My</td>
+                            <td class="border border-gray-300 px-4 py-2 text-center align-middle">50.000</td>
+                            <td class="border border-gray-300 px-4 py-2 text-center align-middle">
+                            <select
+                                class="w-full border border-gray-300 rounded-md px-2 py-1 text-center align-middle focus:outline-none focus:ring focus:ring-blue-300"
+                                onchange="updateStatus(this, '#01')"
+                            >
+                                <option value="1">Mới</option>
+                                <option value="2">Sẵn sàng</option>
+                                <option value="3">Đang vận chuyển</option>
+                                <option value="4">Hoàn thành</option>
+                                <option value="5">Đã hủy</option>
+                            </select>
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2 text-center">
+                            <input
+                                type="checkbox"
+                                class="w-5 h-5"
+                                onchange="togglePayment(this, '#01')"
+                            />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
