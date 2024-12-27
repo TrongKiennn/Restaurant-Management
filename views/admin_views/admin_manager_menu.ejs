@@ -564,35 +564,6 @@
             formData.append('price', parseInt(document.getElementById('editFoodPrice').value, 10));
             formData.append('category_id', parseInt(document.getElementById('editCategory_id').value, 10));
 
-
-            // Check which fields have changed and append only changed values
-            /*
-            const newName = document.getElementById('editFoodName').value;
-            if (newName !== originalValues.name) {
-                formData.append('name', document.getElementById('editFoodName').value);
-            }
-
-            const newDescription = document.getElementById('editFoodDescription').value;
-            if (newDescription !== originalValues.description) {
-                formData.append('description', document.getElementById('editFoodDescription').value);
-            }
-
-            const newPrice = document.getElementById('editFoodPrice').value;
-            if (newPrice !== originalValues.price) {
-                formData.append('price', parseInt(document.getElementById('editFoodPrice').value, 10));
-            }
-
-            const newCategory = document.getElementById('editCategory_id').value;
-            if (newCategory !== originalValues.category_id) {
-                formData.append('category_id', parseInt(document.getElementById('editCategory_id').value, 10));
-            }
-            */
-            // Check if new image was selected
-            /*const newImage = fileInputFix.files[0];
-            if (newImage) {
-                formData.append('product_url', newImage);
-            }*/
-
             // Kiểm tra nếu người dùng đã chọn ảnh mới
             const foodImage = document.getElementById('file-input-fix').files[0];
             if (foodImage) {
