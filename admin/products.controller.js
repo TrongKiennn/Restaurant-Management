@@ -181,16 +181,13 @@ module.exports.createProduct = async (req, res) => {
 module.exports.updateProduct = async (req, res) => {
     console.log(req.body);
     console.log(req.file);
+
     // const productData = new FormData(req.body);
 
     // console.log(productData);
 
     try {
-        const file = req.file;
-
-        if (!file) {
-            return res.status(400).json({ ok: false, message: 'Please upload a file' });
-        }
+        const isNewImage = req.body.isNewImage === 'true';
 
         const productData = {
             product_id: parseInt(req.body.product_id),
@@ -198,8 +195,19 @@ module.exports.updateProduct = async (req, res) => {
             description: req.body.description,
             category_id: parseInt(req.body.category_id),
             price: parseInt(req.body.price),
-            product_url: `/uploads/${file.filename}`
         }
+        if (isNewImage) {
+            if (!req.file) {
+                return res.status(400).json({ 
+                    ok: false, 
+                    message: 'New image upload failed' 
+                });
+            }
+            productData.product_url = `/uploads/${req.file.filename}`;
+        } else {
+            productData.product_url = req.body.product_url;
+        }
+
 
         console.log(productData);
 
