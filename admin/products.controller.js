@@ -50,10 +50,8 @@ module.exports.getProductsByKeyword = async (req, res) => {
     try {
         const productList = await productService.getProductsByKeyword(keyTerm);
         if (productList.length === 0) {
-            return res.status(400).json({
-                ok: false,
-                message: "list item are empty",
-                products: []
+            return res.render("admin_views/admin_layouts/no_result",{
+                keyword: keyTerm
             });
         }
         return res.render("admin_views/admin_manager_menu", { products: productList });
