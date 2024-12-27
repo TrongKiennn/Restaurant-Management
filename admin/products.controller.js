@@ -50,11 +50,13 @@ module.exports.getProductsByKeyword = async (req, res) => {
     try {
         const productList = await productService.getProductsByKeyword(keyTerm);
         if (productList.length === 0) {
-            return res
-                .status(400)
-                .json({ ok: false, message: "list item are empty" });
+            return res.status(400).json({
+                ok: false,
+                message: "list item are empty",
+                products: []
+            });
         }
-        return res.render("admin_views/admin_manager_menu", {products: productList});
+        return res.render("admin_views/admin_manager_menu", { products: productList });
     } catch (error) {
         res.status(500).json({
             ok: false,
@@ -228,7 +230,7 @@ module.exports.updateStatus = async (req, res) => {
     const status = req.body.status === 'true'; // status là trạng thái hiện tại của item
 
     const changeStatus = !status;
-    
+
     console.log("Change status: ", changeStatus);
     try {
         const result = await productService.updateStatus(id, changeStatus);
