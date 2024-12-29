@@ -208,7 +208,6 @@ module.exports.updateProduct = async (req, res) => {
             productData.product_url = req.body.product_url;
         }
 
-
         console.log(productData);
 
         const result = await productService.updateProduct(productData);
