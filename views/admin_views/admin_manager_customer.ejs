@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth font-sans">
+
+<head>
+    <link rel="shortcut icon" href="/images/Logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASTEE Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div id="main" class="relative ">
+        <!-- #region Header -->
+        <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
+        <!-- #endregion Header -->
+        <div class="z-[-1] bg-content bg-repeat w-full h-screen fixed"></div>
+
+        <div class="container z-0 mx-auto py-8 pt-[200px] p-10 font-roboto-condensed">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <%# customers.forEach(customer => { %>
+                <div class="detail bg-white shadow-2xl rounded-lg p-4 relative cursor-pointer" data-id="<%#= customer.id %>">
+                    <button class="js-delete absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600">
+                            <i class="fa-solid fa-x"></i>
+                    </button>
+                    <div class="text-center mt-2 text-sm text-gray-500 mb-2">
+                        <%#= customer.id %>
+                         #2024
+                    </div>
+                    <img class="w-20 h-20 rounded-full mx-auto" src="https://via.placeholder.com/80" alt="Avatar">
+                    <div class="text-center mt-4 text-lg font-semibold capitalize">
+                        <%#= customer.name %>
+                        nguyen my
+                    </div>
+                </div>
+                <%# }); %>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
+        <div class="modal-container js-modal-container bg-white w-[500px] min-h-[165px] rounded-xl animate-modalFadeIn">
+            <header class="modal-header text-[25px] font-bold text-center mt-5 mb-5">
+                Bạn chắc chắn muốn xóa người dùng này chứ?
+            </header>
+
+            <div class="mt-9 ml-[4.5rem] mr-[4.5rem] flex justify-between">
+                <button
+                    class="js-modal-Yes w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none p-[1px] cursor-pointer leading-[37px] rounded-2xl hover:opacity-80">
+                    Có
+                </button>
+
+                <button
+                    class="js-modal-No w-[100px] bg-[#984B01] text-[18px] text-white font-bold uppercase border-none cursor-pointer p-[1px] leading-[37px] rounded-2xl hover:opacity-80">
+                    Không
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Xóa user -->
+    <script>
+        const Deletes = document.querySelectorAll('.js-delete')
+        const modalDelete = document.querySelector('.js-modal-delete')
+        const modalNo = document.querySelector('.js-modal-No')
+        const modalYes = document.querySelector('.js-modal-Yes')
+
+        let currentItemToDelete = null; // Biến lưu trữ item đang được chọn để xóa
+
+        function showConfirmDelete() {
+            modalDelete.classList.add('flex')
+            modalDelete.classList.remove('hidden')
+            currentItemToDelete = event.target.closest('.item') // Lưu trữ item cha của nút "Xóa"
+        }
+
+        function hideConfirmDelete() {
+            modalDelete.classList.remove('flex')
+            modalDelete.classList.add('hidden')
+            currentItemToDelete = null
+        }
+
+        async function deleteItem() {
+            if (currentItemToDelete) {
+                const itemId = currentItemToDelete.dataset.id; // Lấy ID của item từ thuộc tính data-id
+                if (!itemId) {
+                    console.error('Không tìm thấy ID để xóa');
+                    showToast('Không thể xác định người cần xóa!');
+                    hideConfirmDelete();
+                    return;
+                }
+                try {
+                    // Gửi yêu cầu DELETE tới backend
+                    const response = await fetch('/admin/users/delete', {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ id: itemId }), // Gửi ID của item tới backend
+                    });
+
+                    if (response.ok) {
+                        // Nếu thành công, xóa item khỏi DOM
+                        currentItemToDelete.remove();
+                        hideConfirmDelete();
+                        showToast('Xóa thành công!');
+                        // Redirect after successful deletion
+                        window.location.href = result.redirectUrl;
+                    } else {
+                        showToast('Có lỗi xảy ra khi xóa!');
+                    }
+                } catch (error) {
+                    console.error('Lỗi khi gửi yêu cầu xóa:', error);
+                    showToast('Không thể xóa, vui lòng thử lại sau!');
+                }
+            }
+        }
+
+        for (const Delete of Deletes) {
+            Delete.addEventListener('click', showConfirmDelete)
+        }
+
+        modalNo.addEventListener('click', hideConfirmDelete)
+        modalYes.addEventListener('click', deleteItem)
+    </script>
+
+    <script>
+        document.querySelectorAll('.detail').forEach(function(detail) {
+        detail.addEventListener('click', function() {
+            window.location.href = 'http://localhost:4000/admin/detailCustomer'; 
+        });
+    });
+    </script>
+</body>
+</html>
+

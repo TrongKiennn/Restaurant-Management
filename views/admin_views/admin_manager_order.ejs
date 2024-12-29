@@ -21,127 +21,128 @@
     <div id="main" class="relative">
         <!-- #region Header -->
         <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
-            <!-- #endregion Header -->
-            <div class="z-0 p-4 pt-[200px]">
-                <!-- Search & Filter Section -->
-                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <!-- Search -->
-                        <div class="relative">
-                            <input type="text" placeholder="Tìm kiếm mã đơn hàng..."
-                                class="w-full pl-10 pr-4 py-2 border-2 border-[#D9BB1C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D1B31B]/50">
-                            <i class="fas fa-search absolute left-3 top-3 text-[#D9BB1C]"></i>
-                        </div>
+        <!-- #endregion Header -->
+        <div class="z-[-1] bg-content bg-repeat w-full h-screen fixed"></div>
+        <div class="z-0 p-4 pt-[150px] font-roboto-condensed">
+            <!-- Search & Filter Section -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <!-- Search -->
+                    <div class="relative">
+                        <input type="text" placeholder="Tìm kiếm mã đơn hàng..."
+                            class="w-full pl-10 pr-4 py-2 border-2 border-[#D9BB1C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D1B31B]/50">
+                        <i class="fas fa-search absolute left-3 top-3 text-[#D9BB1C]"></i>
+                    </div>
 
-                        <!-- Order Status -->
-                        <select class="w-full p-2 border-2 border-gray-200 rounded-lg">
-                            <option disabled selected value="">Tình trạng đơn hàng</option>
-                            <option value="pending">Chờ xác nhận</option>
-                            <option value="confirmed">Đã xác nhận</option>
-                            <option value="delivered">Đã bàn giao cho đơn vị vận chuyển</option>
-                            <option value="in_transit">Đang vận chuyển</option>
-                            <option value="completed">Giao hàng thành công</option>
-                            <option value="canceled">Đã hủy</option>
-                        </select>
+                    <!-- Order Status -->
+                    <select class="w-full p-2 border-2 border-gray-200 rounded-lg">
+                        <option disabled selected value="">Tình trạng đơn hàng</option>
+                        <option value="pending">Chờ xác nhận</option>
+                        <option value="confirmed">Đã xác nhận</option>
+                        <option value="delivered">Đã bàn giao cho đơn vị vận chuyển</option>
+                        <option value="in_transit">Đang vận chuyển</option>
+                        <option value="completed">Giao hàng thành công</option>
+                        <option value="canceled">Đã hủy</option>
+                    </select>
 
-                        <!-- Payment Status -->
-                        <select class="w-full p-2 border-2 border-gray-200 rounded-lg">
-                            <option selected disabled value="">Trạng thái thanh toán</option>
-                            <option value="unpaid">Chưa thanh toán</option>
-                            <option value="paid">Đã thanh toán</option>
-                        </select>
+                    <!-- Payment Status -->
+                    <select class="w-full p-2 border-2 border-gray-200 rounded-lg">
+                        <option selected disabled value="">Trạng thái thanh toán</option>
+                        <option value="unpaid">Chưa thanh toán</option>
+                        <option value="paid">Đã thanh toán</option>
+                    </select>
 
-                        <!-- Buttons -->
-                        <div class="flex gap-2">
-                            <button class="flex-1 px-4 py-2 bg-[#D9BB1C] text-white rounded-lg hover:bg-[#D1B31B]">
-                                Lọc
-                            </button>
-                            <button class="flex-1 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
-                                Tất cả đơn hàng
-                            </button>
-                        </div>
+                    <!-- Buttons -->
+                    <div class="flex gap-2">
+                        <button class="flex-1 px-4 py-2 bg-[#D9BB1C] text-white rounded-lg hover:bg-[#D1B31B]">
+                            Lọc
+                        </button>
+                        <button class="flex-1 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                            Tất cả đơn hàng
+                        </button>
                     </div>
                 </div>
-
-                <!-- Orders Table -->
-                <div class="bg-white rounded-lg shadow-lg overflow-x-auto">
-                    <table class="w-full">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mã đơn hàng
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thời gian
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Khách hàng
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tổng tiền
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tình trạng
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thanh toán
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thao tác
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            <% orders.forEach(order=> { %>
-                                <tr class="hover:bg-gray-50">
-                                    <td order-id="<%= order.order_id %>" class="px-6 py-4 text-sm">#<%= order.order_code %>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <%= new Date(order.created_at).toLocaleString('vi-VN', { day: '2-digit' ,
-                                            month: '2-digit' , year: 'numeric' , hour: '2-digit' , minute: '2-digit' ,
-                                            second: '2-digit' , hour12: false }) %>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm" data-email="<%= order.email %>"
-                                        data-phone="<%= order.phone %>" data-address="<%= order.address %>">
-                                        <%= order.name %>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <%= order.total %>đ
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 text-xs rounded-full 
-                                        <%= order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
-                                           order.status === 'Confirmed' ? 'bg-blue-100 text-blue-800' :
-                                           order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                                             order.status === 'In Transit' ? 'bg-purple-100 text-purple-800' :
-                                               order.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                                           order.status === 'Canceled' ? 'bg-red-100 text-red-800' : '' %>">
-                                            <%= order.status %>
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 text-xs rounded-full 
-                                        <%= order.status_payment === 'Paid' ? 'bg-green-100 text-green-800' :
-                                           order.status_payment === 'Unpaid' ? 'bg-red-100 text-red-800' :
-                                           'bg-yellow-100 text-yellow-800' %>">
-                                            <%= order.status_payment %>
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 space-x-2">
-                                        <button view-detail order-id="<%= order.order_id %>" class="text-blue-600 hover:text-blue-800"
-                                            title="Xem chi tiết">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="text-green-600 hover:text-green-800" title="Cập nhật">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="text-yellow-600 hover:text-yellow-800" title="In hóa đơn">
-                                            <i class="fas fa-print"></i>
-                                        </button>
-                                        <button class="text-red-600 hover:text-red-800" title="Hủy đơn">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-
             </div>
+
+            <!-- Orders Table -->
+            <div class="bg-white rounded-lg shadow-lg overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mã đơn hàng
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thời gian
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Khách hàng
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tổng tiền
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tình trạng
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thanh toán
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thao tác
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <% orders.forEach(order=> { %>
+                            <tr class="hover:bg-gray-50">
+                                <td order-id="<%= order.order_id %>" class="px-6 py-4 text-sm">#<%= order.order_code %>
+                                </td>
+                                <td class="px-6 py-4 text-sm">
+                                    <%= new Date(order.created_at).toLocaleString('vi-VN', { day: '2-digit' ,
+                                        month: '2-digit' , year: 'numeric' , hour: '2-digit' , minute: '2-digit' ,
+                                        second: '2-digit' , hour12: false }) %>
+                                </td>
+                                <td class="px-6 py-4 text-sm" data-email="<%= order.email %>"
+                                    data-phone="<%= order.phone %>" data-address="<%= order.address %>">
+                                    <%= order.name %>
+                                </td>
+                                <td class="px-6 py-4 text-sm">
+                                    <%= order.total %>đ
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs rounded-full 
+                                    <%= order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
+                                        order.status === 'Confirmed' ? 'bg-blue-100 text-blue-800' :
+                                        order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                                            order.status === 'In Transit' ? 'bg-purple-100 text-purple-800' :
+                                            order.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                                        order.status === 'Canceled' ? 'bg-red-100 text-red-800' : '' %>">
+                                        <%= order.status %>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs rounded-full 
+                                    <%= order.status_payment === 'Paid' ? 'bg-green-100 text-green-800' :
+                                        order.status_payment === 'Unpaid' ? 'bg-red-100 text-red-800' :
+                                        'bg-yellow-100 text-yellow-800' %>">
+                                        <%= order.status_payment %>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 space-x-2">
+                                    <button view-detail order-id="<%= order.order_id %>" class="text-blue-600 hover:text-blue-800"
+                                        title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-green-600 hover:text-green-800" title="Cập nhật">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-yellow-600 hover:text-yellow-800" title="In hóa đơn">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                    <button class="text-red-600 hover:text-red-800" title="Hủy đơn">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </div>
     <!-- MODAL xem chi tiết order -->
 
