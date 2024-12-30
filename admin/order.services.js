@@ -45,8 +45,74 @@ async function getOrderById(orderId) {
 }
 
 
+async function updateOrder(id, status, payment_status) {
+    const query = `
+        UPDATE orders
+        SET status = $1, status_payment = $2
+        WHERE order_id = $3
+        RETURNING *
+    `
+    const values = [
+        status,
+        payment_status,
+        id
+    ];
+    try {
+        const result = await pool.query(query, values);
+
+        return result.rows[0];
+    } catch (error) {
+        console.log("Error updating order: ", error);
+
+        throw new Error("Error updating order");
+    }
+}
+
+async function getOrderByKeyword(keyword) {
+    const query = `
+        SELECT * FROM orders
+        WHERE order_code ILIKE $1
+    `;
+    const values = [`%${keyword}%`];
+    const result = await pool.query(query, values);
+    return result.rows;
+}
+
+async function filterOrder(status, payment_status) {
+    try {
+        const values = [];
+        let query = `
+        SELECT orders.*, users.name, users.email 
+        FROM orders 
+        JOIN users ON orders.user_id = users.id
+        WHERE 1=1
+    `;
+
+        if (status) {
+            values.push(status);
+            query += ` AND orders.status = $${values.length}`;
+        }
+
+        if (payment_status) {
+            values.push(payment_status);
+            query += ` AND orders.status_payment = $${values.length}`;
+        }
+
+        query += ` ORDER BY orders.created_at DESC`;
+        const result = await pool.query(query, values);
+        return result.rows;
+    } catch (error) {
+        console.log("Error filtering order: ", error);
+        throw new Error("Error filtering order");
+    }
+
+}
+
 module.exports = {
     getAllOrder,
     calculateTotalPrice,
-    getOrderById
+    getOrderById,
+    updateOrder,
+    getOrderByKeyword,
+    filterOrder
 }

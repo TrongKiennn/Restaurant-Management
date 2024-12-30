@@ -5,7 +5,7 @@ if(search){
     search.addEventListener("submit",async (e) =>  {
         e.preventDefault();
         const searchValue = search.querySelector("[name='keyword']").value;
-        const baseUrl = '/admin/products/search';
+        // const baseUrl = '/admin/products/search';
         const searchParams = new URLSearchParams();
         
         if(searchValue) {
@@ -19,3 +19,4 @@ if(search){
         window.location.href = searchUrl;
     });
 }
+
