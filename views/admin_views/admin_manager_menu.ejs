@@ -21,85 +21,84 @@
     <div id="main" class="relative">
         <!-- #region Header -->
         <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
-            <!-- #endregion Header -->
-
-            <div id="content" class="z-0 absolute w-full font-roboto-condensed bg-content bg-repeat">
-                <div class="mt-[100px] flex ml-75p">
-                    <div
-                        class="js-add h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
-                        Thêm món
-                        <i class="fa-solid fa-circle-plus ml-2"></i>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px] overflow-hidden">
-                    <% if (products.length===0) { %>
-                        <!-- Hiển thị thông báo khi không có sản phẩm -->
-                        <div class="col-span-4 text-center text-[22px] text-gray-500 font-medium">
-                            Không có sản phẩm nào phù hợp với từ khóa tìm kiếm.
-                        </div>
-                        <% } else { %>
-                            <!-- Dynamically generate menu items -->
-                            <% products.forEach(item=> { %>
-                                <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden"
-                                    data-id="<%= item.product_id %>" data-img="<%= item.product_url %>"
-                                    data-name="<%= item.name %>" data-description="<%= item.description %>"
-                                    data-price="<%= item.price %>" data-category="<%= item.category_id %>">
-                                    <!-- Image -->
-                                    <div class="image bg-gray-200 h-[150px] w-full rounded-t-lg"
-                                        style="background-image: url('<%= item.image_url %>'); background-size: cover; background-position: center;">
-                                        <img src="<%= item.product_url %>" alt="<%= item.name %>"
-                                            class="w-full h-full object-cover transition-opacity duration-300"
-                                            onerror="this.onerror=null; this.src='/admin/images/default-food.png';" />
-                                    </div>
-
-                                    <!-- Content -->
-                                    <div class="content p-4">
-                                        <h3 class="title font-bold text-lg mb-2">
-                                            <%= item.name %>
-                                        </h3>
-                                        <h4 class="title font-bold text-lg mb-2">
-                                            <%= parseInt(item.price).toLocaleString('vi-VN') %>đ
-                                        </h4>
-                                        <p class="description text-sm text-gray-600">
-                                            <%= item.description %>
-                                        </p>
-                                        <% if(item.status==true) { %>
-                                            <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>"
-                                                class="text-green-500 title font-bold text-lg mt-2">Còn món</h4>
-                                            <% } else { %>
-                                                <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>"
-                                                    class="text-red-500 title font-bold text-lg mt-2">Hết món</h4>
-                                                <% } %>
-                                    </div>
-                                    <!-- Detail menu -->
-                                    <div
-                                        class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-white opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
-                                        <% if (item.status) { %>
-                                            <button
-                                                class="js-toggle-status bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Hết
-                                                món</button>
-                                            <% } else { %>
-                                                <button
-                                                    class="js-toggle-status bg-blue-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Còn
-                                                    món</button>
-                                                <% } %>
-                                                    <button
-                                                        class="js-delete bg-red-500 px-4 py-2 rounded-md mb-2 hover:opacity-80">Xóa</button>
-                                                    <button
-                                                        class="js-edit bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh
-                                                        sửa</button>
-                                    </div>
-                                </div>
-                                <% }); %>
-                                    <% } %>
+        <!-- #endregion Header -->
+        <div class="z-[-1] bg-content bg-repeat w-full h-screen fixed"></div>
+        <div id="content" class="z-0 absolute w-full font-roboto-condensed">
+            <div class="mt-[100px] flex ml-75p">
+                <div
+                    class="js-add h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
+                    Thêm món
+                    <i class="fa-solid fa-circle-plus ml-2"></i>
                 </div>
             </div>
+
+            <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px] overflow-hidden">
+                <% if (products.length===0) { %>
+                    <!-- Hiển thị thông báo khi không có sản phẩm -->
+                    <div class="col-span-4 text-center text-[22px] text-gray-500 font-medium">
+                        Không có sản phẩm nào phù hợp với từ khóa tìm kiếm.
+                    </div>
+                    <% } else { %>
+                        <!-- Dynamically generate menu items -->
+                        <% products.forEach(item=> { %>
+                            <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden"
+                                data-id="<%= item.product_id %>" data-img="<%= item.product_url %>"
+                                data-name="<%= item.name %>" data-description="<%= item.description %>"
+                                data-price="<%= item.price %>" data-category="<%= item.category_id %>">
+                                <!-- Image -->
+                                <div class="image bg-gray-200 h-[150px] w-full rounded-t-lg"
+                                    style="background-image: url('<%= item.image_url %>'); background-size: cover; background-position: center;">
+                                    <img src="<%= item.product_url %>" alt="<%= item.name %>"
+                                        class="w-full h-full object-cover transition-opacity duration-300"
+                                        onerror="this.onerror=null; this.src='/admin/images/default-food.png';" />
+                                </div>
+
+                                <!-- Content -->
+                                <div class="content p-4">
+                                    <h3 class="title font-bold text-lg mb-2">
+                                        <%= item.name %>
+                                    </h3>
+                                    <h4 class="title font-bold text-lg mb-2">
+                                        <%= parseInt(item.price).toLocaleString('vi-VN') %>đ
+                                    </h4>
+                                    <p class="description text-sm text-gray-600">
+                                        <%= item.description %>
+                                    </p>
+                                    <% if(item.status==true) { %>
+                                        <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>"
+                                            class="text-green-500 title font-bold text-lg mt-2">Còn món</h4>
+                                        <% } else { %>
+                                            <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>"
+                                                class="text-red-500 title font-bold text-lg mt-2">Hết món</h4>
+                                            <% } %>
+                                </div>
+                                <!-- Detail menu -->
+                                <div
+                                    class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-white opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
+                                    <% if (item.status) { %>
+                                        <button
+                                            class="js-toggle-status bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Hết
+                                            món</button>
+                                        <% } else { %>
+                                            <button
+                                                class="js-toggle-status bg-blue-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Còn
+                                                món</button>
+                                            <% } %>
+                                                <button
+                                                    class="js-delete bg-red-500 px-4 py-2 rounded-md mb-2 hover:opacity-80">Xóa</button>
+                                                <button
+                                                    class="js-edit bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh
+                                                    sửa</button>
+                                </div>
+                            </div>
+                            <% }); %>
+                                <% } %>
+            </div>
+        </div>
     </div>
 
     <!-- MODAL Xóa món -->
-    <div
-        class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
+    <div class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[500px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <header class="modal-header text-[25px] font-bold text-center mt-5 mb-5">
                 Bạn chắc chắn muốn xóa món chứ?
@@ -120,8 +119,7 @@
     </div>
 
     <!-- MODAL Thêm món -->
-    <div
-        class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
+    <div class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[900px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Thêm Món</h2>
 
@@ -177,8 +175,7 @@
     </div>
 
     <!-- MODAL Sửa món -->
-    <div
-        class="modal-edit js-modal-edit z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
+    <div class="modal-edit js-modal-edit z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[900px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Chỉnh sửa món
             </h2>
@@ -469,16 +466,12 @@
                 });
                 const result = await response.json();
                 if (result.ok) {
-                    // const result = await response.json();
                     showToast("Món ăn đã được lưu!", "success");
-                    // console.log(result);
                     resetForm();
                     setTimeout(() => {
-                        // window.location.href = "/admin/products";
                         window.location.reload();
                     }, 1000);
                 } else {
-                    // throw new Error("Không thể lưu món ăn.");
                     showToast("Không thể tạo món", "error");
                 }
             } catch (error) {
