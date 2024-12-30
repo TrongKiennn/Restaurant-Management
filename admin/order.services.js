@@ -108,11 +108,33 @@ async function filterOrder(status, payment_status) {
 
 }
 
+async function deleteOrder(orderId) {
+    const queryORder = `
+        DELETE FROM orders
+        WHERE order_id = $1
+    `;
+    const queryDetailOrder = `
+        DELETE FROM detail_orders
+        WHERE order_id = $1
+    `;
+    const values = [orderId];
+    try {
+        await pool.query(queryDetailOrder, values);
+        await pool.query(queryORder, values);
+        return true;
+    } catch (error) {
+        console.log("Error deleting order: ", error);
+        throw new Error("Error deleting order");
+    }
+
+}
+
 module.exports = {
     getAllOrder,
     calculateTotalPrice,
     getOrderById,
     updateOrder,
     getOrderByKeyword,
-    filterOrder
+    filterOrder,
+    deleteOrder
 }

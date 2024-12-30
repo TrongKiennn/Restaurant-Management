@@ -281,6 +281,7 @@ deleteButtons.forEach(btn => {
         const orderCode = row.querySelector('td:first-child').textContent;
 
         orderToDelete = orderId;
+        console.log(orderToDelete);
         document.getElementById('deleteOrderId').textContent = orderCode;
 
         // Show modal with animation
@@ -295,8 +296,8 @@ deleteButtons.forEach(btn => {
 
 document.getElementById('confirmDelete').addEventListener('click', async () => {
     try {
-        const response = await fetch(`/admin/orders/${orderToDelete}/cancel`, {
-            method: 'PATCH'
+        const response = await fetch(`/admin/orders/${orderToDelete}/delete`, {
+            method: 'DELETE',
         });
 
         if (response.ok) {

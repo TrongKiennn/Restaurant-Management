@@ -3,7 +3,7 @@ const orderService = require("./order.services");
 const { parse } = require("dotenv");
 const { json } = require("express");
 
-
+// Get all order
 module.exports.getAllOrder = async (req, res) => {
     productsList = [];
     try {
@@ -17,7 +17,7 @@ module.exports.getAllOrder = async (req, res) => {
         console.log(error);
     }
 }
-
+// Get order by id
 module.exports.getOrderById = async (req, res) => {
     try {
         const orderId = req.params.id;
@@ -36,7 +36,7 @@ module.exports.getOrderById = async (req, res) => {
     }
 }
 
-
+// Update order
 module.exports.updateOrder = async (req, res) => {
     const id = req.params.id;
     const status = req.body.status;
@@ -63,7 +63,7 @@ module.exports.updateOrder = async (req, res) => {
         });
     }
 }
-
+// Get order by keyword
 module.exports.getOrderByKeyword = async (req, res) => {
     const keyword = req.query.keyword;
     console.log(keyword);
@@ -88,7 +88,7 @@ module.exports.getOrderByKeyword = async (req, res) => {
         });
     }
 }
-
+// Filter order
 module.exports.filterOrder = async (req, res) => {
     console.log(req.query);
 
@@ -134,3 +134,28 @@ module.exports.filterOrder = async (req, res) => {
         });
     }    
 }
+// Delete order
+module.exports.deleteOrder = async (req, res) => {
+    const id = req.params.id;
+    
+    console.log(id);
+
+    try {
+        const result = await orderService.deleteOrder(id);
+        if (result) {
+            res.status(200).json({
+                ok: true
+            });
+        }
+        else {
+            res.status(400).json({
+                ok: false
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: error.message
+        });
+    }
+};
