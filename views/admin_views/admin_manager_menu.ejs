@@ -21,84 +21,110 @@
     <div id="main" class="relative">
         <!-- #region Header -->
         <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
-        <!-- #endregion Header -->
-        <div class="z-[-1] bg-content bg-repeat w-full h-screen fixed"></div>
-        <div id="content" class="z-0 absolute w-full font-roboto-condensed">
-            <div class="mt-[100px] flex ml-75p">
-                <div
-                    class="js-add h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
-                    Thêm món
-                    <i class="fa-solid fa-circle-plus ml-2"></i>
+            <!-- #endregion Header -->
+            <div class="z-[-1] bg-content bg-repeat w-full h-screen fixed"></div>
+            <div id="content" class="z-0 absolute w-full font-roboto-condensed">
+                <div class="mt-[100px] flex ml-75p">
+                    <div
+                        class="js-add h-[50px] w-[170px] text-[25px] bg-[#D9BB1C] font-medium rounded-[20px] text-center leading-[3rem] mr-[65px] cursor-pointer hover:bg-[#D1B31B]">
+                        Thêm món
+                        <i class="fa-solid fa-circle-plus ml-2"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px] overflow-hidden">
+                    <% if (products.length===0) { %>
+                        <!-- Hiển thị thông báo khi không có sản phẩm -->
+                        <div class="col-span-4 text-center text-[22px] text-gray-500 font-medium">
+                            Không có sản phẩm nào phù hợp với từ khóa tìm kiếm.
+                        </div>
+                        <% } else { %>
+                            <!-- Dynamically generate menu items -->
+                            <% products.forEach(item=> { %>
+                                <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden"
+                                    data-id="<%= item.product_id %>" data-status="<%= item.status %>"
+                                    data-img="<%= item.product_url %>" data-name="<%= item.name %>"
+                                    data-description="<%= item.description %>" data-price="<%= item.price %>"
+                                    data-category="<%= item.category_id %>" data-discount="<%= item.discount %>"
+                                    data-discount-active="<%= item.is_discount_active %>">
+
+                                    <!-- Image -->
+                                    <!-- Image with Status Badge -->
+                                    <div class="image bg-gray-200 h-[150px] w-full rounded-t-lg relative">
+                                        <img src="<%= item.product_url %>" alt="<%= item.name %>" class="w-full h-full object-cover transition-opacity duration-300 
+                    <%= !item.status ? 'opacity-50' : '' %>"
+                                            onerror="this.onerror=null; this.src='/admin/images/default-food.png';" />
+
+                                        <!-- Status Badge -->
+                                        <div class="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-medium
+                    <%= item.status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+                                            <%= item.status ? 'Còn món' : 'Hết món' %>
+                                        </div>
+                                    </div>
+                                    <!-- Content -->
+                                    <div class="p-4 space-y-2">
+                                        <h3 class="text-lg font-semibold text-gray-800">
+                                            <%= item.name %>
+                                        </h3>
+
+                                        <!-- Price Section -->
+                                        <div class="space-y-1">
+                                            <% if (item.is_discount_active && item.discount> 0) { %>
+                                                <div class="flex items-center space-x-2">
+                                                    <span class="text-gray-500 line-through text-sm">
+                                                        <%= parseInt(item.price).toLocaleString('vi-VN') %>đ
+                                                    </span>
+                                                    <span class="text-red-500 font-bold">
+                                                        <%= parseInt(item.price * (1 -
+                                                            item.discount/100)).toLocaleString('vi-VN') %>đ
+                                                    </span>
+                                                </div>
+                                                <% } else { %>
+                                                    <div class="text-gray-800 font-bold">
+                                                        <%= parseInt(item.price).toLocaleString('vi-VN') %>đ
+                                                    </div>
+                                                    <% } %>
+                                        </div>
+
+                                        <!-- Discount Status -->
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-gray-600">Khuyến mãi:</span>
+                                            <span class="<%= item.discount > 0 ? 'text-red-500' : 'text-gray-500' %>">
+                                                <%= item.discount %>%
+                                            </span>
+                                        </div>
+
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-gray-600">Trạng thái KM:</span>
+                                            <span
+                                                class="<%= item.is_discount_active ? 'text-green-500' : 'text-gray-500' %>">
+                                                <%= item.is_discount_active ? 'Đang áp dụng' : 'Không áp dụng' %>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div
+                                        class="absolute inset-0 bg-black/50 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button
+                                            class="js-edit text-white hover:text-[#D9BB1C] text-2xl transition-colors">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button
+                                            class="js-delete text-white hover:text-red-500 text-2xl transition-colors">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <% }) %>
+                                    <% } %>
                 </div>
             </div>
-
-            <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px] overflow-hidden">
-                <% if (products.length===0) { %>
-                    <!-- Hiển thị thông báo khi không có sản phẩm -->
-                    <div class="col-span-4 text-center text-[22px] text-gray-500 font-medium">
-                        Không có sản phẩm nào phù hợp với từ khóa tìm kiếm.
-                    </div>
-                    <% } else { %>
-                        <!-- Dynamically generate menu items -->
-                        <% products.forEach(item=> { %>
-                            <div class="item bg-white rounded-lg shadow-xl relative group overflow-hidden"
-                                data-id="<%= item.product_id %>" data-img="<%= item.product_url %>"
-                                data-name="<%= item.name %>" data-description="<%= item.description %>"
-                                data-price="<%= item.price %>" data-category="<%= item.category_id %>">
-                                <!-- Image -->
-                                <div class="image bg-gray-200 h-[150px] w-full rounded-t-lg"
-                                    style="background-image: url('<%= item.image_url %>'); background-size: cover; background-position: center;">
-                                    <img src="<%= item.product_url %>" alt="<%= item.name %>"
-                                        class="w-full h-full object-cover transition-opacity duration-300"
-                                        onerror="this.onerror=null; this.src='/admin/images/default-food.png';" />
-                                </div>
-
-                                <!-- Content -->
-                                <div class="content p-4">
-                                    <h3 class="title font-bold text-lg mb-2">
-                                        <%= item.name %>
-                                    </h3>
-                                    <h4 class="title font-bold text-lg mb-2">
-                                        <%= parseInt(item.price).toLocaleString('vi-VN') %>đ
-                                    </h4>
-                                    <p class="description text-sm text-gray-600">
-                                        <%= item.description %>
-                                    </p>
-                                    <% if(item.status==true) { %>
-                                        <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>"
-                                            class="text-green-500 title font-bold text-lg mt-2">Còn món</h4>
-                                        <% } else { %>
-                                            <h4 status="<%= item.status %>" idProduct="<%= item.product_id %>"
-                                                class="text-red-500 title font-bold text-lg mt-2">Hết món</h4>
-                                            <% } %>
-                                </div>
-                                <!-- Detail menu -->
-                                <div
-                                    class="detail-menu absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 text-white opacity-0 group-hover:opacity-100 group-hover:rounded-t-lg transition-opacity duration-300 flex flex-col justify-center items-center">
-                                    <% if (item.status) { %>
-                                        <button
-                                            class="js-toggle-status bg-yellow-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Hết
-                                            món</button>
-                                        <% } else { %>
-                                            <button
-                                                class="js-toggle-status bg-blue-400 px-4 py-2 rounded-md mb-2 hover:opacity-80">Còn
-                                                món</button>
-                                            <% } %>
-                                                <button
-                                                    class="js-delete bg-red-500 px-4 py-2 rounded-md mb-2 hover:opacity-80">Xóa</button>
-                                                <button
-                                                    class="js-edit bg-green-500 px-4 py-2 rounded-md hover:opacity-80">Chỉnh
-                                                    sửa</button>
-                                </div>
-                            </div>
-                            <% }); %>
-                                <% } %>
-            </div>
-        </div>
     </div>
 
     <!-- MODAL Xóa món -->
-    <div class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
+    <div
+        class="modal-delete js-modal-delete z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[500px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <header class="modal-header text-[25px] font-bold text-center mt-5 mb-5">
                 Bạn chắc chắn muốn xóa món chứ?
@@ -119,7 +145,8 @@
     </div>
 
     <!-- MODAL Thêm món -->
-    <div class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
+    <div
+        class="modal-add js-modal-add z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[900px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Thêm Món</h2>
 
@@ -175,7 +202,8 @@
     </div>
 
     <!-- MODAL Sửa món -->
-    <div class="modal-edit js-modal-edit z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
+    <div
+        class="modal-edit js-modal-edit z-[3] fixed top-0 right-0 bottom-0 left-0 bg-black/40 flex items-center justify-center font-roboto-condensed hidden">
         <div class="modal-container js-modal-container bg-white w-[900px] min-h-[165px] rounded-xl animate-modalFadeIn">
             <h2 class="text-2xl font-bold pt-4 pb-4 mb-4 text-center bg-[#984B01] rounded-t-xl text-white">Chỉnh sửa món
             </h2>
@@ -234,6 +262,56 @@
                         </select>
                     </div>
 
+                    <!-- Status Toggle -->
+                    <!-- Add before discount section in edit form -->
+                    <div class="space-y-4 p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-sm font-medium text-gray-700">Trạng thái món</label>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="editStatus" name="status" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 rounded-full peer 
+                        peer-focus:ring-4 peer-focus:ring-[#984B01]/50 
+                        peer-checked:after:translate-x-full peer-checked:after:border-white 
+                        after:content-[''] after:absolute after:top-0.5 after:left-[2px] 
+                        after:bg-white after:border-gray-300 after:border after:rounded-full 
+                        after:h-5 after:w-5 after:transition-all peer-checked:bg-[#984B01]">
+                                </div>
+                                <span class="ml-3 text-sm font-medium text-gray-700" id="statusText"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Discount Section -->
+                    <div class="space-y-4 p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-sm font-medium text-gray-700">Khuyến mãi</label>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="editDiscountActive" class="sr-only peer"
+                                    name="is_discount_active">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 
+                           peer-focus:ring-[#984B01]/50 rounded-full peer 
+                           peer-checked:after:translate-x-full peer-checked:after:border-white 
+                           after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
+                           after:bg-white after:border-gray-300 after:border after:rounded-full 
+                           after:h-5 after:w-5 after:transition-all peer-checked:bg-[#984B01]">
+                                </div>
+                                <span class="ml-3 text-sm font-medium text-gray-700">Áp dụng</span>
+                            </label>
+                        </div>
+
+                        <div id="discountInputGroup" class="transition-all duration-300">
+                            <label for="editDiscount" class="block text-sm font-medium text-gray-700 mb-1">
+                                Giảm giá (%)
+                            </label>
+                            <div class="relative">
+                                <input type="number" id="editDiscount" name="discount" min="0" max="100" class="block w-full px-3 py-2 border border-gray-300 rounded-md 
+                              focus:ring-[#984B01] focus:border-[#984B01] 
+                              disabled:bg-gray-100 disabled:text-gray-500" placeholder="Nhập % giảm giá">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="flex items-center justify-between">
                         <button type="button"
                             class="js-modal-edit-Cancel bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Hủy</button>
@@ -499,11 +577,18 @@
 
                 // Lấy dữ liệu từ thuộc tính `data-*` của hàng
                 const productId = item.getAttribute('data-id');
+                const status = item.getAttribute('data-status') === 'true';
                 const foodImg = item.getAttribute('data-img');
                 const foodName = item.getAttribute('data-name');
                 const foodDescription = item.getAttribute('data-description');
                 const foodPrice = item.getAttribute('data-price');
                 const foodCategoryId = item.getAttribute('data-category');
+                const discount = item.getAttribute('data-discount');
+                const isDiscountActive = item.getAttribute('data-discount-active');
+
+                // Set initial status
+        document.getElementById('editStatus').checked = status;
+        document.getElementById('statusText').textContent = status ? 'Còn món' : 'Hết món';
 
                 // store original values
                 originalValues = {
@@ -513,6 +598,8 @@
                     description: foodDescription,
                     price: foodPrice,
                     category_id: foodCategoryId,
+                    discount: discount,
+                    is_discount_active: isDiscountActive
                 };
 
                 // Hiển thị hình ảnh trong modal
@@ -532,6 +619,8 @@
                 document.getElementById('editFoodDescription').value = foodDescription;
                 document.getElementById('editFoodPrice').value = foodPrice;
                 document.getElementById('editCategory_id').value = foodCategoryId;
+                document.getElementById('editDiscount').value = discount;
+                document.getElementById('editDiscountActive').checked = isDiscountActive;
 
                 // Lưu productId để sử dụng khi gửi request
                 window.currentEditingFood = { product_id: productId }; // Lưu ID vào biến toàn cục
@@ -540,6 +629,7 @@
                 editModal.classList.remove('hidden');
             });
         });
+
 
         // Lắng nghe sự kiện "Hủy" để đóng modal
         modalEditCancel.addEventListener('click', () => {
@@ -556,7 +646,15 @@
             formData.append('description', document.getElementById('editFoodDescription').value);
             formData.append('price', parseInt(document.getElementById('editFoodPrice').value, 10));
             formData.append('category_id', parseInt(document.getElementById('editCategory_id').value, 10));
+            formData.append('status', document.getElementById('editStatus').checked);
 
+            // Handle discount
+            const isDiscountActive = document.getElementById('editDiscountActive').checked;
+            const discountValue = isDiscountActive ?
+                parseFloat(document.getElementById('editDiscount').value) : 0.00;
+
+            formData.append('is_discount_active', isDiscountActive);
+            formData.append('discount', discountValue.toFixed(2)); // Ensure 2 decimal places
             // Kiểm tra nếu người dùng đã chọn ảnh mới
             const foodImage = document.getElementById('file-input-fix').files[0];
             if (foodImage) {
@@ -658,6 +756,15 @@
                 reader.readAsDataURL(file); // Đọc file dưới dạng Data URL
             } else {
                 previewContainerFix.innerHTML = "<p class='text-gray-500'>Ảnh xem trước</p>";
+            }
+        });
+
+        // Handle discount toggle
+        document.getElementById('editDiscountActive').addEventListener('change', function () {
+            const discountInput = document.getElementById('editDiscount');
+            discountInput.disabled = !this.checked;
+            if (!this.checked) {
+                discountInput.value = '0';
             }
         });
 

@@ -195,6 +195,9 @@ module.exports.updateProduct = async (req, res) => {
             description: req.body.description,
             category_id: parseInt(req.body.category_id),
             price: parseInt(req.body.price),
+            status: req.body.status === 'true',
+            discount: parseInt(req.body.discount),
+            is_discount_active: req.body.is_discount_active === 'true'
         }
         if (isNewImage) {
             if (!req.file) {

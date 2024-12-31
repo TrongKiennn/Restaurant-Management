@@ -140,8 +140,15 @@ async function deleteMultiForever(ids){
     async function updateProduct(productData){
         const query = `
             UPDATE products
-            SET name = $1, description = $2, category_id = $3, price = $4, product_url = $5
-            WHERE product_id = $6
+            SET name = $1,
+            description = $2, 
+            category_id = $3, 
+            price = $4, 
+            status = $5,
+            product_url = $6, 
+            discount = $7, 
+            is_discount_active = $8
+            WHERE product_id = $9
             RETURNING *
         `;
     
@@ -150,7 +157,10 @@ async function deleteMultiForever(ids){
             productData.description,
             productData.category_id,
             productData.price,
+            productData.status,
             productData.product_url,
+            productData.discount,
+            productData.is_discount_active,
             productData.product_id
         ];
     
