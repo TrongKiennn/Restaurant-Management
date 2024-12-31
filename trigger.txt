@@ -37,3 +37,9 @@ CREATE TRIGGER trg_generate_order_code
 BEFORE INSERT ON orders
 FOR EACH ROW
 EXECUTE FUNCTION generate_order_code();
+
+
+// fix error trùng product_id:
+SELECT last_value FROM products_product_id_seq;
+SELECT MAX(product_id) FROM products;
+SELECT setval('products_product_id_seq', (SELECT MAX(product_id) FROM products));
