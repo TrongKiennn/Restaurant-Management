@@ -13,6 +13,8 @@ exports.up = async function(knex) {
             canceled_at TIMESTAMP,
             completed_at TIMESTAMP,
             status_payment VARCHAR(50),
+            order_code TEXT,
+            address TEXT,
             FOREIGN KEY (user_id) REFERENCES users(id)
         );`
 	);

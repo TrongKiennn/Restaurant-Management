@@ -8,11 +8,12 @@ exports.up = async function (knex) {
    Id SERIAL PRIMARY KEY,
     Name TEXT,
     Email TEXT,
+    phone TEXT,
     Password TEXT,
     Salt TEXT,
     Create_At TIMESTAMP,
     Update_At TIMESTAMP,
-    Role BOOLEAN
+    Role BOOLEAN DEFAULT FALSE
 );`
 	);
 };
