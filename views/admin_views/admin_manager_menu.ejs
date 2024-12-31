@@ -70,7 +70,8 @@
                                             <p class="text-sm text-gray-600 line-clamp-2 hover:line-clamp-none">
                                                 <%= item.description || 'No description provided' %>
                                             </p>
-                                            <div class="absolute bottom-full left-0 w-64 bg-gray-900 text-white text-sm rounded-lg p-2 hidden group-hover/tooltip:block z-10">
+                                            <div
+                                                class="absolute bottom-full left-0 w-64 bg-gray-900 text-white text-sm rounded-lg p-2 hidden group-hover/tooltip:block z-10">
                                                 <%= item.description || 'No description provided' %>
                                             </div>
                                         </div>
@@ -125,8 +126,35 @@
                                 </div>
                                 <% }) %>
                                     <% } %>
+                                        
+                </div>
+                <!-- Add after products grid -->
+                <div class="mt-12 mb-8 flex justify-center">
+                    <div class="inline-flex rounded-md shadow-lg">
+                        <% if (pagination.hasPrev) { %>
+                            <a href="?page=<%= pagination.page - 1 %>"
+                                class="px-6 py-3 text-lg font-medium text-gray-600 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        <% } %>
+                
+                        <% for(let i=1; i <=pagination.totalPages; i++) { %>
+                            <a href="?page=<%= i %>"
+                                class="px-6 py-3 text-lg font-medium <%= i === pagination.page ? 'text-white bg-[#D9BB1C]' : 'text-gray-600 bg-white hover:bg-gray-100' %> border border-gray-300">
+                                <%= i %>
+                            </a>
+                        <% } %>
+                
+                        <% if (pagination.hasNext) { %>
+                            <a href="?page=<%= pagination.page + 1 %>"
+                                class="px-6 py-3 text-lg font-medium text-gray-600 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        <% } %>
+                    </div>
                 </div>
             </div>
+            
     </div>
 
     <!-- MODAL Xóa món -->
@@ -594,8 +622,8 @@
                 const isDiscountActive = item.getAttribute('data-discount-active');
 
                 // Set initial status
-        document.getElementById('editStatus').checked = status;
-        document.getElementById('statusText').textContent = status ? 'Còn món' : 'Hết món';
+                document.getElementById('editStatus').checked = status;
+                document.getElementById('statusText').textContent = status ? 'Còn món' : 'Hết món';
 
                 // store original values
                 originalValues = {

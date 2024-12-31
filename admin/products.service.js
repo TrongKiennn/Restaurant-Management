@@ -191,6 +191,32 @@ async function updateStatus(id, status){
     return result.rows[0];
 }
 
+async function getProductsPaginated(limit, offset) {
+    const query = `
+        SELECT p.*, c.name as category_name 
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.category_id
+        WHERE p.deleted = false
+        ORDER BY p.product_id DESC
+        LIMIT $1 OFFSET $2
+    `;
+    
+    const values = [limit, offset];
+    const result = await pool.query(query, values);
+    return result.rows;
+}
+
+async function getTotalProducts() {
+    const query = `
+        SELECT COUNT(*) as total
+        FROM products
+        WHERE deleted = false
+    `;
+    
+    const result = await pool.query(query);
+    return parseInt(result.rows[0].total);
+}
+
 
 
     module.exports = {
@@ -203,6 +229,8 @@ async function updateStatus(id, status){
         deleteProductForever,
         updateProduct,
         updateStatus,
-        getProductsByKeyword
+        getProductsByKeyword,
+        getProductsPaginated,
+        getTotalProducts
     }
 

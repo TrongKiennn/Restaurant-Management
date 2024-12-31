@@ -19,18 +19,92 @@
 
 <body>
     <div id="main" class="relative min-h-[500px]">
-        <div class="z-[-1] w-screen h-screen bg-content bg-repeat fixed"></div>
         <div class="container z-0 mx-auto py-8 pt-[200px] p-10 font-roboto-condensed">
-            <div >
-                <p>Thông tin khách hàng</p>
-                <div class="">
-                    
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Header with Avatar -->
+                <div class="relative h-32 bg-gradient-to-r from-[#984B01] to-[#D9BB1C]">
+                    <div class="absolute -bottom-10 left-10">
+                        <div class="w-24 h-24 rounded-full bg-white p-1">
+                            <div class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                                <i class="fas fa-user text-3xl text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Content -->
+                <div class="pt-12 px-6 pb-6">
+                    <!-- Customer Info Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Left Column -->
+                        <div class="space-y-6">
+                            <div class="bg-gray-50 rounded-lg p-4 space-y-4">
+                                <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">
+                                    <i class="fas fa-user-circle mr-2 text-[#984B01]"></i>Thông tin cá nhân
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center">
+                                        <span class="text-gray-600 w-32">Họ và tên:</span>
+                                        <span class="font-medium"><%= customer.name %></span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="text-gray-600 w-32">Ngày tạo:</span>
+                                        <span class="font-medium">
+                                            <%= new Date(customer.create_at).toLocaleString('vi-VN', {
+                                                day: '2-digit',
+                                                month: '2-digit',
+                                                year: 'numeric'
+                                            }) %>
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="text-gray-600 w-32">Cập nhật:</span>
+                                        <span class="font-medium">
+                                            <%= new Date(customer.update_at).toLocaleString('vi-VN', {
+                                                day: '2-digit',
+                                                month: '2-digit',
+                                                year: 'numeric'
+                                            }) %>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- Right Column -->
+                        <div class="space-y-6">
+                            <div class="bg-gray-50 rounded-lg p-4 space-y-4">
+                                <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">
+                                    <i class="fas fa-address-card mr-2 text-[#984B01]"></i>Thông tin liên hệ
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center">
+                                        <span class="text-gray-600 w-32">Email:</span>
+                                        <span class="font-medium"><%= customer.email %></span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="text-gray-600 w-32">Số điện thoại:</span>
+                                        <span class="font-medium"><%= customer.phone || 'Chưa cập nhật' %></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Actions -->
+                    <div class="mt-8 flex justify-end">
+                        <button onclick="window.history.back()" 
+                                class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors flex items-center">
+                            <i class="fas fa-arrow-left mr-2"></i>Quay lại
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    
+
+
 
 </body>
+
 </html>

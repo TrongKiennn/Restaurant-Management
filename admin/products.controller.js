@@ -257,3 +257,38 @@ module.exports.updateStatus = async (req, res) => {
         return res.status(500).json({ ok: false, message: error.message });
     }
 }
+
+const productsPerPage = 8;
+
+module.exports.getProducts = async (req, res) => {
+    try {
+        let page = req.query.page;
+        if(page === NaN || page < 1) {
+            page = 1;
+        }
+        page = parseInt(page);
+        console.log(page);
+
+        const offset = (page - 1) * productsPerPage; // vi tri bat dau lay
+        
+        const [products, total] = await Promise.all([
+            productService.getProductsPaginated(productsPerPage, offset),
+            productService.getTotalProducts()
+        ]);
+
+        const totalPages = Math.ceil(total / productsPerPage);
+
+        return res.render("admin_views/admin_manager_menu", {
+            title: "Menu",
+            products,
+            pagination: {
+                page,
+                totalPages,
+                hasNext: page < totalPages,
+                hasPrev: page > 1
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

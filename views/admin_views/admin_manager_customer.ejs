@@ -26,22 +26,20 @@
 
         <div class="container z-0 mx-auto py-8 pt-[200px] p-10 font-roboto-condensed">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                <%# customers.forEach(customer => { %>
+                <% customers.forEach(customer => { %>
                 <div class="detail bg-white shadow-2xl rounded-lg p-4 relative cursor-pointer" data-id="<%#= customer.id %>">
                     <button class="js-delete absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600">
                             <i class="fa-solid fa-x"></i>
                     </button>
-                    <div class="text-center mt-2 text-sm text-gray-500 mb-2">
-                        <%#= customer.id %>
-                         #2024
+                    <div customer-id="<%= customer.id %>" class="text-center mt-2 text-sm text-gray-500 mb-2">
+                        <%= customer.id %>
                     </div>
                     <img class="w-20 h-20 rounded-full mx-auto" src="https://via.placeholder.com/80" alt="Avatar">
                     <div class="text-center mt-4 text-lg font-semibold capitalize">
-                        <%#= customer.name %>
-                        nguyen my
+                        <%= customer.name %>
                     </div>
                 </div>
-                <%# }); %>
+                <% }); %>
             </div>
         </div>
     </div>
@@ -134,7 +132,8 @@
     <script>
         document.querySelectorAll('.detail').forEach(function(detail) {
         detail.addEventListener('click', function() {
-            window.location.href = 'http://localhost:4000/admin/detailCustomer'; 
+            const currentItem = detail.querySelector("[customer-id]").getAttribute('customer-id');
+            window.location.href = `http://localhost:4000/admin/customers/${currentItem}/detail`; 
         });
     });
     </script>

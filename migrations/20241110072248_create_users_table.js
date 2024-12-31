@@ -13,7 +13,7 @@ exports.up = async function (knex) {
     Salt TEXT,
     Create_At TIMESTAMP,
     Update_At TIMESTAMP,
-    Role BOOLEAN DEFAULT FALSE
+    Role BOOLEAN DEFAULT TRUE
 );`
 	);
 };

@@ -5,7 +5,7 @@ const createRouter = require("./createItem.route");
 const loginRouter = require('./login.route');
 const orderRouter = require('./order.route');
 const customerRouter = require('./customer.route');
-const detailCustomerRouter = require('./detailCustomer.route');
+// const detailCustomerRouter = require('./detailCustomer.route');
 
 
 module.exports = (app) => {
@@ -19,6 +19,7 @@ module.exports = (app) => {
 
     // <<<<<<< HEAD
     app.use("/admin/orders", orderRouter);
+    app.use("/admin/customers", customerRouter);
     // =======
     //     app.use("/admin/order", orderRouter); 
 

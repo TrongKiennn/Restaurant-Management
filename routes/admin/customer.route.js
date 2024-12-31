@@ -3,5 +3,6 @@ const Router = express.Router();
 const customerController = require('../../admin/customer.controller');
 
 Router.get("/", customerController.index);
+Router.get("/:id/detail", customerController.detail);
 
 module.exports = Router;

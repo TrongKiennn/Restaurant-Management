@@ -3,7 +3,7 @@ const Router = express.Router();
 const productController = require("../../admin/products.controller");
 const upload = require("../../config/multer.config");
 
-Router.get("/", productController.index); // get all products
+Router.get("/", productController.getProducts); // get all products
 
 Router.get("/search", productController.getProductsByKeyword); // get products by keyword
 
