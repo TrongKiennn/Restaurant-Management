@@ -30,7 +30,12 @@
                         Thêm món
                         <i class="fa-solid fa-circle-plus ml-2"></i>
                     </div>
+                    <div class="js-add-category h-[50px] w-[170px] text-[25px] bg-[#984B01] font-medium rounded-[20px] text-center leading-[3rem] cursor-pointer hover:bg-[#873F01] transition-colors">
+                        Thêm loại
+                        <i class="fa-solid fa-layer-group ml-2"></i>
+                    </div>
                 </div>
+                
 
                 <div class="grid grid-cols-4 gap-10 px-[50px] py-[70px] overflow-hidden">
                     <% if (products.length===0) { %>
@@ -128,7 +133,7 @@
                                     <% } %>
                                         
                 </div>
-                <!-- Add after products grid -->
+                <!-- pagination -->
                 <div class="mt-12 mb-8 flex justify-center">
                     <div class="inline-flex rounded-md shadow-lg">
                         <% if (pagination.hasPrev) { %>
