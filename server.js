@@ -89,13 +89,11 @@ app.use("/cart", cartRouter);
 const adminRouter = require("./routes/admin/index.route.js");
 adminRouter(app);
 
-app.get('/home', (req, res) => {
-  res.render('home', { title: 'Trang chủ' });
+app.get('/about', (req, res) => {
+  res.render('about', { title: 'Trang chủ' });
 });
 
-app.get('/home',(req,res)=>{
-  res.render('home',{title: 'Home Page - Superstore - GA05'})
- });
+
 
 const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {
