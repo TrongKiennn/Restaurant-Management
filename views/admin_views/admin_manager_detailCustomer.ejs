@@ -18,93 +18,101 @@
 </head>
 
 <body>
-    <div id="main" class="relative min-h-[500px]">
-        <div class="container z-0 mx-auto py-8 pt-[200px] p-10 font-roboto-condensed">
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <!-- Header with Avatar -->
-                <div class="relative h-32 bg-gradient-to-r from-[#984B01] to-[#D9BB1C]">
-                    <div class="absolute -bottom-10 left-10">
-                        <div class="w-24 h-24 rounded-full bg-white p-1">
-                            <div class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
-                                <i class="fas fa-user text-3xl text-gray-400"></i>
-                            </div>
-                        </div>
+    <div id="main" class="relative">
+        <!-- #region Header -->
+        <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
+        <!-- #endregion Header -->
+        <div class="z-[-1] bg-content bg-repeat w-full h-screen fixed"></div>
+
+        <div class="z-0 relative max-w-4xl h-auto mx-auto font-roboto-condensed top-[65px] bottom-10 bg-white shadow-md rounded-lg overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center px-6 py-4 bg-[#E1E0E0]">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center">
+                        <!-- AVATAR -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 7l-9-5 9-5 9 5-9 5z" />
+                        </svg>
                     </div>
-                </div>
-        
-                <!-- Content -->
-                <div class="pt-12 px-6 pb-6">
-                    <!-- Customer Info Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Left Column -->
-                        <div class="space-y-6">
-                            <div class="bg-gray-50 rounded-lg p-4 space-y-4">
-                                <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">
-                                    <i class="fas fa-user-circle mr-2 text-[#984B01]"></i>Thông tin cá nhân
-                                </h3>
-                                <div class="space-y-3">
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Họ và tên:</span>
-                                        <span class="font-medium"><%= customer.name %></span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Ngày tạo:</span>
-                                        <span class="font-medium">
-                                            <%= new Date(customer.create_at).toLocaleString('vi-VN', {
-                                                day: '2-digit',
-                                                month: '2-digit',
-                                                year: 'numeric'
-                                            }) %>
-                                        </span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Cập nhật:</span>
-                                        <span class="font-medium">
-                                            <%= new Date(customer.update_at).toLocaleString('vi-VN', {
-                                                day: '2-digit',
-                                                month: '2-digit',
-                                                year: 'numeric'
-                                            }) %>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <!-- Right Column -->
-                        <div class="space-y-6">
-                            <div class="bg-gray-50 rounded-lg p-4 space-y-4">
-                                <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">
-                                    <i class="fas fa-address-card mr-2 text-[#984B01]"></i>Thông tin liên hệ
-                                </h3>
-                                <div class="space-y-3">
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Email:</span>
-                                        <span class="font-medium"><%= customer.email %></span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Số điện thoại:</span>
-                                        <span class="font-medium"><%= customer.phone || 'Chưa cập nhật' %></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- Actions -->
-                    <div class="mt-8 flex justify-end">
-                        <button onclick="window.history.back()" 
-                                class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors flex items-center">
-                            <i class="fas fa-arrow-left mr-2"></i>Quay lại
-                        </button>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-700">Nguyen My</h2>
+                        <p class="text-sm text-gray-500">Mã khách hàng: #2402</p>
                     </div>
                 </div>
             </div>
+        
+            <!-- Progress Bar -->
+            <div class="mt-5 flex flex-col justify-center items-center">
+                <ul class="flex mt-[10px]">
+                    <li class="list-none flex flex-col items-center">
+                        <i class="fa-solid fa-hourglass-start text-[25px] text-[#984B01] mx-[60px] "></i>
+                        <div class="progress one w-[30px] h-[30px] rounded-full bg-[#984B01] my-[14px] grid place-items-center text-white relative font-bold 
+                            after:absolute after:w-[0px] after:h-[0px] after:bg-[#984B01] after:right-[30px]">
+                            <p>1</p>
+                        </div>
+                        <p class="text text-[18px] text-[#984B01]">Chờ xác nhận</p>
+                    </li>
+                    <li class="list-none flex flex-col items-center">
+                        <i class="fa-solid fa-check-to-slot text-[25px] text-[#7d7b7b] mx-[60px]"></i>
+                        <div class="progress two w-[30px] h-[30px] rounded-full bg-[#7d7b7b] my-[14px] grid place-items-center text-white relative font-bold
+                        after:absolute after:w-[115px] after:h-[5px] after:bg-[#7d7b7b] after:right-[30px]">
+                            <p>2</p>
+                        </div>
+                        <p class="text text-[18px] text-[#7d7b7b]">Đã xác nhận</p>
+                    </li>
+                    <li class="list-none flex flex-col items-center">
+                        <i class="fa-solid fa-truck-fast text-[25px] text-[#7d7b7b] mx-[60px]"></i>
+                        <div class="progress three w-[30px] h-[30px] rounded-full bg-[#7d7b7b] my-[14px] grid place-items-center text-white relative font-bold
+                        after:absolute after:w-[120px] after:h-[5px] after:bg-[#7d7b7b] after:right-[30px]">
+                            <p>3</p>
+                        </div>
+                        <p class="text text-[18px] text-[#7d7b7b]">Đang vận chuyển</p>
+                    </li>
+                    <li class="list-none flex flex-col items-center">
+                        <i class="fa-solid fa-circle-check text-[25px] text-[#7d7b7b] mx-[60px]"></i>
+                        <div class="progress four w-[30px] h-[30px] rounded-full bg-[#7d7b7b] my-[14px] grid place-items-center text-white relative font-bold
+                        after:absolute after:w-[119px] after:h-[5px] after:bg-[#7d7b7b] after:right-[30px]">
+                            <p>4</p>
+                        </div>
+                        <p class="text text-[18px] text-[#7d7b7b]">Hoàn thành</p>
+                    </li>
+                </ul>
+        
+            </div>
+        
+            <!-- Customer Information -->
+            <div class="px-6 py-4">
+              <h3 class="text-lg font-semibold text-gray-800">Thông tin khách hàng</h3>
+              <div class="mt-2 p-4 bg-gray-100 rounded-lg">
+                <p class="text-sm text-gray-600">Họ tên: Nguyen My</p>
+                <p class="text-sm text-gray-600">Email: my.nguyen@example.com</p>
+                <p class="text-sm text-gray-600">Địa chỉ: 123 Phố ABC, Quận X, TP HCM</p>
+                <p class="text-sm text-gray-600">Số điện thoại: 0123456789</p>
+              </div>
+            </div>
+        
+            <!-- Order History -->
+            <div class="px-6 py-4">
+              <h3 class="text-lg font-semibold text-gray-800">Lịch sử đặt hàng</h3>
+              <div class="mt-2 p-4 bg-gray-100 rounded-lg">
+                <ul class="list-disc pl-4 text-sm text-gray-600">
+                  <li>Đơn hàng #001 - Hoàn tất</li>
+                  <li>Đơn hàng #002 - Đang xử lý</li>
+                </ul>
+              </div>
+            </div>
+        
+            <!-- Rating History -->
+            <div class="px-6 py-4 pb-10">
+              <h3 class="text-lg font-semibold text-gray-800">Lịch sử đánh giá</h3>
+              <div class="mt-2 p-4 bg-gray-100 rounded-lg">
+                <ul class="list-disc pl-4 text-sm text-gray-600">
+                  <li>Sản phẩm A - Đánh giá: 5 sao</li>
+                  <li>Sản phẩm B - Đánh giá: 4 sao</li>
+                </ul>
+              </div>
+            </div>
         </div>
     </div>
-
-
-
 </body>
-
 </html>

@@ -5,7 +5,7 @@ const createRouter = require("./createItem.route");
 const loginRouter = require('./login.route');
 const orderRouter = require('./order.route');
 const customerRouter = require('./customer.route');
-// const detailCustomerRouter = require('./detailCustomer.route');
+const detailCustomerRouter = require('./detailCustomer.route');
 
 
 module.exports = (app) => {
@@ -17,14 +17,9 @@ module.exports = (app) => {
 
     app.use("/admin/login", loginRouter);
 
-    // <<<<<<< HEAD
     app.use("/admin/orders", orderRouter);
-    app.use("/admin/customers", customerRouter);
-    // =======
-    //     app.use("/admin/order", orderRouter); 
+    
+    app.use("/admin/customer", customerRouter); 
 
-    //     app.use("/admin/customer", customerRouter); 
-
-    //     app.use("/admin/detailCustomer", detailCustomerRouter); 
-    // >>>>>>> d2b8bfbe3f891bb7b46bab2c4f1219773d449728
+    app.use("/admin/detailCustomer", detailCustomerRouter); 
 }
