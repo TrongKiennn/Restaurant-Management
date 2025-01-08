@@ -13,8 +13,7 @@ async function renderCategoryPage(req, res) {
     const maxPrice = req.query.max ? parseInt(req.query.max) : null;
     const userID = res.locals.user ? res.locals.user.id : null;
 
-    const selectedtypeOfFoods =
-      typeOfFood === 'All' ? [] : typeOfFood.split(',');
+    const selectedtypeOfFoods = typeOfFood === 'All' ? [] : typeOfFood.split(',');
 
    
     const { products, total, typeOfFoods } =
