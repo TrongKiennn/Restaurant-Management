@@ -16,60 +16,79 @@
 
 <body>
     <div id="main" class="relative">
-        
-        <!-- #region Header -->
         <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
-        <!-- #endregion Header -->
 
-        <div id="content" class="z-[0] absolute w-full h-lvh font-roboto-condensed">
-            <ul class="grid gap-10 justify-center items-center pt-[130px] bg-repeat">
-                <li class="flex w-[1000px] justify-between ">
-                    <div class="h-[50px] w-[170px] text-[25px] text-white font-bold bg-[#984B01] rounded-[20px] text-center leading-[3rem]">
-                        Báo cáo tháng
-                    </div>
-                    <div class="w-fit max-w-max p-6 bg-white rounded-[20px] flex items-center gap-6">
-                        <i class="fa-solid fa-sack-dollar w-20 h-20 bg-[#D9BB1C] rounded-[50px] text-[36px] p-[22px]"></i>
-                        <span class="leading-[35px]">
-                            <h3 class="text-xl font-bold text-center">10.000.000đ</h3>
-                            <p>Tổng thu</p>
-                        </span>
-                    </div>
-                    <div class="h-[50px] w-[170px] text-[20px] bg-white rounded-[20px] text-center leading-[3rem]">
-                        Tháng 10
-                        <i class="fa-solid fa-caret-down ml-2"></i>
-                    </div>
-                </li>
-                <li class="flex w-[1000px] justify-between">
-                    <div class="h-[50px] w-[170px] text-[25px] text-white font-bold bg-[#984B01] rounded-[20px] text-center leading-[3rem]">
-                        Báo cáo ngày
-                    </div>
-                    <div class="max-w-max p-6 bg-white rounded-[20px] flex items-center gap-6">
-                        <i class="fa-solid fa-sack-dollar w-20 h-20 bg-[#D9BB1C] rounded-[50px] text-[36px] p-[22px]"></i>
-                        <span class="leading-[35px]">
-                            <h3 class="text-xl font-bold text-center">1.000.000đ</h3>
-                            <p>Tổng thu</p>
-                        </span>
-                    </div>
-                    <div class="h-[50px] w-[170px] text-[20px] bg-white rounded-[20px] text-center leading-[3rem] ">
-                        11/12/2024
-                        <i class="fa-solid fa-calendar-days ml-2"></i>
-                    </div>
-                </li>
-                <li>
-                    <div class="grid grid-cols-4 gap-10 px-[50px] py-[20px]">
-                        <!-- Item 1 -->
-                        <div class="item bg-[#C9C9C9] rounded-lg shadow-xl relative group">
-                            <div class="image bg-burger bg-cover bg-no-repeat h-[170px] mt-[10px] ml-[10px] mr-[10px] rounded-t-lg "></div>
-                            <div class="content p-4">
-                                <h3 class="title font-bold text-lg mb-2">Tên món ăn</h3>
-                                <p class="description text-lg leading-5">SL: 5</p>
+        <div class="min-h-screen bg-gray-50 pt-[120px] pb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Revenue Card (Non-clickable) -->
+                    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-800">
+                                        <%= revenue.toLocaleString('vi-VN') %>đ
+                                    </h3>
+                                    <p class="text-gray-500 mt-1">Doanh thu</p>
+                                </div>
+                                <div class="p-4 bg-amber-50 rounded-full">
+                                    <i class="fas fa-sack-dollar text-2xl text-amber-500"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </li>
-            </ul>
+
+                    <!-- Orders Card (Clickable) -->
+                    <a href="/admin/orders" class="block">
+                        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-800">
+                                        <%= totalOrder.toLocaleString('vi-VN') %>
+                                    </h3>
+                                    <p class="text-gray-500 mt-1">Đơn hàng</p>
+                                </div>
+                                <div class="p-4 bg-blue-50 rounded-full">
+                                    <i class="fas fa-shopping-cart text-2xl text-blue-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Customers Card (Clickable) -->
+                    <a href="/admin/customers" class="block">
+                        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-800">
+                                        <%= customers.toLocaleString('vi-VN') %>
+                                    </h3>
+                                    <p class="text-gray-500 mt-1">Khách hàng</p>
+                                </div>
+                                <div class="p-4 bg-green-50 rounded-full">
+                                    <i class="fas fa-users text-2xl text-green-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Products Card (Clickable) -->
+                    <a href="/admin/products?page=1" class="block">
+                        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-800">25</h3>
+                                    <p class="text-gray-500 mt-1">Sản phẩm</p>
+                                </div>
+                                <div class="p-4 bg-purple-50 rounded-full">
+                                    <i class="fas fa-box text-2xl text-purple-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-    <script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>

@@ -83,6 +83,16 @@ async function getItemsFromOrder(id){
 }
 
 
+async function countCustomer(){
+    const query = `
+        SELECT COUNT(*) as total_customers
+        FROM users
+        WHERE role = true
+    `;
+    const result = await pool.query(query);
+    return parseInt(result.rows[0].total_customers);
+}
+
 module.exports = {
     getAllCustomer,
     getDetailCustomer,
@@ -90,5 +100,6 @@ module.exports = {
     getTotalPrice,
     getOrderByUserId,
     getDetailOrder,
-    getItemsFromOrder
+    getItemsFromOrder,
+    countCustomer
 }

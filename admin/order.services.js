@@ -164,6 +164,31 @@ async function deleteOrder(orderId) {
 
 }
 
+async function getRevenue(){
+    const query = `
+       SELECT COALESCE(SUM(total)::numeric(18,2), 0) as total_revenue
+        FROM orders
+        WHERE status = 'Completed'
+    `;
+    try {
+        const result = await pool.query(query);
+        const revenue = parseFloat(result.rows[0].total_revenue);
+        return Math.round(revenue); // Round to whole number for display
+    } catch (error) {
+        console.error("Error getting revenue:", error);
+        throw error;
+    }
+}
+
+async function countOrder(){
+    const query = `
+        SELECT COUNT(*) as total_orders
+        FROM orders
+    `;
+    const result = await pool.query(query);
+    return parseInt(result.rows[0].total_orders);
+}
+
 module.exports = {
     getAllOrder,
     calculateTotalPrice,
@@ -171,5 +196,7 @@ module.exports = {
     updateOrder,
     getOrderByKeyword,
     filterOrder,
-    deleteOrder
+    deleteOrder,
+    getRevenue,
+    countOrder
 }
