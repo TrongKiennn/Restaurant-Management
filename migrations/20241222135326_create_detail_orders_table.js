@@ -2,9 +2,9 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = async function(knex) {
-    await knex.raw(
-		`CREATE TABLE IF NOT EXISTS detail_orders (
+exports.up = async function (knex) {
+  await knex.raw(
+    `CREATE TABLE IF NOT EXISTS detail_orders (
             order_id INT NOT NULL,
             product_id INT NOT NULL,
             quantity INT NOT NULL,
@@ -12,7 +12,7 @@ exports.up = async function(knex) {
             FOREIGN KEY (order_id) REFERENCES orders(order_id),
             FOREIGN KEY (product_id) REFERENCES products(product_id)
         );`
-	);
+  );
 
   await knex.raw(`
     CREATE OR REPLACE FUNCTION update_order_total()
@@ -20,11 +20,16 @@ exports.up = async function(knex) {
     BEGIN
         UPDATE orders
         SET total = (
-            SELECT SUM(detail_orders.quantity * products.price)
-            FROM detail_orders 
-            JOIN products ON detail_orders.product_id = products.product_id
-            WHERE detail_orders.order_id = NEW.order_id
+        SELECT SUM(
+            CASE 
+                WHEN products.is_discount_active = true THEN products.price * (1 - products.discount) * detail_orders.quantity
+                ELSE products.price * detail_orders.quantity
+            END
         )
+        FROM detail_orders 
+        JOIN products  ON detail_orders.product_id = products.product_id
+        WHERE detail_orders.order_id = NEW.order_id
+    )
         WHERE orders.order_id = NEW.order_id;
 
         RETURN NEW;
@@ -41,7 +46,7 @@ exports.up = async function(knex) {
   `);
 
   await knex.raw(`
-    CREATE SEQUENCE order_code_seq START 1;
+    CREATE SEQUENCE IF NOT EXISTS order_code_seq  START 1;
   `);
 
   await knex.raw(`
@@ -67,7 +72,7 @@ exports.up = async function(knex) {
 };
 
 exports.down = async function (knex) {
-	await knex.raw(`DROP TABLE IF EXISTS detail_orders;`);
+  await knex.raw(`DROP TABLE IF EXISTS detail_orders;`);
   await knex.raw(`DROP TRIGGER IF EXISTS trg_update_order_total ON detail_orders`);
   await knex.raw(`DROP FUNCTION IF EXISTS update_order_total`);
 

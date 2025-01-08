@@ -36,7 +36,7 @@ module.exports.detail = async (req, res) => {
         res.render("admin_views/admin_manager_detailCustomer.ejs", {
             title: "Detail Customer",
             customer: customer,
-            total: total,
+            total: total ? total : 0,
             countOrder: countOrder,
             orders: orders
         });
