@@ -10,6 +10,6 @@ Router.post("/",passport.authenticate('local',{
     failureFlash: true,
 }));
 
-Router.get("/", loginController.index);
+Router.get("/", loginController.renderLoginPage);
 
 module.exports = Router;

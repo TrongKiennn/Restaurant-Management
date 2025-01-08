@@ -89,14 +89,13 @@ app.use("/logout",logoutRouter)
 app.use("/category",categoryRouter)
 
 
-// Cung cấp thư mục chứa ảnh
-app.use('/uploads', express.static('uploads'));
-
 app.use("/logout",logoutRouter);
 app.use("/search", searchRouter);
 app.use("/category",categoryRouter)
 app.use("/cart", cartRouter);
 
+// Cung cấp thư mục chứa ảnh
+app.use('/uploads', express.static('uploads'));
 
 
 

@@ -2,6 +2,9 @@ const express = require('express');
 const Router = express.Router();
 const productController = require("./products.controller");
 const upload = require("../../config/multer.config");
+const utils = require('../utils/jwtUtils.js');
+
+Router.use(utils.authMiddleware({ session: true }));
 
 Router.get("/", productController.getProducts); // get all products
 

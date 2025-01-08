@@ -10,7 +10,8 @@ const logoutRouter = require('./logout/logout.route');
 
 module.exports = (app) => {
     app.use('/admin/login',loginRouter);
-    app.use('/admin/logout', loginRouter);
+    
+    app.use('/admin/logout', logoutRouter);
     
     app.use('/admin/dashboard', dashboardRouter);
 
