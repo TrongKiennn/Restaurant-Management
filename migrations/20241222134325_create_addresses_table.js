@@ -8,6 +8,7 @@ exports.up = async function(knex) {
             address_id SERIAL PRIMARY KEY,
             user_id INT NOT NULL,
             address_line VARCHAR(255) NOT NULL,
+            isdefault boolean DEFAULT false,
             FOREIGN KEY (user_id) REFERENCES users(id),
             CONSTRAINT unique_user_address UNIQUE (user_id, address_line)
         );`

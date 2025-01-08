@@ -48,6 +48,9 @@ const logoutRouter=require('./customer/logout/logoutRouter');
 const categoryRouter=require('./customer/category/categoryRouter');
 const homeRouter = require("./customer/home/homeRouter");
 const cartRouter = require("./customer/cart/cartRouter");
+const profileRouter = require("./customer/profile/profileRouter");
+const checkoutRouter = require("./customer/checkout/checkoutRouter");
+const orderListRouter=require("./customer/OrderList/orderListRouter");
 
 // Set the view engine to EJS
 app.set('views', [
@@ -56,7 +59,7 @@ app.set('views', [
 ]);
 app.set("view engine", "ejs");
 
-
+app.use(express.static('public'));
 app.use((req, res, next) => {
   if (req.isAuthenticated()) {
     res.locals.user = req.user;
@@ -93,25 +96,29 @@ app.use("/logout",logoutRouter);
 app.use("/search", searchRouter);
 app.use("/category",categoryRouter)
 app.use("/cart", cartRouter);
+<<<<<<< HEAD
 
 // Cung cấp thư mục chứa ảnh
 app.use('/uploads', express.static('uploads'));
 
 
 
+=======
+app.use("/account", profileRouter);
+app.use("/checkout", checkoutRouter); 
+app.use("/orderList",orderListRouter);
+>>>>>>> main
 
 // Call the adminRouter function and pass the app as an argument
 // const adminRouter = require("./routes/admin/index.route.js");
 const adminRouter = require('./admin/index.route');
 adminRouter(app);
 
-app.get('/home', (req, res) => {
-  res.render('home', { title: 'Trang chủ' });
+app.get('/about', (req, res) => {
+  res.render('about', { title: 'Trang chủ' });
 });
 
-app.get('/home',(req,res)=>{
-  res.render('home',{title: 'Home Page - Superstore - GA05'})
- });
+
 
 const PORT = process.env.SERVER_PORT || 4000;
 app.listen(PORT, () => {
