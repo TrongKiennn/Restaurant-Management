@@ -96,18 +96,18 @@ app.use("/logout",logoutRouter);
 app.use("/search", searchRouter);
 app.use("/category",categoryRouter)
 app.use("/cart", cartRouter);
-<<<<<<< HEAD
+// <<<<<<< HEAD
 
 // Cung cấp thư mục chứa ảnh
 app.use('/uploads', express.static('uploads'));
 
 
 
-=======
+// =======
 app.use("/account", profileRouter);
 app.use("/checkout", checkoutRouter); 
 app.use("/orderList",orderListRouter);
->>>>>>> main
+// >>>>>>> main
 
 // Call the adminRouter function and pass the app as an argument
 // const adminRouter = require("./routes/admin/index.route.js");
