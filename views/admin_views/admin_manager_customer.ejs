@@ -19,34 +19,35 @@
 
 <body>
     <div id="main" class="relative ">
+        <!-- Background -->
+        
         <!-- #region Header -->
         <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
             <!-- #endregion Header -->
-            <div class="z-[-1] bg-content bg-repeat w-full h-screen fixed"></div>
             <div class="z-0 p-4 pt-[150px]">
                 <!-- Customer Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
                     <% customers.forEach(customer=> { %>
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                            class="bg-yellow-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                             <div class="p-6 relative">
 
                                 <!-- Customer Info -->
                                 <div class="text-center">
                                     <div
-                                        class="w-20 h-20 mx-auto bg-gray-100 rounded-full flex items-center justify-center">
+                                        class="w-20 h-20 mx-auto bg-gray-200 rounded-full flex items-center justify-center">
                                         <i class="fas fa-user text-3xl text-gray-400"></i>
                                     </div>
                                     <h3 class="mt-4 text-xl font-semibold text-gray-800">
                                         <%= customer.name %>
                                     </h3>
-                                    <p class="text-gray-500">
+                                    <p class="text-gray-800">
                                         <%= customer.email %>
                                     </p>
                                 </div>
 
                                 <!-- View Detail Button -->
-                                <div class="customer-card bg-white rounded-lg shadow-lg" data-id="<%= customer.id %>">
+                                <div class=" bg-yellow-200 customer-card rounded-lg shadow-lg" data-id="<%= customer.id %>">
                                     <button
                                         class="js-view-detail mt-6 w-full py-2 bg-[#984B01] text-white rounded-lg hover:bg-[#873F01] transition-colors"
                                         data-id="<%= customer.id %>">
