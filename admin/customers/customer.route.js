@@ -1,6 +1,6 @@
 const express = require('express');
 const Router = express.Router();
-const customerController = require('../../admin/customer.controller');
+const customerController = require('./customer.controller');
 
 Router.get("/", customerController.index);
 Router.get("/:id/detail", customerController.detail);

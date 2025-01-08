@@ -1,6 +1,6 @@
 const express = require('express');
 const Router = express.Router();
-const productController = require("../../admin/products.controller");
+const productController = require("./products.controller");
 const upload = require("../../config/multer.config");
 
 Router.get("/", productController.getProducts); // get all products

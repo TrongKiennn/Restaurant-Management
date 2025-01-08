@@ -1,7 +1,7 @@
 const express = require('express');
 const Router = express.Router();
 
-const createController = require("../../admin/createItem.controller");
+const createController = require("./createItem.controller");
 const upload = require("../../config/multer.config");
 
 

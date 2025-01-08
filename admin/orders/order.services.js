@@ -1,6 +1,6 @@
 const { parse } = require("dotenv");
-const pool = require("../config/database");
-const { get } = require("../customer/registration/registrationRouter");
+const pool = require("../../config/database");
+// const { get } = require("../customer/registration/registrationRouter");
 
 async function getAllOrder() {
     const query = `

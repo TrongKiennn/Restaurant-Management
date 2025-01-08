@@ -102,7 +102,8 @@ app.use("/cart", cartRouter);
 
 
 // Call the adminRouter function and pass the app as an argument
-const adminRouter = require("./routes/admin/index.route.js");
+// const adminRouter = require("./routes/admin/index.route.js");
+const adminRouter = require('./admin/index.route');
 adminRouter(app);
 
 app.get('/home', (req, res) => {

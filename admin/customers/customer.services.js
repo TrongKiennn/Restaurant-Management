@@ -1,6 +1,5 @@
 const { parse } = require("dotenv");
-const pool = require("../config/database");
-const orderService = require("./order.services");
+const pool = require("../../config/database");
 const { getDefaultHighWaterMark } = require("form-data");
 
 async function getAllCustomer() {

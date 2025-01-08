@@ -12,7 +12,8 @@
             nào!!</div>
     </div>
 
-    <form form-search action="/admin/products/search" method="GET" class="relative flex items-center w-[400px] mx-4 font-roboto-condensed">
+    <form form-search action="/admin/products/search" method="GET"
+        class="relative flex items-center w-[400px] mx-4 font-roboto-condensed">
         <input type="text" name="keyword" id="searchInput" placeholder="Tìm kiếm món ăn..." class="w-full h-[50px] pl-12 pr-4 
                 text-[18px] 
                 text-gray-800 
@@ -44,20 +45,76 @@
         </button>
     </div>
 
-    <div id="account" class="ml-[50px] flex">
-        <div
-            class="avatar w-[40px] h-[40px] mt-[4px] text-[25px] px-[9px] py-[1px] border-[1px] border-solid rounded-full">
-            <i class="fa-solid fa-user"></i>
-        </div>
-
-        <div class="name-role ml-[7px]">
-            <div class="name text-[17px] font-lalezar capitalize">
-                Nguyễn Mỹ
+    <div id="admin-account" class="relative ml-[50px]">
+        <!-- Admin Button -->
+        <button onclick="toggleDropdown()" class="flex items-center">
+            <div class="w-[45px] h-[45px] bg-amber-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-[20px] text-amber-600"></i>
             </div>
-
-            <div class="role text-[17px] font-roboto-condensed capitalize">
-                Admin
+            <div class="ml-3">
+                <div class="text-[16px] text-white">Admin</div>
+                <div class="text-[14px] text-amber-200">Quản trị viên</div>
+            </div>
+            <i id="dropdownArrow" class="fas fa-chevron-down text-amber-200 ml-2"></i>
+        </button>
+    
+        <!-- Dropdown Menu -->
+        <div id="dropdownMenu" class="hidden absolute right-0 top-[60px] w-[200px] bg-white rounded-lg shadow-lg">
+            <a href="/admin/profile" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-user-circle text-amber-500 mr-3"></i>
+                <span>Hồ sơ</span>
+            </a>
+            <hr class="my-1">
+            <button onclick="showLogoutConfirm()" class="w-full flex items-center px-4 py-3 text-red-600 hover:bg-gray-100">
+                <i class="fas fa-sign-out-alt mr-3"></i>
+                <span>Đăng xuất</span>
+            </button>
+        </div>
+    
+        <!-- Simple Logout Modal -->
+        <div id="logoutModal" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 w-[300px]">
+                <div class="text-center mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Bạn có chắc chắn muốn đăng xuất?</h3>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button onclick="closeLogoutModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded">
+                        Hủy
+                    </button>
+                    <a href="/admin/logout" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                        Đăng xuất
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+    
+    <script>
+    let isDropdownOpen = false;
+    
+    function toggleDropdown() {
+        const menu = document.getElementById('dropdownMenu');
+        const arrow = document.getElementById('dropdownArrow');
+        isDropdownOpen = !isDropdownOpen;
+        
+        menu.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+    }
+    
+    function showLogoutConfirm() {
+        document.getElementById('logoutModal').classList.replace('hidden', 'flex');
+    }
+    
+    function closeLogoutModal() {
+        document.getElementById('logoutModal').classList.replace('flex', 'hidden');
+    }
+    
+    document.addEventListener('click', (e) => {
+        if (!document.getElementById('admin-account').contains(e.target) && isDropdownOpen) {
+            toggleDropdown();
+        }
+    });
+    </script>
+   
+
 </div>

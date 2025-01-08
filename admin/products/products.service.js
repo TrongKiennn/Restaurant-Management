@@ -1,6 +1,6 @@
 
     const { parse } = require("dotenv");
-    const pool = require("../config/database");
+    const pool = require("../../config/database");
 
     async function getProductById(id){
         const result = await pool.query(

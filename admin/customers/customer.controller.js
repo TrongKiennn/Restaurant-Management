@@ -1,4 +1,4 @@
-const customerService = require("../admin/customer.services");
+const customerService = require("./customer.services");
 
 
 module.exports.index = async (req, res) => {

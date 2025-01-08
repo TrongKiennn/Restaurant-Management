@@ -138,43 +138,6 @@ module.exports.deleteMulti = async (req, res) => {
 }
 
 
-/*
-//[GET] render trang tạo sản phẩm mới
-module.exports.createPage = async (req, res) => {   
-    try {
-        return res.render("admin_views/createItem",{
-            title: "Create new item"
-        });
-    } catch (error) {
-        return res.status(500).json({ok: false, message: error.message});
-    }
-}
-
-
-//[POST] thêm một sản phẩm mới
-module.exports.createProduct = async (req, res) => {
-    const productData = req.body;
-    // console.log(productData);
-    try {
-        if(!productData.name || !productData.category_id || !productData.price){
-            return res.status(400).json({ok: false, message: "Please enter all fields"});
-        }
-        // const product = await productService.getProductByName(name);
-        // if(product){
-        //     return res.status(400).json({ok: false, message: "Product already exists"});
-        // }  
-        const result = await productService.createProduct(productData);
-        console.log(result);
-        if(result){
-            return res.redirect("back");
-        }
-        return res.status(400).json({ok: false, message: "Create product failed"});
-    } 
-    catch (error) {
-        return res.status(500).json({ok: false, message: error.message});
-    }
-}
-*/
 
 
 // [PATCH] cập nhật sản phẩm

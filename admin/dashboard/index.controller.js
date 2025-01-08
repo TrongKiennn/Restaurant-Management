@@ -1,5 +1,5 @@
-const customerService = require("./customer.services");
-const orderService = require("./order.services");
+const customerService = require("../customers/customer.services");
+const orderService = require("../orders/order.services");
 
 
 module.exports.index = async (req, res) => {
