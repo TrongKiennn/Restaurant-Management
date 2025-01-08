@@ -21,12 +21,18 @@ module.exports.getAllOrder = async (req, res) => {
 module.exports.getOrderById = async (req, res) => {
     try {
         const orderId = req.params.id;
-        console.log(orderId);
         const orderDetails = await orderService.getOrderById(orderId);
-        console.log(orderDetails);
+        
+        const formattedDetails = orderDetails.map(item => ({
+            ...item,
+            original_price: parseInt(item.original_price),
+            final_price: parseInt(item.final_price),
+            subtotal: parseInt(item.final_price * item.quantity)
+        }));
+
         res.json({
             ok: true,
-            details: orderDetails
+            details: formattedDetails
         });
     } catch (error) {
         res.status(500).json({

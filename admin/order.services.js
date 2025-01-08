@@ -26,10 +26,18 @@ async function calculateTotalPrice(orderId) { // tính tổng tiền của 1 đ�
 async function getOrderById(orderId) {
     const query = `
     SELECT 
+        orders.order_code,
         detail_orders.quantity,
         products.name as product_name,
-        products.price,
+        products.price as original_price,
         products.product_url,
+        products.discount,
+        products.is_discount_active,
+        CASE 
+            WHEN products.is_discount_active = true 
+            THEN ROUND(products.price * (1 - products.discount::float/100))
+            ELSE products.price 
+        END as final_price,
         orders.*,
         users.name,
         users.email
@@ -44,19 +52,46 @@ async function getOrderById(orderId) {
     return result.rows;
 }
 
+const ORDER_STATUS = {
+    PENDING: 'Pending',
+    CONFIRMED: 'Confirmed',
+    DELIVERED: 'Delivered',
+    IN_TRANSIT: 'In Transit',
+    COMPLETED: 'Completed',
+    CANCELED: 'Canceled'
+};
+
+const PAYMENT_STATUS = {
+    UNPAID: 'Unpaid',
+    PAID: 'Paid',
+    PENDING: 'Pending'
+};
+
 
 async function updateOrder(id, status, payment_status) {
     const query = `
         UPDATE orders
-        SET status = $1, status_payment = $2
+        SET 
+            status = $1::varchar,
+            status_payment = $2::varchar,
+            canceled_at = CASE 
+                WHEN $1::varchar = 'Canceled' THEN CURRENT_TIMESTAMP 
+                ELSE canceled_at 
+            END,
+            completed_at = CASE 
+                WHEN $1::varchar = 'Completed' THEN CURRENT_TIMESTAMP 
+                ELSE completed_at 
+            END
         WHERE order_id = $3
         RETURNING *
-    `
+    `;
+
     const values = [
-        status,
-        payment_status,
+        String(status),         // Ensure string type
+        String(payment_status), 
         id
     ];
+
     try {
         const result = await pool.query(query, values);
 

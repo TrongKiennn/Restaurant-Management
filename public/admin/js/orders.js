@@ -28,11 +28,26 @@ viewDetail.forEach((btn) => {
                                 <div>
                                     <p class="font-medium">${item.product_name}</p>
                                     <p class="text-sm text-gray-500">Số lượng: ${item.quantity}</p>
+                                    <div class="space-y-1">
+                                        <p class="text-sm ${item.is_discount_active ? 'line-through text-gray-400' : 'text-gray-600'}">
+                                            Giá gốc: ${item.original_price.toLocaleString('vi-VN')}đ
+                                        </p>
+                                        ${item.is_discount_active ? `
+                                            <p class="text-sm text-red-500">
+                                                Giảm giá: ${item.discount}%
+                                            </p>
+                                            <p class="text-sm text-green-600">
+                                                Giá sau giảm: ${item.final_price.toLocaleString('vi-VN')}đ
+                                            </p>
+                                        ` : ''}
+                                    </div>
                                 </div>
                             </div>
-                            <span class="font-medium">
-                                ${(item.price * item.quantity).toLocaleString('vi-VN')}đ
-                            </span>
+                            <div class="text-right">
+                                <p class="font-medium">
+                                    ${item.subtotal.toLocaleString('vi-VN')}đ
+                                </p>
+                            </div>
                         </div>
                     `;
                     orderItemsContainer.innerHTML += itemElement;
@@ -49,7 +64,7 @@ viewDetail.forEach((btn) => {
                 document.getElementById('customerAddress').textContent = details[0].address;
                 document.getElementById('deliveryFee').textContent = '0đ';
                 document.getElementById('orderTotal').textContent =
-                    `${parseInt(details[0].total).toLocaleString('vi-VN')}đ`;
+                    `${parseInt(details[0].total).toLocaleString('vi-VN')} đ`;
 
                 // Show modal
                 modal.classList.remove('hidden');
@@ -84,31 +99,48 @@ modal.addEventListener('click', (e) => {
 
 // Link to update order
 function showToast(message, type = 'success') {
-    const container = document.getElementById('toast-container');
+    // Create toast container if not exists
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'fixed top-4 right-4 z-50 flex flex-col items-end space-y-4';
+        document.body.appendChild(container);
+    }
 
+    // Create toast element
     const toast = document.createElement('div');
     toast.className = `
-        flex items-center p-4 mb-3 rounded-lg shadow-lg transform translate-x-full
-        ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white
+        transform translate-x-full
+        flex items-center p-4 rounded-lg shadow-lg
+        ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} 
+        text-white min-w-[300px]
     `;
 
+    // Add content
     toast.innerHTML = `
         <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>
-        <span>${message}</span>
+        <span class="flex-1">${message}</span>
     `;
 
+    // Add to container
     container.appendChild(toast);
 
-    // Animation
+    // Trigger animation
     requestAnimationFrame(() => {
         toast.classList.add('transition-transform', 'duration-300');
         toast.classList.remove('translate-x-full');
     });
 
-    // Auto remove after 3s
+    // Auto dismiss
     setTimeout(() => {
         toast.classList.add('translate-x-full');
-        setTimeout(() => toast.remove(), 300);
+        setTimeout(() => {
+            container.removeChild(toast);
+            if (container.children.length === 0) {
+                document.body.removeChild(container);
+            }
+        }, 300);
     }, 3000);
 }
 
@@ -161,13 +193,14 @@ document.getElementById('updateOrderForm').addEventListener('submit', async (e) 
             })
         });
 
-        if (response.ok) {
+        const data = await response.json();
+
+        if (data.ok) {
             showToast('Cập nhật đơn hàng thành công!', 'success');
             document.getElementById('closeUpdateModal').click();
-            setTimeout(() => window.location.reload(), 1500);
-            // window.location.reload();
+            // setTimeout(() => window.location.reload(), 1500);
         } else {
-            showToast('Có lỗi xảy ra khi cập nhật đơn hàng!', 'error');
+            throw new Error(data.message || 'Có lỗi xảy ra');
         }
     } catch (error) {
         console.error('Error:', error);
@@ -235,7 +268,7 @@ if (urlParams.get('payment_status')) filterPayment.value = urlParams.get('paymen
 function handleFilter() {
     const status = filterStatus.value;
     const payment = filterPayment.value;
-    
+
     if (!status && !payment) {
         window.location.href = '/admin/orders';
         return;
@@ -244,7 +277,7 @@ function handleFilter() {
     const searchParams = new URLSearchParams();
     if (status) searchParams.append('status', status);
     if (payment) searchParams.append('payment_status', payment);
-    
+
     window.location.href = `/admin/orders/filter?${searchParams.toString()}`;
 }
 
