@@ -27,6 +27,7 @@ async function getOrderById(orderId) {
     const query = `
     SELECT 
         orders.order_code,
+        orders.address,
         detail_orders.quantity,
         products.name as product_name,
         products.price as original_price,
@@ -41,7 +42,6 @@ async function getOrderById(orderId) {
         orders.*,
         users.name,
         users.email,
-        users.address,
         users.phone
     FROM orders 
     JOIN users ON orders.user_id = users.id

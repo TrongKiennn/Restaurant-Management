@@ -197,7 +197,7 @@ document.getElementById('updateOrderForm').addEventListener('submit', async (e) 
         if (data.ok) {
             showToast('Cập nhật đơn hàng thành công!', 'success');
             document.getElementById('closeUpdateModal').click();
-            // setTimeout(() => window.location.reload(), 1500);
+            setTimeout(() => window.location.reload(), 1500);
         } else {
             throw new Error(data.message || 'Có lỗi xảy ra');
         }
