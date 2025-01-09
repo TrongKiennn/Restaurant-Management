@@ -58,13 +58,12 @@ viewDetail.forEach((btn) => {
                 document.getElementById('orderStatus').textContent = details[0].status;
                 document.getElementById('customerName').textContent = details[0].name;
                 document.getElementById('customerEmail').textContent = details[0].email;
-                // document.getElementById('customerPhone').textContent = details[0].phone;
+                document.getElementById('customerPhone').textContent = details[0].phone;
                 // document.getElementById('customerAddress').textContent = details[0].address;
 
                 document.getElementById('customerAddress').textContent = details[0].address;
                 document.getElementById('deliveryFee').textContent = '0đ';
-                document.getElementById('orderTotal').textContent =
-                    `${parseInt(details[0].total).toLocaleString('vi-VN')} đ`;
+                document.getElementById('orderTotal').textContent =`${parseInt(details[0].total).toLocaleString('vi-VN')} đ`;
 
                 // Show modal
                 modal.classList.remove('hidden');

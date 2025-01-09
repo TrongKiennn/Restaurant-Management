@@ -40,7 +40,9 @@ async function getOrderById(orderId) {
         END as final_price,
         orders.*,
         users.name,
-        users.email
+        users.email,
+        users.address,
+        users.phone
     FROM orders 
     JOIN users ON orders.user_id = users.id
     JOIN detail_orders ON orders.order_id = detail_orders.order_id
