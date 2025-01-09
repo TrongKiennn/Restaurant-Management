@@ -20,7 +20,7 @@
 		"fe:start": "concurrently \"npm run build:css\" \"npm run serve\"",
 		"start: ": "nodemon --inspect server.js"
 	},
-	"author": "Manh Trong Kien, Ma Cat Huynh, Nguyen Minh Khang",
+	"author": "Manh Trong Kien, Nguyen Thanh Phong, Nguyen Thi My, Quach Quynh Nhu, Tran Hoang Kim Ngan",
 	"license": "ISC",
 	"dependencies": {
 		"axios": "^1.7.7",

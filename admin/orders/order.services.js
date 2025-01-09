@@ -83,7 +83,6 @@ async function updateOrder(id, status, payment_status) {
     const paymentStatusMap = {
         'Chưa thanh toán': 'Unpaid',
         'Đã thanh toán': 'Paid',
-        'Đang chờ': 'Pending'
     };
 
     const dbStatus = statusMap[status] || status;

@@ -30,14 +30,14 @@ viewDetail.forEach((btn) => {
                                     <p class="text-sm text-gray-500">Số lượng: ${item.quantity}</p>
                                     <div class="space-y-1">
                                         <p class="text-sm ${item.is_discount_active ? 'line-through text-gray-400' : 'text-gray-600'}">
-                                            Giá gốc: ${item.original_price.toLocaleString('vi-VN')}đ
+                                            Giá gốc: ${item.original_price.toLocaleString('vi-VN')}VNĐ
                                         </p>
                                         ${item.is_discount_active ? `
                                             <p class="text-sm text-red-500">
                                                 Giảm giá: ${item.discount}%
                                             </p>
                                             <p class="text-sm text-green-600">
-                                                Giá sau giảm: ${item.final_price.toLocaleString('vi-VN')}đ
+                                                Giá sau giảm: ${item.final_price.toLocaleString('vi-VN')}VNĐ
                                             </p>
                                         ` : ''}
                                     </div>
@@ -45,7 +45,7 @@ viewDetail.forEach((btn) => {
                             </div>
                             <div class="text-right">
                                 <p class="font-medium">
-                                    ${item.subtotal.toLocaleString('vi-VN')}đ
+                                    ${item.subtotal.toLocaleString('vi-VN')}VNĐ
                                 </p>
                             </div>
                         </div>
@@ -62,8 +62,8 @@ viewDetail.forEach((btn) => {
                 // document.getElementById('customerAddress').textContent = details[0].address;
 
                 document.getElementById('customerAddress').textContent = details[0].address;
-                document.getElementById('deliveryFee').textContent = '0đ';
-                document.getElementById('orderTotal').textContent =`${parseInt(details[0].total).toLocaleString('vi-VN')} đ`;
+                document.getElementById('deliveryFee').textContent = '0VNĐ';
+                document.getElementById('orderTotal').textContent =`${parseInt(details[0].total).toLocaleString('vi-VN')} VNĐ`;
 
                 // Show modal
                 modal.classList.remove('hidden');

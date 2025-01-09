@@ -85,16 +85,16 @@
                                             <% if (item.is_discount_active && item.discount> 0) { %>
                                                 <div class="flex items-center space-x-2">
                                                     <span class="text-gray-500 line-through text-sm">
-                                                        <%= parseInt(item.price).toLocaleString('vi-VN') %>đ
+                                                        <%= parseInt(item.price).toLocaleString('vi-VN') %>VNĐ
                                                     </span>
                                                     <span class="text-red-500 font-bold">
                                                         <%= parseInt(item.price * (1 -
-                                                            item.discount/100)).toLocaleString('vi-VN') %>đ
+                                                            item.discount/100)).toLocaleString('vi-VN') %>VNĐ
                                                     </span>
                                                 </div>
                                                 <% } else { %>
                                                     <div class="text-gray-800 font-bold">
-                                                        <%= parseInt(item.price).toLocaleString('vi-VN') %>đ
+                                                        <%= parseInt(item.price).toLocaleString('vi-VN') %>VNĐ
                                                     </div>
                                                     <% } %>
                                         </div>
