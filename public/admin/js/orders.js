@@ -58,13 +58,12 @@ viewDetail.forEach((btn) => {
                 document.getElementById('orderStatus').textContent = details[0].status;
                 document.getElementById('customerName').textContent = details[0].name;
                 document.getElementById('customerEmail').textContent = details[0].email;
-                // document.getElementById('customerPhone').textContent = details[0].phone;
+                document.getElementById('customerPhone').textContent = details[0].phone;
                 // document.getElementById('customerAddress').textContent = details[0].address;
 
                 document.getElementById('customerAddress').textContent = details[0].address;
                 document.getElementById('deliveryFee').textContent = '0đ';
-                document.getElementById('orderTotal').textContent =
-                    `${parseInt(details[0].total).toLocaleString('vi-VN')} đ`;
+                document.getElementById('orderTotal').textContent =`${parseInt(details[0].total).toLocaleString('vi-VN')} đ`;
 
                 // Show modal
                 modal.classList.remove('hidden');
@@ -147,7 +146,54 @@ function showToast(message, type = 'success') {
 const updateModal = document.querySelector("#updateOrderModal");
 const updateModalContent = updateModal.querySelector(".bg-white");
 const updateButtons = document.querySelectorAll('[update-detail]');
+const STATUS_TRANSLATIONS = {
+    'Pending': 'Chờ xác nhận',
+    'Confirmed': 'Đã xác nhận',
+    'Delivered': 'Đã giao cho ĐVVC',
+    'In Transit': 'Đang vận chuyển',
+    'Completed': 'Hoàn thành',
+    'Canceled': 'Đã hủy'
+};
 
+const PAYMENT_STATUS_TRANSLATIONS = {
+    'Paid': 'Đã thanh toán',
+    'Unpaid': 'Chưa thanh toán',
+};
+const STATUS_COLORS = {
+    'Chờ xác nhận': 'bg-yellow-100 text-yellow-800',
+    'Đã xác nhận': 'bg-blue-100 text-blue-800',
+    'Đã giao cho ĐVVC': 'bg-purple-100 text-purple-800',
+    'Đang vận chuyển': 'bg-indigo-100 text-indigo-800',
+    'Hoàn thành': 'bg-green-100 text-green-800',
+    'Đã hủy': 'bg-red-100 text-red-800'
+};
+
+const PAYMENT_COLORS = {
+    'Chưa thanh toán': 'bg-red-100 text-red-800',
+    'Đã thanh toán': 'bg-green-100 text-green-800',
+
+};
+const STATUS_MAP = {
+    'Pending': 'Chờ xác nhận',
+    'Confirmed': 'Đã xác nhận',
+    'Delivered': 'Đã giao cho ĐVVC',
+    'In Transit': 'Đang vận chuyển',
+    'Completed': 'Hoàn thành',
+    'Canceled': 'Đã hủy',
+    'Chờ xác nhận': 'Pending',
+    'Đã xác nhận': 'Confirmed',
+    'Đã giao cho ĐVVC': 'Delivered',
+    'Đang vận chuyển': 'In Transit',
+    'Hoàn thành': 'Completed',
+    'Đã hủy': 'Canceled'
+};
+
+const PAYMENT_STATUS_MAP = {
+    'Paid': 'Đã thanh toán',
+    'Unpaid': 'Chưa thanh toán',
+    'Đã thanh toán': 'Paid',
+    'Chưa thanh toán': 'Unpaid',
+};
 updateButtons.forEach(btn => {
     btn.addEventListener('click', () => {
         const row = btn.closest('tr');
@@ -156,15 +202,11 @@ updateButtons.forEach(btn => {
         const currentPaymentStatus = row.querySelector('td:nth-child(6) span').textContent.trim();
         const orderCode = row.querySelector('td:first-child').textContent.trim();
 
-        console.log(currentStatus);
-
-        // Set current values
         document.getElementById('updateOrderId').textContent = orderCode;
         document.getElementById('updateOrderIdInput').value = orderId;
-        document.getElementById('orderStatusSelect').value = currentStatus;
-        document.getElementById('paymentStatusSelect').value = currentPaymentStatus;
+        document.getElementById('orderStatusSelect').value = STATUS_MAP[currentStatus];
+        document.getElementById('paymentStatusSelect').value = PAYMENT_STATUS_MAP[currentPaymentStatus];
 
-        // Show modal
         updateModal.classList.remove('hidden');
         updateModal.classList.add('flex');
         setTimeout(() => {
@@ -178,8 +220,15 @@ document.getElementById('updateOrderForm').addEventListener('submit', async (e) 
     e.preventDefault();
 
     const orderId = document.getElementById('updateOrderIdInput').value;
-    const newStatus = document.getElementById('orderStatusSelect').value;
-    const newPaymentStatus = document.getElementById('paymentStatusSelect').value;
+    const vietnameseStatus = document.getElementById('orderStatusSelect').value;
+    const vietnamesePaymentStatus = document.getElementById('paymentStatusSelect').value;
+
+    const newStatus = STATUS_MAP[vietnameseStatus];
+    const newPaymentStatus = PAYMENT_STATUS_MAP[vietnamesePaymentStatus];
+
+    console.log("orderId: ", orderId);
+    console.log("newStatus: ", newStatus);
+    console.log("newPaymentStatus: ", newPaymentStatus);
 
     try {
         const response = await fetch(`/admin/orders/${orderId}/update`, {
@@ -198,7 +247,7 @@ document.getElementById('updateOrderForm').addEventListener('submit', async (e) 
         if (data.ok) {
             showToast('Cập nhật đơn hàng thành công!', 'success');
             document.getElementById('closeUpdateModal').click();
-            // setTimeout(() => window.location.reload(), 1500);
+             setTimeout(() => window.location.reload(), 1500);
         } else {
             throw new Error(data.message || 'Có lỗi xảy ra');
         }

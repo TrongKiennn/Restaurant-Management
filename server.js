@@ -1,5 +1,4 @@
 const express = require('express');
-
 const path =require('path');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -36,9 +35,11 @@ app.use((req, res, next) => {
     next();
 });
 
-require('./customer/login/passport.js');
-app.use(passport.initialize())
-app.use(passport.session())
+require('./customer/login/passport_cus.js');
+require('./admin/login/passport.js');
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 const registrationRouter = require("./customer/registration/registrationRouter");
@@ -80,15 +81,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/dist", express.static("dist"));
 
 app.use("/", homeRouter);
-
 app.use("/register", registrationRouter);
 app.use("/login",loginRouter);
-
-
-app.use("/logout",logoutRouter);
-
-
-app.use("/logout",logoutRouter)
 app.use("/category",categoryRouter)
 
 
@@ -96,18 +90,16 @@ app.use("/logout",logoutRouter);
 app.use("/search", searchRouter);
 app.use("/category",categoryRouter)
 app.use("/cart", cartRouter);
-// <<<<<<< HEAD
 
-// Cung cấp thư mục chứa ảnh
 app.use('/uploads', express.static('uploads'));
 
 
 
-// =======
+
 app.use("/account", profileRouter);
 app.use("/checkout", checkoutRouter); 
 app.use("/orderList",orderListRouter);
-// >>>>>>> main
+
 
 // Call the adminRouter function and pass the app as an argument
 // const adminRouter = require("./routes/admin/index.route.js");

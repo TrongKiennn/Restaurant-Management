@@ -27,6 +27,7 @@ async function getOrderById(orderId) {
     const query = `
     SELECT 
         orders.order_code,
+        orders.address,
         detail_orders.quantity,
         products.name as product_name,
         products.price as original_price,
@@ -40,7 +41,8 @@ async function getOrderById(orderId) {
         END as final_price,
         orders.*,
         users.name,
-        users.email
+        users.email,
+        users.phone
     FROM orders 
     JOIN users ON orders.user_id = users.id
     JOIN detail_orders ON orders.order_id = detail_orders.order_id
@@ -53,22 +55,40 @@ async function getOrderById(orderId) {
 }
 
 const ORDER_STATUS = {
-    PENDING: 'Pending',
-    CONFIRMED: 'Confirmed',
-    DELIVERED: 'Delivered',
-    IN_TRANSIT: 'In Transit',
-    COMPLETED: 'Completed',
-    CANCELED: 'Canceled'
+    PENDING: 'Chờ xác nhận',
+    CONFIRMED: 'Đã xác nhận',
+    DELIVERED: 'Đã giao cho ĐVVC',
+    IN_TRANSIT: 'Đang vận chuyển',
+    COMPLETED: 'Hoàn thành',
+    CANCELED: 'Đã hủy'
 };
 
 const PAYMENT_STATUS = {
-    UNPAID: 'Unpaid',
-    PAID: 'Paid',
-    PENDING: 'Pending'
+    UNPAID: 'Chưa thanh toán',
+    PAID: 'Đã thanh toán',
+    PENDING: 'Đang chờ'
 };
 
-
 async function updateOrder(id, status, payment_status) {
+    // Map Vietnamese status back to English for DB
+    const statusMap = {
+        'Chờ xác nhận': 'Pending',
+        'Đã xác nhận': 'Confirmed',
+        'Đã giao cho ĐVVC': 'Delivered',
+        'Đang vận chuyển': 'In Transit',
+        'Hoàn thành': 'Completed',
+        'Đã hủy': 'Canceled'
+    };
+
+    const paymentStatusMap = {
+        'Chưa thanh toán': 'Unpaid',
+        'Đã thanh toán': 'Paid',
+        'Đang chờ': 'Pending'
+    };
+
+    const dbStatus = statusMap[status] || status;
+    const dbPaymentStatus = paymentStatusMap[payment_status] || payment_status;
+
     const query = `
         UPDATE orders
         SET 
@@ -83,25 +103,20 @@ async function updateOrder(id, status, payment_status) {
                 ELSE completed_at 
             END
         WHERE order_id = $3
-        RETURNING *
+        RETURNING *;
     `;
 
-    const values = [
-        String(status),         // Ensure string type
-        String(payment_status), 
-        id
-    ];
-
     try {
-        const result = await pool.query(query, values);
-
+        const result = await pool.query(query, [dbStatus, dbPaymentStatus, id]);
         return result.rows[0];
     } catch (error) {
-        console.log("Error updating order: ", error);
-
-        throw new Error("Error updating order");
+        console.error("Error updating order:", error);
+        throw new Error("Lỗi khi cập nhật đơn hàng");
     }
 }
+
+
+
 
 async function getOrderByKeyword(keyword) {
     const query = `

@@ -11,7 +11,7 @@ async function handleLoginRequest(req, res, next) {
         if(!user){
             message =
                 "Incorrect Email or Password!.";
-            return res.render("login", { message, title });
+            return res.render("admin_views/admin_login.ejs", { message, title });
         }
         const isValid=await validPassword(password,user.password,user.salt);
 

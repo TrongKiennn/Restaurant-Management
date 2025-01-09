@@ -29,7 +29,7 @@ const renderCartPage=async (req,res)=>{
     try{
         const user_id = res.locals.user ? res.locals.user.id : null;
         const {products, totalSum, totalDiscount, totalPay}=await cartService.getProductInCartByUserId(user_id);
-
+       
         
         const response = {
             title: 'Cart Page - Superstore - GA05',
@@ -40,6 +40,8 @@ const renderCartPage=async (req,res)=>{
             user_id:user_id,
             totalPay: totalPay
           };
+
+   
 
         if(req.xhr){
             return res.status(200).json(response);

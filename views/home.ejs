@@ -82,7 +82,21 @@
 
                 <div class="flex items-baseline mb-1 space-x-2">
                   <p class="text-xl text-primary font-semibold">
-                    <%= product.price %> VNĐ
+                    <% if (product.is_discount_active && product.discount> 0) { %>
+                      <div class="flex items-center space-x-2">
+                          <span class="text-gray-500 line-through text-sm">
+                              <%= parseInt(product.price).toLocaleString('vi-VN') %>đ
+                          </span>
+                          <span class="text-red-500 font-bold">
+                              <%= parseInt(product.price * (1 -
+                              product.discount/100)).toLocaleString('vi-VN') %>đ
+                          </span>
+                      </div>
+                      <% } else { %>
+                          <div class="text-gray-800 font-bold">
+                              <%= parseInt(product.price).toLocaleString('vi-VN') %>đ
+                          </div>
+                          <% } %>
                   </p>
                 </div>
               </div> 
@@ -174,5 +188,6 @@
   <%- include('layouts/footer') %>
   <!-- #endregion Footer -->
    </div>
+   <Script src="/js/searchWithAJAXHandling.js"></Script>
 </body>
 </html>

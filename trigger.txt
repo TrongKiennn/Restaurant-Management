@@ -58,7 +58,7 @@ BEGIN
     SET total = (
         SELECT SUM(
             CASE 
-                WHEN products.is_discount_active = true THEN products.price * (1 - products.discount) * detail_orders.quantity
+                WHEN products.is_discount_active = true THEN products.price * (1 - products.discount/100.0) * detail_orders.quantity
                 ELSE products.price * detail_orders.quantity
             END
         )

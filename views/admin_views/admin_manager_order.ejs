@@ -19,7 +19,7 @@
 
 <body>
     <div id="main" class="relative">
-        
+
         <!-- #region Header -->
         <%- include('admin_layouts/admin_mainLayout', { content: locals.body }) %>
             <!-- #endregion Header -->
@@ -128,10 +128,22 @@
                                         <%= order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
                                            order.status === 'Confirmed' ? 'bg-blue-100 text-blue-800' :
                                            order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                                             order.status === 'In Transit' ? 'bg-purple-100 text-purple-800' :
-                                               order.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                                           order.status === 'In Transit' ? 'bg-purple-100 text-purple-800' :
+                                           order.status === 'Completed' ? 'bg-green-100 text-green-800' :
                                            order.status === 'Canceled' ? 'bg-red-100 text-red-800' : '' %>">
-                                            <%= order.status %>
+                                            <%= 
+                                                (() => {
+                                                    switch(order.status) {
+                                                        case 'Pending': return 'Chờ xác nhận';
+                                                        case 'Confirmed': return 'Đã xác nhận';
+                                                        case 'Delivered': return 'Đã giao cho ĐVVC';
+                                                        case 'In Transit': return 'Đang vận chuyển';
+                                                        case 'Completed': return 'Hoàn thành';
+                                                        case 'Canceled': return 'Đã hủy';
+                                                        default: return order.status;
+                                                    }
+                                                })()
+                                            %>
                                         </span>
                                     </td>
                                     <td class="px-6 py-4">
@@ -139,7 +151,16 @@
                                         <%= order.status_payment === 'Paid' ? 'bg-green-100 text-green-800' :
                                            order.status_payment === 'Unpaid' ? 'bg-red-100 text-red-800' :
                                            'bg-yellow-100 text-yellow-800' %>">
-                                            <%= order.status_payment %>
+                                            <%= 
+                                                (() => {
+                                                    switch(order.status_payment) {
+                                                        case 'Paid': return 'Đã thanh toán';
+                                                        case 'Unpaid': return 'Chưa thanh toán';
+                                                        case 'Pending': return 'Đang chờ';
+                                                        default: return order.status_payment;
+                                                    }
+                                                })()
+                                            %>
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 space-x-2">
@@ -151,9 +172,7 @@
                                             class="text-green-600 hover:text-green-800" title="Cập nhật">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="text-yellow-600 hover:text-yellow-800" title="In hóa đơn">
-                                            <i class="fas fa-print"></i>
-                                        </button>
+                                       
                                         <button cancel-detail class="text-red-600 hover:text-red-800" title="Hủy đơn">
                                             <i class="fas fa-times"></i>
                                         </button>
@@ -258,27 +277,27 @@
                 <input type="hidden" id="updateOrderIdInput">
 
                 <!-- Order Status -->
+                <!-- Order Status Select -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Trạng thái đơn hàng</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tình trạng đơn hàng</label>
                     <select id="orderStatusSelect"
                         class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#D9BB1C] focus:border-[#D9BB1C]">
-                        <option value="Pending">Pending</option>
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="In Transit">In Transit</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Canceled">Canceled</option>
+                        <option value="Peding">Chờ xác nhận</option>
+                        <option value="Confirmed">Đã xác nhận</option>
+                        <option value="Delivered">Đã giao cho ĐVVC</option>
+                        <option value="In Transit">Đang vận chuyển</option>
+                        <option value="Completed">Hoàn thành</option>
+                        <option value="Canceled">Đã hủy</option>
                     </select>
                 </div>
 
-                <!-- Payment Status -->
+                <!-- Payment Status Select -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Trạng thái thanh toán</label>
                     <select id="paymentStatusSelect"
                         class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#D9BB1C] focus:border-[#D9BB1C]">
-                        <option value="Unpaid">Unpaid</option>
-                        <option value="Paid">Paid</option>
-                        <option value="Pending">Pending Payment</option>
+                        <option value="Unpaid">Chưa thanh toán</option>
+                        <option value="Paid">Đã thanh toán</option>
                     </select>
                 </div>
 

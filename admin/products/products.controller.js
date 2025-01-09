@@ -42,19 +42,42 @@ module.exports.index = async (req, res) => {
 };
 
 //[GET] LẤY DANH SÁCH SẢN PHẨM THEO KEYWORD
+//[GET] LẤY DANH SÁCH SẢN PHẨM THEO KEYWORD
 module.exports.getProductsByKeyword = async (req, res) => {
     const keyTerm = req.query.keyword;
-
+    const page = parseInt(req.query.page) || 1;
+    const limit = 12; // Items per page
+    
     console.log(keyTerm);
 
     try {
         const productList = await productService.getProductsByKeyword(keyTerm);
+        
         if (productList.length === 0) {
-            return res.render("admin_views/admin_layouts/no_result",{
+            return res.render("admin_views/admin_layouts/no_result", {
                 keyword: keyTerm
             });
         }
-        return res.render("admin_views/admin_manager_menu", { products: productList });
+
+        // Calculate pagination data
+        const totalItems = productList.length;
+        const totalPages = Math.ceil(totalItems / limit);
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const paginatedProducts = productList.slice(startIndex, endIndex);
+
+        // Create pagination object
+        const pagination = {
+            page: page,
+            totalPages: totalPages,
+            hasPrev: page > 1,
+            hasNext: page < totalPages
+        };
+
+        return res.render("admin_views/admin_manager_menu", { 
+            products: paginatedProducts,
+            pagination: pagination
+        });
     } catch (error) {
         res.status(500).json({
             ok: false,

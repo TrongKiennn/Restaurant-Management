@@ -107,11 +107,11 @@
                                     <!-- Nút chức năng -->
                                     <div class="flex space-x-2">
                                         <% if (address.isdefault) { %>
-                                            <button onclick="showUpdateAddressForm('<%= address.address_id %>', '<%= address.name %>', '<%= address.phonenumber %>', '<%= address.address_line %>')" class="text-white bg-yellow-500 px-4 py-2 rounded-md hover:bg-yellow-600">
+                                            <button onclick="showUpdateAddressForm('<%= address.address_id %>', '<%= address.address_line %>')" class="text-white bg-yellow-500 px-4 py-2 rounded-md hover:bg-yellow-600">
                                                 Cập nhật
                                             </button>
                                         <% } else { %>
-                                            <button onclick="showUpdateAddressForm('<%= address.address_id %>', '<%= address.name %>', '<%= address.phonenumber %>', '<%= address.address_line %>')" class="text-white bg-yellow-500 px-4 py-2 rounded-md hover:bg-yellow-600">
+                                            <button onclick="showUpdateAddressForm('<%= address.address_id %>', '<%= address.name %>', '<%= address.address_line %>')" class="text-white bg-yellow-500 px-4 py-2 rounded-md hover:bg-yellow-600">
                                                 Cập nhật
                                             </button>
                                             <button onclick="deleteAddress('<%= address.address_id %>')" class="text-white bg-red-500 px-4 py-2 rounded-md hover:bg-red-600">Xóa</button>
@@ -209,6 +209,7 @@
     <script src="/js/cart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="/js/filterHandlingAndPaginationAJAX.js"></script>
+    <Script src="/js/searchWithAJAXHandling.js"></Script>
     <script src="/layouts/search"></script>
     <script src="/js/profile.js"></script>
 </body>

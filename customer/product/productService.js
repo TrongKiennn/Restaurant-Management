@@ -57,7 +57,7 @@ async function getAllProductsOfCategoriesWithFilterAndCount(
             SELECT p.*, c.name as category_name, count(*) over() as total_count 
             FROM products p 
             JOIN categories c ON p.category_id = c.category_id
-            WHERE 1=1
+            WHERE p.deleted=false
             ${productsCategoryFilter}
             ${searchFilter}
             ${priceFilter}

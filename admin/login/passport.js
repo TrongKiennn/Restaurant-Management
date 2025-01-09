@@ -47,4 +47,4 @@ const strategy = new LocalStrategy(
     },
     verifyCallback
   );
-passport.use(strategy);
+passport.use('strategy',strategy);
