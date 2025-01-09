@@ -70,6 +70,7 @@ async function updateUserAddressInfo(req,res){
         }
        
         const {address_id, address_line, setAsDefault } = req.body;
+        console.log(address_id);
         const isDefault = setAsDefault === 'on';
         await  profileService.updateUserAddress(address_id,userID,isDefault,address_line);
         res.redirect('/account');

@@ -12,6 +12,7 @@ const verifyCallback=async (email, password, done)=>{
         if(!user){
             return done(null,false, { message, title });
         }
+        
         const isValid=await validPassword(password,user.password,user.salt);
 
         if(isValid){
@@ -37,11 +38,11 @@ passport.deserializeUser(async(userId,done)=>{
         done(err);
     }
 })
-const strategy = new LocalStrategy(
+const cus_strategy = new LocalStrategy(
     {
       usernameField: "email", 
       passwordField: "password", 
     },
     verifyCallback
   );
-passport.use(strategy);
+  passport.use('cus_strategy', cus_strategy);
