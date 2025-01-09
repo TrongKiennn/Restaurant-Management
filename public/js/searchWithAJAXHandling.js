@@ -23,57 +23,57 @@ async function searchWithAJAXHandling() {
     }
   }
   
-  function updateProductList(products) {
-      const productContainer = document.getElementById('product-list'); // Class container sản phẩm
-      productContainer.innerHTML = ''; // Xóa danh sách cũ
+  // function updateProductList(products) {
+  //     const productContainer = document.getElementById('product-list'); // Class container sản phẩm
+  //     productContainer.innerHTML = ''; // Xóa danh sách cũ
   
-      // Render danh sách sản phẩm mới
-      products.forEach((product) => {
-        let productHTML = `
-          <div class="bg-white shadow-md flex flex-col h-full rounded-lg">
-            <div class="relative group w-full h-80 flex items-center justify-center">
-              <img src="${product.product_url}" alt="${product.name}" class="max-w-full max-h-full" />
-              <a href="/category/${product.product_id}">
-                          <div
-                            class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                          </div>
-                        </a>
-                      </div>
+  //     // Render danh sách sản phẩm mới
+  //     products.forEach((product) => {
+  //       let productHTML = `
+  //         <div class="bg-white shadow-md flex flex-col h-full rounded-lg">
+  //           <div class="relative group w-full h-80 flex items-center justify-center">
+  //             <img src="${product.product_url}" alt="${product.name}" class="max-w-full max-h-full" />
+  //             <a href="/category/${product.product_id}">
+  //                         <div
+  //                           class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
+  //                         </div>
+  //                       </a>
+  //                     </div>
     
-                      <div class="flex-grow pt-4 pb-3 px-4 flex flex-col">
-                        <a href="/category/${product.product_id}">
-                          <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            ${product.name}
-                          </h4>
-                        </a>
+  //                     <div class="flex-grow pt-4 pb-3 px-4 flex flex-col">
+  //                       <a href="/category/${product.product_id}">
+  //                         <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
+  //                           ${product.name}
+  //                         </h4>
+  //                       </a>
     
-                        <div class="flex justify-between mb-1 space-x-2">
-                          <p class="text-xl text-primary font-semibold">
-                            ${product.category_name}
-                          </p>`;
+  //                       <div class="flex justify-between mb-1 space-x-2">
+  //                         <p class="text-xl text-primary font-semibold">
+  //                           ${product.category_name}
+  //                         </p>`;
         
-        productHTML += `
-                        </div>
-                        <div class="flex items-baseline mb-1 space-x-2">
-                          <p class="text-xl text-primary font-semibold">
-                            $${product.price}
-                          </p>`;
+  //       productHTML += `
+  //                       </div>
+  //                       <div class="flex items-baseline mb-1 space-x-2">
+  //                         <p class="text-xl text-primary font-semibold">
+  //                           $${product.price}
+  //                         </p>`;
     
        
-        productHTML += `
+  //       productHTML += `
                     
-                      <!-- Nút Add to Cart -->
-                      <a href="#"
-                        class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition"
-                        data-product-id="${product.id}"
-                        data-product-price="${product.price}">
-                        Add to cart
-                      </a>
-                    </div>`;
+  //                     <!-- Nút Add to Cart -->
+  //                     <a href="#"
+  //                       class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-green-700 border border-primary hover:bg-green-500 transition"
+  //                       data-product-id="${product.id}"
+  //                       data-product-price="${product.price}">
+  //                       Add to cart
+  //                     </a>
+  //                   </div>`;
     
-        productContainer.insertAdjacentHTML('beforeend', productHTML);
-      });
-    }
+  //       productContainer.insertAdjacentHTML('beforeend', productHTML);
+  //     });
+  //   }
   
     function updateQueryText(query) {
       const queryElement = document.getElementById('search-query');

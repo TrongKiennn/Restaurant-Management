@@ -49,9 +49,10 @@ async function SaveOrderToDB(req,res){
         }
 
 
-        const { name, email, phonenumber, address_line, totalPay } = req.body;
-       
-        // const userProfile=profileService.getUserProfile(userID);
+        const { name, email, phonenumber, address_line} = req.body;
+
+        const totalPay = parseFloat(req.body.totalPay);
+        
         const orderInfo=await checkoutService.createNewOrder(userID,totalPay,address_line);
 
         for (const product of products) {

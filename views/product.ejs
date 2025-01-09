@@ -83,22 +83,18 @@
                         <h3 class="text-sm text-gray-800 uppercase mb-1">Số lượng</h3>
                         <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
                             <div id="decrease" class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">-</div>
-                            <div id="quantity" class="h-8 w-8 text-base flex items-center justify-center">4</div>
+                            <div id="quantity" class="h-8 w-8 text-base flex items-center justify-center">1</div>
                             <div id="increase" class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">+</div>
                         </div>
                     </div>
 
                     <div class="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
                         <a href="#"
-                    class="add-to-cart-btn block w-96 py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-lg"
+                    class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
                     data-product-id="<%= product.product_id %>"
                     data-product-price="<%= product.price %>">
                     Thêm vào giỏ hàng
                   </a>
-                        <a href="#"
-                            class="bg-[#984B01] text-white px-8 py-2 font-medium uppercase flex items-center gap-2 hover:bg-[#b87434] transition">
-                            Đặt ngay
-                        </a>
                     </div>
                 </div>
             </div>
@@ -138,8 +134,8 @@
                                 </div>
                             
                             </div> 
-                            <a href="#"
-                            class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-b-lg"
+                            <a href="#" 
+                            class="add-to-cart-btn block w-full py-3 mt-auto text-center text-white bg-[#9c5e25]  hover:bg-[#b87434] transition rounded-lg"
                             data-product-id="<%= product.product_id %>"
                             data-product-price="<%= product.price %>">
                             Thêm vào giỏ hàng
@@ -156,8 +152,10 @@
         <%- include('layouts/footer') %>
         <!-- #endregion Footer -->
     </div>
-    <script src="/js/cart.js"></script>
+    <script src="/js/addProductToCartInProductDetail.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <Script src="/js/searchWithAJAXHandling.js"></Script>
+    <script src="/js/increaseAndDecreaseQuantity.js"></script>
 </body>
 
 

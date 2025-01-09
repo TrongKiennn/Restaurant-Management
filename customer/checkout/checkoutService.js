@@ -5,19 +5,24 @@ const  prepareFilterService = require('../Utils/filterStatementUtils');
 const getProductInCartByUserIdToOrder= async(user_id)=>{
     try {
         const result=await pool.query(`
-            SELECT p.product_url, c.quantity, p.price,
-            c.quantity * p.price AS total, p.name, p.product_id
-            FROM carts c
-            JOIN products p ON c.product_id=p.product_id
-            WHERE c.user_id=$1
-            `,[user_id])
-    
-        
-        const totalSum = result.rows.reduce((sum, row) => {
-            return sum + parseFloat(row.total);
-        }, 0);
-        const totalDiscount=0;
+             SELECT p.product_url, c.quantity, p.price,
+        c.quantity * p.price AS total, p.name, p.product_id,  ROUND(p.price - p.price * COALESCE(p.discount, 0) / 100.0, 2) AS discountprice,
+        ROUND(p.price * COALESCE(p.discount, 0) / 100.0,0)*c.quantity AS discountasmoney
+        FROM carts c
+        JOIN products p ON c.product_id=p.product_id
+        WHERE c.user_id=$1
+        `,[user_id])
 
+    
+        const totalSum = result.rows.reduce((sum, row) => {
+          return sum + parseFloat(row.total);
+        }, 0);
+
+        const totalDiscount = result.rows.reduce((sumDis, row) => {
+          return sumDis + parseFloat(row.discountasmoney);
+        }, 0);
+      
+        
         return {
             products: result.rows,
             totalSum:  parseFloat(totalSum).toFixed(0),
@@ -32,6 +37,8 @@ const getProductInCartByUserIdToOrder= async(user_id)=>{
 
 async function createNewOrder(user_id, total, address) {
     try {
+        // console.log(total);
+
         const result = await pool.query(
             `INSERT INTO orders (user_id, total, address) 
              VALUES ($1, $2, $3) RETURNING order_id, order_code`, 
@@ -71,7 +78,7 @@ async function findOrderWithDetails(order_code, user_id) {
         const order = orderResult.rows[0]; 
       
         const detailsResult = await pool.query(`
-            Select p.product_url, p.name, d.quantity, p.price
+            Select p.product_url, p.name, d.quantity, p.price, ROUND(p.price - p.price * COALESCE(p.discount, 0) / 100.0, 0) AS discountprice
             from detail_orders d 
             join products p on d.product_id=p.product_id
             where d.order_id=$1`, [order.order_id]);

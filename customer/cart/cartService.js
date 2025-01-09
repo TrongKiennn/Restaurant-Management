@@ -27,7 +27,8 @@ const getProductInCartByUserId = async(user_id)=>{
     try {
         const result=await pool.query(`
         SELECT p.product_url, c.quantity, p.price,
-        c.quantity * p.price AS total, p.name, p.product_id
+        c.quantity * p.price AS total, p.name, p.product_id,  ROUND(p.price - p.price * COALESCE(p.discount, 0) / 100.0, 2) AS discountprice,
+        ROUND(p.price * COALESCE(p.discount, 0) / 100.0, 2)*c.quantity AS discountasmoney
         FROM carts c
         JOIN products p ON c.product_id=p.product_id
         WHERE c.user_id=$1
@@ -37,8 +38,12 @@ const getProductInCartByUserId = async(user_id)=>{
         const totalSum = result.rows.reduce((sum, row) => {
           return sum + parseFloat(row.total);
         }, 0);
-        const totalDiscount=0;
 
+        const totalDiscount = result.rows.reduce((sum, row) => {
+          return sum + parseFloat(row.discountasmoney);
+        }, 0);
+      
+        
         return {
             products: result.rows,
             totalSum:  parseFloat(totalSum).toFixed(0),

@@ -25,7 +25,7 @@
     <form class="flex flex-col lg:flex-row gap-6 lg:gap-10" method="post" action="/checkout/create">
       <!-- Billing Details -->
       <div class="flex-grow">
-        <h2 class="text-xl md:text-2xl font-medium mb-4 md:mb-6">Shipping Details</h2>
+        <h2 class="text-xl md:text-2xl font-medium mb-4 md:mb-6">Thông tin đặt hàng</h2>
         <div class="flex flex-col gap-4">
          
             <div>
@@ -56,7 +56,7 @@
 
       <!-- Cart Summary -->
       <div class="w-full lg:w-1/2 bg-white p-6 shadow rounded-md max-w-md">
-        <h2 class="text-lg md:text-xl font-medium mb-4 md:mb-6">Your Order</h2>
+        <h2 class="text-lg md:text-xl font-medium mb-4 md:mb-6">Đơn hàng</h2>
         <div class="flex flex-col gap-4">
           <div class="col-span-2 rounded-xl overflow-hidden">
             <table class="w-full text-gray-700 shadow-md bg-blue-950">
@@ -78,7 +78,7 @@
                                 </button>
                             </div>
                         </td>
-                        <td class="py-4 px-6 text-right">$<%= product.price %></td>
+                        <td class="py-4 px-6 text-right"><%= product.discountprice %> VNĐ</td>
                     </tr>
                     <% }); %>
                 </tbody>
@@ -93,19 +93,19 @@
                 <tbody>
                     <tr class="border-b border-gray-400">
                         <td class="py-4 px-6 text-left font-medium">Total</td>
-                        <td class="py-4 px-6 text-right">$<%= totalSum %></td>
+                        <td class="py-4 px-6 text-right"><%= totalSum %> VNĐ</td>
                     </tr>
                     <tr class="border-b border-gray-400">
                         <td class="py-4 px-6 text-left font-medium">Discount</td>
-                        <td class="py-4 px-6 text-right">-$<%= totalDiscount %></td>
+                        <td class="py-4 px-6 text-right">-<%= totalDiscount %></td>
                     </tr>
                     <tr class="border-b border-gray-400">
-                      <td class="py-4 px-6 text-left font-medium">Shipping</td>
-                      <td class="py-4 px-6 text-right">Free</td>
+                      <td class="py-4 px-6 text-left font-medium">Shipping </td>
+                      <td class="py-4 px-6 text-right">Free VNĐ</td>
                     </tr>
                     <tr class="">
                         <td class="py-4 px-6 text-left font-medium">Final Amount</td>
-                        <td class="py-4 px-6 text-right">$<%= totalPay %></td>
+                        <td class="py-4 px-6 text-right"><%= totalPay %> VNĐ</td>
                     </tr>
                 </tbody>
             </table>
