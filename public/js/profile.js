@@ -44,7 +44,7 @@ function submitAddressForm() {
     hideAddAddressForm();
 }
 
-function showUpdateAddressForm(addressId, name, phoneNumber, addressLine) {
+function showUpdateAddressForm(addressId, addressLine) {
    
     const updateForm = document.getElementById("update-address-form");
     updateForm.classList.remove("hidden");
@@ -54,7 +54,6 @@ function showUpdateAddressForm(addressId, name, phoneNumber, addressLine) {
     addressList.classList.add("hidden");
 
 
-    updateForm.querySelector('input[name="phonenumber"]').value = phoneNumber;
     updateForm.querySelector('input[name="address_line"]').value = addressLine;
     updateForm.querySelector('input[name="address_id"]').value = addressId;
 }

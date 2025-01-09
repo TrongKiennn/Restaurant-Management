@@ -4,7 +4,8 @@ const Router = express.Router();
 const loginController = require('./login.controller');
 require('./passport');
 
-Router.post("/",passport.authenticate('local',{
+Router.post("/",passport.authenticate('strategy',{
+  
     failureRedirect: '/admin/login',
     successRedirect: '/admin/dashboard',
     failureFlash: true,

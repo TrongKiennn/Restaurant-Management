@@ -13,11 +13,13 @@ function genPassword(password) {
 }
 
 function validPassword(password, hashedPassword, salt) {
-    console.log(password);
-console.log(hashedPassword);
     return new Promise((resolve, reject) => {
         crypto.pbkdf2(password, salt, 310000, 32, 'sha256', (err, hashVerify) => {
             if (err) return reject(err);
+          
+            console.log(hashedPassword);
+
+            console.log(hashVerify.toString('hex'));
             resolve(hashedPassword === hashVerify.toString('hex'));
         });
     }); 
