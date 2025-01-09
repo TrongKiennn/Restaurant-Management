@@ -85,16 +85,16 @@
                     <% if (product.is_discount_active && product.discount> 0) { %>
                       <div class="flex items-center space-x-2">
                           <span class="text-gray-500 line-through text-sm">
-                              <%= parseInt(product.price).toLocaleString('vi-VN') %>đ
+                              <%= parseInt(product.price).toLocaleString('vi-VN') %>VNĐ
                           </span>
                           <span class="text-red-500 font-bold">
                               <%= parseInt(product.price * (1 -
-                              product.discount/100)).toLocaleString('vi-VN') %>đ
+                              product.discount/100)).toLocaleString('vi-VN') %>VNĐ
                           </span>
                       </div>
                       <% } else { %>
                           <div class="text-gray-800 font-bold">
-                              <%= parseInt(product.price).toLocaleString('vi-VN') %>đ
+                              <%= parseInt(product.price).toLocaleString('vi-VN') %>VNĐ
                           </div>
                           <% } %>
                   </p>
@@ -134,7 +134,7 @@
       if (currentIndex < slider.children.length - 1) {
         currentIndex++;
       } else {
-        currentIndex = 0; // Quay lại ảnh đầu tiên
+        currentIndex = 0; // Quay lại ảnh VNĐầu tiên
       }
       updateSlider();
     });
@@ -143,7 +143,7 @@
       if (currentIndex > 0) {
         currentIndex--;
       } else {
-        currentIndex = slider.children.length - 1; // Chuyển đến ảnh cuối cùng
+        currentIndex = slider.children.length - 1; // Chuyển VNĐến ảnh cuối cùng
       }
       updateSlider();
     });
@@ -158,7 +158,7 @@
         </div>
         <h3 class="text-3xl font-bold text-yellow-400 uppercase">Thức ăn chuẩn</h3>
         <h3 class="text-3xl font-bold text-yellow-400 uppercase">tươi ngon 100%</h3>
-        <p>Thưởng thức đồ ăn tươi ngon ngay trong ngày.</p>
+        <p>Thưởng thức VNĐồ ăn tươi ngon ngay trong ngày.</p>
       </div>
   
       <!-- Tính năng 2: Mát lạnh -->
