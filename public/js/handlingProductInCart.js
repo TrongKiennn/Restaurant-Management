@@ -38,6 +38,7 @@ async function updateCartList(products){
           </div>
       </td>
       <td class="py-4 px-6 text-right">${product.price} VNĐ</td>
+       <td class="py-4 px-6 text-right">${product.discountprice} VNĐ</td>
       <!-- <td class="py-4 px-6 text-right">$${product.discount_price}</td> -->
       <td class="py-4 px-6 text-center">
           <button class="text-red-600 hover:text-red-800 delete-btn" product-id="${product.product_id}">

@@ -24,10 +24,10 @@
     <section class="py-24">
       <div class="w-full max-w-7xl mx-auto px-4">
         <h2 class="font-bold text-4xl text-black text-center mb-6">
-          Order Successful! Please scan the QR code below to make the payment!
+         Đặt hàng thành công! Quét mã QR bên dưới để thanh toán
         </h2>
         <p class="text-center text-red-500 text-lg mb-12">
-          The order can only be sent after you make the payment!
+          Lưu ý! Chỉ gửi hàng khi đơn hàng được thanh toán.
         </p>
         <div class="flex flex-col lg:flex-row items-start lg:items-center gap-8">
           <!-- QR Code -->
@@ -40,10 +40,10 @@
             <div class="flex flex-col lg:flex-row justify-between px-6 pb-6 border-b border-gray-200">
               <div>
                 <p class="font-semibold text-base text-black">
-                  Order Id: <span class="text-indigo-600 font-medium">#<%= orderCode %></span>
+                  Mã đơn: <span class="text-indigo-600 font-medium">#<%= orderCode %></span>
                 </p>
                 <p class="font-semibold text-base text-black">
-                  Status: <span class="text-emerald-600"><%= Order.status %></span>
+                  Tình trạng: <span class="text-emerald-600"><%= Order.status %></span>
                 </p>
               </div>
             </div>
@@ -62,8 +62,8 @@
                     <p class="text-gray-500">Qty: <%= item.quantity %></p>
                   </div>
                   <div class="col-span-2 text-right">
-                    <p class="font-medium text-sm text-black">Price</p>
-                    <p class="font-semibold text-lg text-indigo-600">$<%= item.price %></p>
+                    <p class="font-medium text-sm text-black">Giá</p>
+                    <p class="font-semibold text-lg text-indigo-600"><%= item.discountprice %> VNĐ</p>
                   </div>
                 </div>
               </div>
@@ -79,7 +79,7 @@
                 Cancel Order
               </button> -->
               <p class="font-semibold text-lg text-black mt-4 lg:mt-0">
-                Total Price: <span class="text-indigo-600">$<%= Order.total %></span>
+                Tổng tiền: <span class="text-indigo-600"><%= Order.total %> VNĐ</span>
               </p>
             </div>
           </div>

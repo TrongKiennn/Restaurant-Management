@@ -49,6 +49,7 @@
                                     <th class="py-4 px-6 text-white text-left font-medium uppercase">Tên</th>
                                     <th class="py-4 px-6 text-white text-left font-medium uppercase">Số lượng</th>
                                     <th class="py-4 px-6 text-white text-right font-medium uppercase">Giá</th>
+                                    <th class="py-4 px-6 text-white text-right font-medium uppercase">Giá sau giảm</th>
                                     <th class="py-4 px-6 text-white text-right font-medium uppercase">Thao tác</th>
                                 </tr>
                             </thead>
@@ -71,11 +72,13 @@
                                             </div>
                                         </td>
                                         <td class="py-4 px-6 text-right"><%= product.price %> VNĐ</td>
+                                        <td class="py-4 px-6 text-right"><%= product.discountprice %> VNĐ</td>
                                         <td class="py-4 px-6 text-center">
                                             <button class="text-red-600 hover:text-red-800 delete-btn" product-id="<%= product.product_id %>">
                                                 Xoá
                                             </button>
                                         </td>
+                                        
                                     </tr>
                                     <% }); %>
                                 
